@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +17,7 @@ import {
   ArrowRight,
   Play
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const scrollToSection = (id: string) => {
@@ -25,7 +25,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-inter overflow-hidden">
+    <div className="min-h-screen bg-black text-white overflow-hidden relative">
       {/* Floating geometric elements */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl rotate-12 opacity-60 animate-float"></div>
@@ -34,31 +34,24 @@ const Index = () => {
         <div className="absolute bottom-20 right-10 w-28 h-28 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full opacity-30 animate-float" style={{ animationDelay: '0.5s' }}></div>
       </div>
 
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-gray-800">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-r from-[#9cff1e] to-lime-400 rounded-lg flex items-center justify-center">
-              <QrCode className="w-5 h-5 text-black" />
+      {/* Header */}
+      <nav className="relative z-10 border-b border-gray-800 backdrop-blur-sm bg-black/50">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <div className="w-8 h-8 bg-[#9cff1e] rounded-lg flex items-center justify-center">
+                <span className="text-black font-bold text-sm">QR</span>
+              </div>
+              <h1 className="text-xl font-bold">QRide</h1>
             </div>
-            <span className="text-xl font-bold text-white">
-              QRide
-            </span>
-          </div>
-          
-          <div className="hidden md:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('how-it-works')} className="text-gray-400 hover:text-[#9cff1e] transition-colors">
-              How it Works
-            </button>
-            <button onClick={() => scrollToSection('features')} className="text-gray-400 hover:text-[#9cff1e] transition-colors">
-              Features
-            </button>
-            <button onClick={() => scrollToSection('pricing')} className="text-gray-400 hover:text-[#9cff1e] transition-colors">
-              Pricing
-            </button>
-            <Button className="bg-[#9cff1e] text-black hover:bg-lime-400 font-medium">
-              Get Started
-            </Button>
+            <div className="flex items-center space-x-4">
+              <Link 
+                to="/create"
+                className="bg-[#9cff1e] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] transition-all duration-300"
+              >
+                Create QR Code
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
@@ -490,24 +483,26 @@ const Index = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 px-6 bg-gradient-to-r from-gray-950 to-black">
-        <div className="container mx-auto text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-            Ready to Transform Your Parking Experience?
-          </h2>
-          <p className="text-xl mb-12 text-gray-400 max-w-2xl mx-auto">
-            Join thousands of drivers who've already discovered the peace of mind that comes with QRide.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-            <Button size="lg" className="bg-[#9cff1e] text-black hover:bg-lime-400 text-lg px-10 py-4 font-medium">
-              Order Your QRide Sticker Now →
-            </Button>
-          </div>
-
-          <div className="mt-8 text-sm text-gray-500">
-            30-day money-back guarantee • Free shipping on orders over $20 • Customer support included
+      {/* CTA Section - Update with link to create page */}
+      <section className="relative z-10 py-20">
+        <div className="container mx-auto px-4 text-center">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-4xl font-bold mb-6">
+              Ready to Transform Your Car Communication?
+            </h2>
+            <p className="text-xl text-gray-400 mb-8">
+              Join thousands of drivers already using QRide smart stickers
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/create">
+                <button className="bg-[#9cff1e] text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-[#8ae619] transition-all duration-300 hover:scale-105">
+                  Get Your QR Sticker
+                </button>
+              </Link>
+              <button className="border border-gray-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300">
+                Watch Demo
+              </button>
+            </div>
           </div>
         </div>
       </section>

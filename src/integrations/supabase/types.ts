@@ -9,7 +9,36 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      qr_codes: {
+        Row: {
+          created_at: string
+          default_message: string | null
+          id: string
+          name: string
+          phone_number: string | null
+          unique_code: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          default_message?: string | null
+          id?: string
+          name: string
+          phone_number?: string | null
+          unique_code: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          default_message?: string | null
+          id?: string
+          name?: string
+          phone_number?: string | null
+          unique_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
