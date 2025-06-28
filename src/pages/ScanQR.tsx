@@ -169,6 +169,11 @@ const ScanQR = () => {
                   <Phone className="w-5 h-5 mr-3" />
                   Call
                 </Button>
+                <Link to={`/edit/${qrData.id}`} className="w-full block mt-2">
+                  <Button className="w-full bg-gray-800 text-[#9cff1e] hover:bg-gray-900 hover:text-white font-semibold py-4 flex items-center justify-center text-base rounded-lg border border-[#9cff1e] focus:ring-2 focus:ring-[#9cff1e] focus:outline-none" aria-label="Edit QR Code">
+                    Edit QR Code
+                  </Button>
+                </Link>
               </div>
               <div className="mt-6 p-4 bg-gray-800/30 rounded-lg">
                 <p className="text-xs text-gray-400 text-center">
