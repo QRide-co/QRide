@@ -79,11 +79,13 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-[#ff6b00] rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">QR</span>
+              <div className="flex items-center">
+                <span className="font-extrabold text-2xl md:text-3xl tracking-tight" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '-0.04em' }}>
+                  <span className="text-black">QR</span><span className="text-[#ff6b00]">ide</span>
+                </span>
               </div>
-              <h1 className="text-xl font-bold text-gray-900">QRide</h1>
             </div>
+            <h1 className="sr-only">QRide</h1>
             <div className="flex items-center space-x-4">
               {isAdmin && adminAuth && (
                 <>
