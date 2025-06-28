@@ -11,6 +11,7 @@ interface QRCodeData {
   name: string;
   phone_number: string;
   default_message: string;
+  activated: boolean;
 }
 
 const ScanQR = () => {
@@ -40,7 +41,7 @@ const ScanQR = () => {
         if (!data) {
           setError('QR code not found');
         } else {
-          setQrData(data);
+          setQrData(data as any);
         }
       } catch (error) {
         console.error('Error fetching QR data:', error);
@@ -114,6 +115,34 @@ const ScanQR = () => {
               </CardContent>
             </Card>
           </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!qrData.activated) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="w-full max-w-md mx-auto px-4 py-8">
+          <Card className="bg-gray-900/70 border-gray-800 shadow-xl rounded-2xl">
+            <CardHeader className="text-center">
+              <CardTitle className="text-white text-2xl font-bold">QR Code Not Activated</CardTitle>
+              <CardDescription className="text-gray-400 text-lg mt-1">
+                This QR code is not yet active. Please activate it to enable contact options.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <Button
+                className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold py-4 text-lg rounded-lg shadow-md"
+                onClick={() => window.location.href = '/subscribe'}
+              >
+                Activate QR Code
+              </Button>
+              <div className="text-center text-gray-400 text-sm mt-4">
+                Already subscribed? Please refresh this page after activation.
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );

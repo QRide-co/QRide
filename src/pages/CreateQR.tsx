@@ -129,6 +129,7 @@ const CreateQR = () => {
           phone_number: phoneNumber.trim(),
           default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
           password: newPassword,
+          activated: false,
         });
 
       if (error) throw error;
