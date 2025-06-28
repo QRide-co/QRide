@@ -81,7 +81,7 @@ const Index = () => {
             <div className="flex items-center space-x-2">
               <div className="flex items-center">
                 <span className="font-extrabold text-2xl md:text-3xl tracking-tight" style={{ fontFamily: 'Inter, sans-serif', letterSpacing: '-0.04em' }}>
-                  <span className="text-black">QR</span><span className="text-[#ff6b00]">ide</span>
+                  <span className="text-[#ff6b00]">QR</span><span className="text-black">ide</span>
                 </span>
               </div>
             </div>
