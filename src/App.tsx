@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import CreateQR from "./pages/CreateQR";
 import ScanQR from "./pages/ScanQR";
 import NotFound from "./pages/NotFound";
+import Subscribe from './pages/Subscribe';
 
 const queryClient = new QueryClient();
 
@@ -21,6 +22,7 @@ const App = () => (
           <Route path="/create" element={<CreateQR />} />
           <Route path="/edit/:id" element={<CreateQR />} />
           <Route path="/scan/:code" element={<ScanQR />} />
+          <Route path="/subscribe" element={<Subscribe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
