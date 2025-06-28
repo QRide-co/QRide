@@ -391,9 +391,11 @@ const CreateQR = () => {
               {!generatedQR ? (
                 <Card className="bg-white border border-gray-200 shadow-lg mb-8">
                   <CardHeader>
-                    <CardTitle className="text-gray-900">{id ? 'Edit QR Code' : 'Generate Your QRide Sticker'}</CardTitle>
+                    <CardTitle className="text-gray-900">{isAdmin ? (id ? 'Edit QR Code' : 'Generate Your QRide Sticker') : 'Edit Your Information'}</CardTitle>
                     <CardDescription className="text-gray-600">
-                      {id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle'}
+                      {isAdmin
+                        ? (id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle')
+                        : 'Update your contact information below.'}
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -515,8 +517,8 @@ const CreateQR = () => {
                   </CardContent>
                 </Card>
               )}
-              {/* Show QR code in edit mode or after creation (edit mode only) */}
-              {(id && qrImageUrl && scanUrl) && (
+              {/* Only show QR code in edit mode or after creation (edit mode only) for admin */}
+              {(isAdmin && id && qrImageUrl && scanUrl) && (
                 <Card className="bg-white border border-gray-200 shadow-lg mb-8">
                   <CardHeader>
                     <CardTitle className="text-gray-900">Your QR Code</CardTitle>
