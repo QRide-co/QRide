@@ -349,17 +349,19 @@ const CreateQR = () => {
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900">
       {/* Header */}
-      <div className="border-b border-gray-200 backdrop-blur-sm bg-white/80">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Link to={isAdmin ? "/my-qr-codes?admin=1" : "/"} className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff5a00] transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              {isAdmin ? "Back to My QR Codes" : "Back to Home"}
-            </Link>
-            <h1 className="text-2xl font-bold">Create QR Code</h1>
+      {(!id || isAdmin) && (
+        <div className="border-b border-gray-200 backdrop-blur-sm bg-white/80">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center gap-4">
+              <Link to={isAdmin ? "/my-qr-codes?admin=1" : "/"} className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff5a00] transition-colors">
+                <ArrowLeft className="w-4 h-4" />
+                {isAdmin ? "Back to My QR Codes" : "Back to Home"}
+              </Link>
+              <h1 className="text-2xl font-bold">Create QR Code</h1>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
