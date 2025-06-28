@@ -77,8 +77,10 @@ const CreateQR = () => {
           setQrImageUrl(qrUrl);
           setQrPassword((data as any).password || null);
           // Only show password modal if navigated from scan page
-          if (location.state && location.state.fromScan) {
+          if ((location.state && location.state.fromScan) && (data.password && data.password.length > 0)) {
             setShowPasswordModal(true);
+          } else if (!data.password || data.password.length === 0) {
+            setIsAuthenticated(true);
           } else {
             setIsAuthenticated(true);
           }
