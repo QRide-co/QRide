@@ -48,6 +48,9 @@ const CreateQR = () => {
   const [bulkSuccess, setBulkSuccess] = useState(false);
   const [fetchingQR, setFetchingQR] = useState(false);
   const [showSuccessPage, setShowSuccessPage] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const [cancelSuccess, setCancelSuccess] = useState(false);
 
   const defaultMessages = [
     'Please move your car',
@@ -487,8 +490,44 @@ const CreateQR = () => {
                 {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
               </Button>
             </form>
+            {!isAdmin && id && (
+              <div className="flex justify-end mb-4">
+                <Button variant="outline" size="sm" onClick={() => setShowSettings(true)}>
+                  Settings
+                </Button>
+              </div>
+            )}
           </CardContent>
         </Card>
+        {showSettings && (
+          <Dialog open={showSettings} onOpenChange={setShowSettings}>
+            <DialogContent className="max-w-sm mx-auto">
+              <DialogHeader>
+                <DialogTitle>Settings</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-6">
+                <div className="flex flex-col gap-2">
+                  <Button
+                    variant="destructive"
+                    disabled={cancelLoading || cancelSuccess}
+                    onClick={async () => {
+                      setCancelLoading(true);
+                      // Set cancellation_requested flag in db
+                      await supabase.from('qr_codes').update({ cancellation_requested: true }).eq('id', id);
+                      setCancelLoading(false);
+                      setCancelSuccess(true);
+                    }}
+                  >
+                    {cancelLoading ? 'Processing...' : cancelSuccess ? 'Cancellation Requested' : 'Cancel Subscription'}
+                  </Button>
+                  {cancelSuccess && (
+                    <div className="text-green-600 text-sm mt-2">Your subscription will remain active until the end of your current paid month.</div>
+                  )}
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </div>
   );
