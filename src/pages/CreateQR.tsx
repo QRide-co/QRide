@@ -47,6 +47,7 @@ const CreateQR = () => {
   const [bulkDownloadLoading, setBulkDownloadLoading] = useState(false);
   const [bulkSuccess, setBulkSuccess] = useState(false);
   const [fetchingQR, setFetchingQR] = useState(false);
+  const [showSuccessPage, setShowSuccessPage] = useState(false);
 
   const defaultMessages = [
     'Please move your car',
@@ -174,8 +175,8 @@ const CreateQR = () => {
           .update(updateData)
           .eq('id', id);
         if (error) throw error;
-        toast({ title: 'Updated!', description: 'QR code updated successfully.' });
-        navigate('/');
+        setShowSuccessPage(true);
+        setIsLoading(false);
         return;
       }
       if (newPassword.length < 4) {
@@ -374,6 +375,20 @@ const CreateQR = () => {
           </form>
         </DialogContent>
       </Dialog>
+    );
+  }
+
+  if (showSuccessPage) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-white to-green-200">
+        <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center">
+          <div className="flex flex-col items-center mb-6">
+            <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M9 12l2 2l4 -4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            <h2 className="text-2xl font-bold text-green-700 mb-2">Success!</h2>
+            <p className="text-lg text-gray-700">Scan QR code to be able to edit information</p>
+          </div>
+        </div>
+      </div>
     );
   }
 
