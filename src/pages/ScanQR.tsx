@@ -172,9 +172,9 @@ const ScanQR = () => {
               <CardTitle className="text-2xl font-bold text-gray-900">Contact Vehicle Owner</CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="mb-6 w-full">
+              <div className="mb-6 w-full px-2">
                 <div className="text-center text-gray-600 text-base mb-2">Choose a message to send:</div>
-                <div className="flex gap-4 justify-center w-full">
+                <div className="flex flex-wrap gap-4 justify-center w-full max-w-full">
                   {messageChoices.map(msg => (
                     <Button
                       key={msg}
