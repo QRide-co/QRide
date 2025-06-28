@@ -14,6 +14,7 @@ const CreateQR = () => {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const location = useLocation();
+  const isAdmin = location.search.includes('admin=1');
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [defaultMessage, setDefaultMessage] = useState('');
@@ -199,6 +200,18 @@ const CreateQR = () => {
     setDefaultMessage('');
     setGeneratedQR(null);
   };
+
+  if (!isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">404</h1>
+          <p className="text-xl text-gray-400 mb-4">Page not found</p>
+          <a href="/" className="text-[#9cff1e] hover:text-[#8ae619] underline">Return to Home</a>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white">
