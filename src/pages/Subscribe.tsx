@@ -71,8 +71,8 @@ const Subscribe = () => {
           </CardHeader>
           <CardContent className="flex flex-col md:flex-row gap-8 items-center justify-center">
             {/* Pricing Card */}
-            <div className="flex-1 bg-gradient-to-br from-[#9cff1e]/10 to-gray-900 rounded-2xl p-8 border border-[#9cff1e]/30 shadow-lg flex flex-col items-center">
-              <div className="text-2xl font-semibold text-[#9cff1e] mb-2">Basic</div>
+            <div className="flex-1 bg-gradient-to-br from-[#ff6b00]/10 to-gray-900 rounded-2xl p-8 border border-[#ff6b00]/30 shadow-lg flex flex-col items-center">
+              <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
               <div className="text-5xl font-extrabold text-white mb-2 flex items-end gap-2">
                 <span>10</span>
                 <span className="text-2xl text-gray-300 font-medium">EGP</span>
@@ -82,12 +82,12 @@ const Subscribe = () => {
               <ul className="mb-8 space-y-3 w-full">
                 {features.map((f, i) => (
                   <li key={i} className="flex items-center gap-3 text-base text-gray-200">
-                    <CheckCircle className="w-5 h-5 text-[#9cff1e]" /> {f}
+                    <CheckCircle className="w-5 h-5 text-[#ff6b00]" /> {f}
                   </li>
                 ))}
               </ul>
               <Button
-                className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2"
+                className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2"
                 size="lg"
                 onClick={handleSubscribe}
               >
@@ -117,7 +117,7 @@ const Subscribe = () => {
         {/* FAQ / Benefits Section */}
         <div className="max-w-2xl mx-auto mt-12 bg-gray-900/70 border border-gray-800 rounded-2xl p-8 shadow-lg">
           <div className="flex items-center gap-2 mb-6">
-            <HelpCircle className="w-6 h-6 text-[#9cff1e]" />
+            <HelpCircle className="w-6 h-6 text-[#ff6b00]" />
             <span className="text-xl font-bold text-white">Frequently Asked Questions</span>
           </div>
           <ul className="space-y-6">
@@ -131,9 +131,9 @@ const Subscribe = () => {
         </div>
         {/* Trust signals */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-10 text-gray-400 text-sm">
-          <div className="flex items-center gap-2"><Shield className="w-5 h-5 text-[#9cff1e]" /> 100% Secure Payment</div>
-          <div className="flex items-center gap-2"><Zap className="w-5 h-5 text-[#9cff1e]" /> Instant Activation</div>
-          <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-[#9cff1e]" /> Money-back Guarantee</div>
+          <div className="flex items-center gap-2"><Shield className="w-5 h-5 text-[#ff6b00]" /> 100% Secure Payment</div>
+          <div className="flex items-center gap-2"><Zap className="w-5 h-5 text-[#ff6b00]" /> Instant Activation</div>
+          <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-[#ff6b00]" /> Money-back Guarantee</div>
         </div>
         <div className="text-center mt-8">
           <Link to="/">

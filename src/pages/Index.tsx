@@ -40,7 +40,7 @@ const Index = () => {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">404</h1>
           <p className="text-xl text-gray-400 mb-4">Page not found</p>
-          <a href="/" className="text-[#9cff1e] hover:text-[#8ae619] underline">Return to Home</a>
+          <a href="/" className="text-[#ff6b00] hover:text-[#ff4d00] underline">Return to Home</a>
         </div>
       </div>
     );
@@ -79,7 +79,7 @@ const Index = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-[#9cff1e] rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-[#ff6b00] rounded-lg flex items-center justify-center">
                 <span className="text-black font-bold text-sm">QR</span>
               </div>
               <h1 className="text-xl font-bold">QRide</h1>
@@ -89,13 +89,13 @@ const Index = () => {
                 <>
                   <Link 
                     to="/create?admin=1"
-                    className="bg-[#9cff1e] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] transition-all duration-300"
+                    className="bg-[#ff6b00] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#ff4d00] transition-all duration-300"
                   >
                     Create QR Code
                   </Link>
                   <Link
                     to="/my-qr-codes?admin=1"
-                    className="bg-gray-800 text-[#9cff1e] px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] hover:text-black transition-all duration-300 ml-2"
+                    className="bg-gray-800 text-[#ff6b00] px-6 py-2 rounded-full font-semibold hover:bg-[#ff4d00] hover:text-black transition-all duration-300 ml-2"
                   >
                     My QR Codes
                   </Link>
@@ -112,7 +112,7 @@ const Index = () => {
           <DialogContent className="max-w-sm mx-auto p-8 rounded-2xl bg-gray-900 border border-gray-800">
             <DialogHeader className="text-center mb-2">
               <div className="flex flex-col items-center justify-center mb-2">
-                <Lock className="w-10 h-10 text-[#9cff1e] mb-2" />
+                <Lock className="w-10 h-10 text-[#ff6b00] mb-2" />
                 <DialogTitle className="text-2xl font-bold text-white">Admin Login</DialogTitle>
               </div>
               <p className="text-gray-400 text-base">Enter the admin password to access this page.</p>
@@ -123,11 +123,11 @@ const Index = () => {
                 placeholder="Admin password"
                 value={adminPassword}
                 onChange={e => setAdminPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-[#9cff1e]"
+                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b00]"
                 autoFocus
               />
               {adminError && <div className="text-red-500 text-sm text-center font-medium">{adminError}</div>}
-              <button type="submit" className="w-full bg-[#9cff1e] text-black font-bold py-3 rounded-lg text-lg shadow hover:bg-[#8ae619] transition-all">Continue</button>
+              <button type="submit" className="w-full bg-[#ff6b00] text-black font-bold py-3 rounded-lg text-lg shadow hover:bg-[#ff4d00] transition-all">Continue</button>
             </form>
           </DialogContent>
         </Dialog>
@@ -135,13 +135,13 @@ const Index = () => {
       {isAdmin && adminAuth && (
         <section className="container mx-auto px-4 py-12">
           <h2 className="text-3xl font-bold mb-6 text-white flex items-center gap-3">
-            <QrCode className="w-7 h-7 text-[#9cff1e]" />
+            <QrCode className="w-7 h-7 text-[#ff6b00]" />
             Your QR Codes
           </h2>
           {loadingQRCodes ? (
             <div className="text-gray-400">Loading QR codes...</div>
           ) : qrCodes.length === 0 ? (
-            <div className="text-gray-400">No QR codes found. <Link to='/create?admin=1' className='text-[#9cff1e] underline'>Create one</Link>.</div>
+            <div className="text-gray-400">No QR codes found. <Link to='/create?admin=1' className='text-[#ff6b00] underline'>Create one</Link>.</div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {qrCodes.map((qr) => (
@@ -149,7 +149,7 @@ const Index = () => {
                   <CardContent className="flex-1 flex flex-col gap-3 p-6">
                     <div className="flex items-center justify-between mb-2">
                       <div className="font-semibold text-lg text-white truncate max-w-[70%]">{qr.name}</div>
-                      <Link to={`/edit/${qr.id}?admin=1`} className="text-[#9cff1e] hover:text-[#8ae619]" aria-label="Edit QR Code">
+                      <Link to={`/edit/${qr.id}?admin=1`} className="text-[#ff6b00] hover:text-[#ff4d00]" aria-label="Edit QR Code">
                         <Pencil className="w-5 h-5" />
                       </Link>
                     </div>
@@ -173,13 +173,13 @@ const Index = () => {
           <div className="absolute bottom-32 left-1/2 w-28 h-28 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full opacity-30 animate-float" style={{ animationDelay: '0.5s', transform: 'translateX(-50%)' }}></div>
         </div>
         <div className="container mx-auto text-center relative z-10">
-          <Badge className="mb-8 bg-gray-900 text-[#9cff1e] border-gray-800 text-sm font-medium">
+          <Badge className="mb-8 bg-gray-900 text-[#ff6b00] border-gray-800 text-sm font-medium">
             Revolutionary Car Communication
           </Badge>
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight animate-fade-in-up">
             Design that speaks
-            <span className="block text-[#9cff1e] italic font-light">
+            <span className="block text-[#ff6b00] italic font-light">
               solutions
             </span>
           </h1>
@@ -190,7 +190,7 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in-up">
-            <Button size="lg" className="bg-[#9cff1e] text-black hover:bg-lime-400 text-lg px-10 py-4 font-medium">
+            <Button size="lg" className="bg-[#ff6b00] text-black hover:bg-orange-500 text-lg px-10 py-4 font-medium">
               Get started →
             </Button>
           </div>
@@ -214,7 +214,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-red-500/20">
                 <Car className="w-8 h-8 text-red-400" />
               </div>
@@ -224,7 +224,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
                 <Clock className="w-8 h-8 text-orange-400" />
               </div>
@@ -234,7 +234,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-16 h-16 bg-yellow-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-yellow-500/20">
                 <MessageSquare className="w-8 h-8 text-yellow-400" />
               </div>
@@ -252,7 +252,7 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <Badge className="mb-6 bg-[#9cff1e]/10 text-[#9cff1e] border-[#9cff1e]/20">
+              <Badge className="mb-6 bg-[#ff6b00]/10 text-[#ff6b00] border-[#ff6b00]/20">
                 The Solution
               </Badge>
               <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
@@ -265,7 +265,7 @@ const Index = () => {
               
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
-                  <div className="w-6 h-6 rounded-full bg-[#9cff1e] flex items-center justify-center mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[#ff6b00] flex items-center justify-center mt-1">
                     <CheckCircle className="w-4 h-4 text-black" />
                   </div>
                   <div>
@@ -275,7 +275,7 @@ const Index = () => {
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="w-6 h-6 rounded-full bg-[#9cff1e] flex items-center justify-center mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[#ff6b00] flex items-center justify-center mt-1">
                     <CheckCircle className="w-4 h-4 text-black" />
                   </div>
                   <div>
@@ -285,7 +285,7 @@ const Index = () => {
                 </div>
                 
                 <div className="flex items-start space-x-4">
-                  <div className="w-6 h-6 rounded-full bg-[#9cff1e] flex items-center justify-center mt-1">
+                  <div className="w-6 h-6 rounded-full bg-[#ff6b00] flex items-center justify-center mt-1">
                     <CheckCircle className="w-4 h-4 text-black" />
                   </div>
                   <div>
@@ -301,7 +301,7 @@ const Index = () => {
                 <div className="text-center mb-8">
                   <h3 className="text-lg font-semibold mb-4 text-white">QRide Sticker</h3>
                   <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-12 border border-gray-700">
-                    <QrCode className="w-32 h-32 mx-auto text-[#9cff1e] mb-6" />
+                    <QrCode className="w-32 h-32 mx-auto text-[#ff6b00] mb-6" />
                     <p className="text-sm text-gray-400">Scan to message car owner</p>
                   </div>
                 </div>
@@ -330,8 +330,8 @@ const Index = () => {
 
           <div className="grid md:grid-cols-3 gap-12">
             <div className="text-center group">
-              <div className="w-20 h-20 bg-[#9cff1e]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#9cff1e]/20 group-hover:bg-[#9cff1e]/20 transition-all duration-300">
-                <span className="text-3xl font-bold text-[#9cff1e]">1</span>
+              <div className="w-20 h-20 bg-[#ff6b00]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#ff6b00]/20 group-hover:bg-[#ff6b00]/20 transition-all duration-300">
+                <span className="text-3xl font-bold text-[#ff6b00]">1</span>
               </div>
               <h3 className="text-2xl font-semibold mb-6 text-white">Place Your Sticker</h3>
               <p className="text-gray-400 mb-8 leading-relaxed">
@@ -344,8 +344,8 @@ const Index = () => {
             </div>
 
             <div className="text-center group">
-              <div className="w-20 h-20 bg-[#9cff1e]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#9cff1e]/20 group-hover:bg-[#9cff1e]/20 transition-all duration-300">
-                <span className="text-3xl font-bold text-[#9cff1e]">2</span>
+              <div className="w-20 h-20 bg-[#ff6b00]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#ff6b00]/20 group-hover:bg-[#ff6b00]/20 transition-all duration-300">
+                <span className="text-3xl font-bold text-[#ff6b00]">2</span>
               </div>
               <h3 className="text-2xl font-semibold mb-6 text-white">Someone Scans</h3>
               <p className="text-gray-400 mb-8 leading-relaxed">
@@ -357,8 +357,8 @@ const Index = () => {
             </div>
 
             <div className="text-center group">
-              <div className="w-20 h-20 bg-[#9cff1e]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#9cff1e]/20 group-hover:bg-[#9cff1e]/20 transition-all duration-300">
-                <span className="text-3xl font-bold text-[#9cff1e]">3</span>
+              <div className="w-20 h-20 bg-[#ff6b00]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#ff6b00]/20 group-hover:bg-[#ff6b00]/20 transition-all duration-300">
+                <span className="text-3xl font-bold text-[#ff6b00]">3</span>
               </div>
               <h3 className="text-2xl font-semibold mb-6 text-white">Instant Message</h3>
               <p className="text-gray-400 mb-8 leading-relaxed">
@@ -388,7 +388,7 @@ const Index = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
                 <Shield className="w-7 h-7 text-blue-400" />
               </div>
@@ -398,7 +398,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 border border-green-500/20">
                 <Zap className="w-7 h-7 text-green-400" />
               </div>
@@ -408,7 +408,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
                 <Globe className="w-7 h-7 text-purple-400" />
               </div>
@@ -418,7 +418,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-6 border border-orange-500/20">
                 <Award className="w-7 h-7 text-orange-400" />
               </div>
@@ -428,7 +428,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 border border-red-500/20">
                 <Users className="w-7 h-7 text-red-400" />
               </div>
@@ -438,7 +438,7 @@ const Index = () => {
               </p>
             </Card>
 
-            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
+            <Card className="p-8 bg-gray-900/50 border-gray-800 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm">
               <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20">
                 <Clock className="w-7 h-7 text-indigo-400" />
               </div>
@@ -459,31 +459,31 @@ const Index = () => {
               Official Pricing
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Simple, transparent pricing. Activate your QR code for just <span className='text-[#9cff1e] font-bold'>10 EGP/month</span>.
+              Simple, transparent pricing. Activate your QR code for just <span className='text-[#ff6b00] font-bold'>10 EGP/month</span>.
             </p>
           </div>
           <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-            <div className="bg-gray-900/80 border border-[#9cff1e]/30 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md">
-              <div className="text-2xl font-semibold text-[#9cff1e] mb-2">Basic</div>
+            <div className="bg-gray-900/80 border border-[#ff6b00]/30 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md">
+              <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
               <div className="text-5xl font-extrabold text-white mb-2 flex items-end gap-2">
                 <span>10</span>
                 <span className="text-2xl text-gray-300 font-medium">EGP</span>
                 <span className="text-lg text-gray-400 font-normal mb-1">/month</span>
               </div>
               <ul className="mb-8 space-y-3 w-full mt-6">
-                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Activate your QR code instantly</li>
-                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Unlimited scans & contact options</li>
-                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Secure & private communication</li>
-                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Cancel anytime</li>
-                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Priority support</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Activate your QR code instantly</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Unlimited scans & contact options</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Secure & private communication</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Cancel anytime</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Priority support</li>
               </ul>
               <a href="/subscribe/demo" className="w-full">
-                <button className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">
+                <button className="w-full bg-[#ff6b00] text-black hover:bg-[#ff4d00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">
                   Subscribe Now
                 </button>
               </a>
               <div className="flex items-center justify-center gap-2 text-xs text-gray-400 mt-2">
-                <svg className="w-4 h-4 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11V17M12 7V7.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" /></svg>
+                <svg className="w-4 h-4 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11V17M12 7V7.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" /></svg>
                 Secure payment via Paymob
               </div>
             </div>
@@ -504,7 +504,7 @@ const Index = () => {
             <Card className="p-8 bg-gray-900/50 border-gray-800 backdrop-blur-sm">
               <div className="flex items-center mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#9cff1e] fill-current" />
+                  <Star key={i} className="w-5 h-5 text-[#ff6b00] fill-current" />
                 ))}
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
@@ -518,7 +518,7 @@ const Index = () => {
             <Card className="p-8 bg-gray-900/50 border-gray-800 backdrop-blur-sm">
               <div className="flex items-center mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#9cff1e] fill-current" />
+                  <Star key={i} className="w-5 h-5 text-[#ff6b00] fill-current" />
                 ))}
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
@@ -532,7 +532,7 @@ const Index = () => {
             <Card className="p-8 bg-gray-900/50 border-gray-800 backdrop-blur-sm">
               <div className="flex items-center mb-6">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#9cff1e] fill-current" />
+                  <Star key={i} className="w-5 h-5 text-[#ff6b00] fill-current" />
                 ))}
               </div>
               <p className="text-gray-300 mb-6 leading-relaxed">
@@ -558,7 +558,7 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/create">
-                <button className="bg-[#9cff1e] text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-[#8ae619] transition-all duration-300 hover:scale-105">
+                <button className="bg-[#ff6b00] text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-[#ff4d00] transition-all duration-300 hover:scale-105">
                   Get Your QR Sticker
                 </button>
               </Link>
@@ -576,7 +576,7 @@ const Index = () => {
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-8 h-8 bg-gradient-to-r from-[#9cff1e] to-lime-400 rounded-lg flex items-center justify-center">
+                <div className="w-8 h-8 bg-gradient-to-r from-[#ff6b00] to-orange-500 rounded-lg flex items-center justify-center">
                   <QrCode className="w-5 h-5 text-black" />
                 </div>
                 <span className="text-xl font-bold text-white">QRide</span>
@@ -589,30 +589,30 @@ const Index = () => {
             <div>
               <h4 className="font-semibold mb-6 text-white">Product</h4>
               <ul className="space-y-3 text-gray-400">
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">How it Works</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">FAQ</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">How it Works</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Features</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Pricing</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">FAQ</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-6 text-white">Company</h4>
               <ul className="space-y-3 text-gray-400">
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Terms of Service</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">About Us</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Privacy Policy</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Terms of Service</a></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-6 text-white">Connect</h4>
               <ul className="space-y-3 text-gray-400">
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Twitter</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Facebook</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">Instagram</a></li>
-                <li><a href="#" className="hover:text-[#9cff1e] transition-colors">LinkedIn</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Twitter</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Facebook</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Instagram</a></li>
+                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">LinkedIn</a></li>
               </ul>
             </div>
           </div>

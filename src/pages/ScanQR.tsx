@@ -87,7 +87,7 @@ const ScanQR = () => {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#9cff1e] mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff6b00] mx-auto mb-4"></div>
           <p className="text-gray-400">Loading QR code data...</p>
         </div>
       </div>
@@ -108,7 +108,7 @@ const ScanQR = () => {
               </CardHeader>
               <CardContent>
                 <Link to="/">
-                  <Button className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold">
+                  <Button className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold">
                     <ArrowLeft className="w-4 h-4 mr-2" />
                     Go to QRide Home
                   </Button>
@@ -134,7 +134,7 @@ const ScanQR = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               <Button
-                className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold py-4 text-lg rounded-lg shadow-md"
+                className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold py-4 text-lg rounded-lg shadow-md"
                 onClick={() => window.location.href = `/subscribe/${qrData.unique_code}`}
               >
                 Activate QR Code
@@ -155,7 +155,7 @@ const ScanQR = () => {
       <div className="border-b border-gray-800 backdrop-blur-sm bg-black/50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-2 text-[#9cff1e] hover:text-[#8ae619] transition-colors">
+            <Link to="/" className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff5a00] transition-colors">
               <ArrowLeft className="w-4 h-4" />
               QRide
             </Link>
@@ -185,7 +185,7 @@ const ScanQR = () => {
                 </Button>
                 <Button
                   onClick={handleSendMessage}
-                  className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#9cff1e] focus:outline-none"
+                  className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#ff6b00] focus:outline-none"
                   aria-label="Send SMS Message"
                 >
                   <Smartphone className="w-5 h-5 mr-3" />
@@ -200,7 +200,7 @@ const ScanQR = () => {
                   Call
                 </Button>
                 <Link to={`/edit/${qrData.id}`} state={{ fromScan: true }} className="w-full block mt-2">
-                  <Button className="w-full bg-gray-800 text-[#9cff1e] hover:bg-gray-900 hover:text-white font-semibold py-4 flex items-center justify-center text-base rounded-lg border border-[#9cff1e] focus:ring-2 focus:ring-[#9cff1e] focus:outline-none" aria-label="Edit QR Code">
+                  <Button className="w-full bg-gray-800 text-[#ff6b00] hover:bg-gray-900 hover:text-white font-semibold py-4 flex items-center justify-center text-base rounded-lg border border-[#ff6b00] focus:ring-2 focus:ring-[#ff6b00] focus:outline-none" aria-label="Edit QR Code">
                     Edit QR Code
                   </Button>
                 </Link>

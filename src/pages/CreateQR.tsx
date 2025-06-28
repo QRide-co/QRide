@@ -229,7 +229,7 @@ const CreateQR = () => {
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">404</h1>
           <p className="text-xl text-gray-400 mb-4">Page not found</p>
-          <a href="/" className="text-[#9cff1e] hover:text-[#8ae619] underline">Return to Home</a>
+          <a href="/" className="text-[#ff6b00] hover:text-[#ff5a00] underline">Return to Home</a>
         </div>
       </div>
     );
@@ -241,7 +241,7 @@ const CreateQR = () => {
         <DialogContent className="max-w-sm mx-auto p-8 rounded-2xl bg-gray-900 border border-gray-800">
           <DialogHeader className="text-center mb-2">
             <div className="flex flex-col items-center justify-center mb-2">
-              <Lock className="w-10 h-10 text-[#9cff1e] mb-2" />
+              <Lock className="w-10 h-10 text-[#ff6b00] mb-2" />
               <DialogTitle className="text-2xl font-bold text-white">Admin Login</DialogTitle>
             </div>
             <p className="text-gray-400 text-base">Enter the admin password to access this page.</p>
@@ -252,11 +252,11 @@ const CreateQR = () => {
               placeholder="Admin password"
               value={adminPassword}
               onChange={e => setAdminPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-[#9cff1e]"
+              className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b00]"
               autoFocus
             />
             {adminError && <div className="text-red-500 text-sm text-center font-medium">{adminError}</div>}
-            <button type="submit" className="w-full bg-[#9cff1e] text-black font-bold py-3 rounded-lg text-lg shadow hover:bg-[#8ae619] transition-all">Continue</button>
+            <button type="submit" className="w-full bg-[#ff6b00] text-black font-bold py-3 rounded-lg text-lg shadow hover:bg-[#ff5a00] transition-all">Continue</button>
           </form>
         </DialogContent>
       </Dialog>
@@ -269,7 +269,7 @@ const CreateQR = () => {
       <div className="border-b border-gray-800 backdrop-blur-sm bg-black/50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-2 text-[#9cff1e] hover:text-[#8ae619] transition-colors">
+            <Link to="/" className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff5a00] transition-colors">
               <ArrowLeft className="w-4 h-4" />
               Back to Home
             </Link>
@@ -297,7 +297,7 @@ const CreateQR = () => {
                     autoFocus
                   />
                   {passwordError && <div className="text-red-500 text-sm">{passwordError}</div>}
-                  <Button type="submit" className="w-full bg-[#9cff1e] text-black font-semibold">Continue</Button>
+                  <Button type="submit" className="w-full bg-[#ff6b00] text-black font-semibold">Continue</Button>
                 </form>
               </DialogContent>
             </Dialog>
@@ -372,7 +372,7 @@ const CreateQR = () => {
                       <Button
                         type="submit"
                         disabled={isLoading}
-                        className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                        className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold"
                       >
                         {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
                       </Button>
@@ -396,7 +396,7 @@ const CreateQR = () => {
                     <div className="space-y-4">
                       <div>
                         <Label className="text-white">QR Code ID:</Label>
-                        <p className="text-[#9cff1e] font-mono text-sm">{generatedQR.uniqueCode}</p>
+                        <p className="text-[#ff6b00] font-mono text-sm">{generatedQR.uniqueCode}</p>
                       </div>
                       <div>
                         <Label className="text-white">Scan URL:</Label>
@@ -406,7 +406,7 @@ const CreateQR = () => {
                     <div className="flex gap-4">
                       <Button
                         onClick={downloadQR}
-                        className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                        className="flex-1 bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold"
                       >
                         <Download className="w-4 h-4 mr-2" />
                         Download QR Code
@@ -459,7 +459,7 @@ const CreateQR = () => {
                           link.href = qrImageUrl;
                           link.click();
                         }}
-                        className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                        className="flex-1 bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold"
                       >
                         <Download className="w-4 h-4 mr-2" />
                         Download QR Code
