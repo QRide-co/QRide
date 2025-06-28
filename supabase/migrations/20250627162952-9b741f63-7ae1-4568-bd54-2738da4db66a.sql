@@ -28,3 +28,6 @@ CREATE POLICY "Anyone can create QR codes"
   FOR INSERT 
   TO anon, authenticated
   WITH CHECK (true);
+
+-- Add unique constraint to name
+ALTER TABLE public.qr_codes ADD CONSTRAINT unique_qr_code_name UNIQUE (name);
