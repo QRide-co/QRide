@@ -22,6 +22,8 @@ const CreateQR = () => {
     scanUrl: string;
   } | null>(null);
   const { toast } = useToast();
+  const [qrImageUrl, setQrImageUrl] = useState<string | null>(null);
+  const [scanUrl, setScanUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -32,7 +34,15 @@ const CreateQR = () => {
           setName(data.name);
           setPhoneNumber(data.phone_number);
           setDefaultMessage(data.default_message);
-          setGeneratedQR(null);
+          const url = `${window.location.origin}/scan/${data.unique_code}`;
+          setScanUrl(url);
+          // Generate QR code image
+          const qrUrl = await QRCode.toDataURL(url, {
+            width: 300,
+            margin: 2,
+            color: { dark: '#000000', light: '#FFFFFF' },
+          });
+          setQrImageUrl(qrUrl);
         }
       })();
     }
@@ -167,65 +177,113 @@ const CreateQR = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          {!generatedQR ? (
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
+          <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm mb-8">
+            <CardHeader>
+              <CardTitle className="text-white">{id ? 'Edit QR Code' : 'Generate Your QRide Sticker'}</CardTitle>
+              <CardDescription className="text-gray-400">
+                {id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle'}
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-white">QR Code Name *</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="e.g., My Car, Work Vehicle"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phone" className="text-white">Phone Number *</Label>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="+1 (555) 123-4567"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="message" className="text-white">Default Message (Optional)</Label>
+                  <Input
+                    id="message"
+                    type="text"
+                    placeholder="Custom message for people contacting you"
+                    value={defaultMessage}
+                    onChange={(e) => setDefaultMessage(e.target.value)}
+                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                  />
+                </div>
+
+                <Button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                >
+                  {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+          {/* Show QR code in edit mode or after creation */}
+          {(id && qrImageUrl && scanUrl) && (
+            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm mb-8">
               <CardHeader>
-                <CardTitle className="text-white">{id ? 'Edit QR Code' : 'Generate Your QRide Sticker'}</CardTitle>
+                <CardTitle className="text-white">Your QR Code</CardTitle>
                 <CardDescription className="text-gray-400">
-                  {id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle'}
+                  Download and place this QR code on your vehicle
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="space-y-2">
-                    <Label htmlFor="name" className="text-white">QR Code Name *</Label>
-                    <Input
-                      id="name"
-                      type="text"
-                      placeholder="e.g., My Car, Work Vehicle"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                      required
-                    />
+              <CardContent className="space-y-6">
+                <div className="flex justify-center">
+                  <div className="bg-white p-4 rounded-lg">
+                    <img src={qrImageUrl} alt="Generated QR Code" className="w-64 h-64" />
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-white">Phone Number *</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="+1 (555) 123-4567"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                      required
-                    />
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <Label className="text-white">Scan URL:</Label>
+                    <p className="text-gray-400 text-sm break-all">{scanUrl}</p>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message" className="text-white">Default Message (Optional)</Label>
-                    <Input
-                      id="message"
-                      type="text"
-                      placeholder="Custom message for people contacting you"
-                      value={defaultMessage}
-                      onChange={(e) => setDefaultMessage(e.target.value)}
-                      className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                    />
-                  </div>
-
+                </div>
+                <div className="flex gap-4">
                   <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.download = `qride-${name.replace(/\s+/g, '-').toLowerCase()}.png`;
+                      link.href = qrImageUrl;
+                      link.click();
+                    }}
+                    className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
                   >
-                    {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
+                    <Download className="w-4 h-4 mr-2" />
+                    Download QR Code
                   </Button>
-                </form>
+                  <Button
+                    onClick={async () => {
+                      await navigator.clipboard.writeText(scanUrl);
+                      toast({ title: 'Copied!', description: 'QR code link copied to clipboard' });
+                    }}
+                    variant="outline"
+                    className="flex-1 border-gray-700 text-white hover:bg-gray-800"
+                  >
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copy Link
+                  </Button>
+                </div>
               </CardContent>
             </Card>
-          ) : (
+          )}
+          {!generatedQR && (
             <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
               <CardHeader>
                 <CardTitle className="text-white">Your QR Code is Ready!</CardTitle>
@@ -236,19 +294,19 @@ const CreateQR = () => {
               <CardContent className="space-y-6">
                 <div className="flex justify-center">
                   <div className="bg-white p-4 rounded-lg">
-                    <img src={generatedQR.qrCodeUrl} alt="Generated QR Code" className="w-64 h-64" />
+                    <img src={generatedQR?.qrCodeUrl} alt="Generated QR Code" className="w-64 h-64" />
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   <div>
                     <Label className="text-white">QR Code ID:</Label>
-                    <p className="text-[#9cff1e] font-mono text-sm">{generatedQR.uniqueCode}</p>
+                    <p className="text-[#9cff1e] font-mono text-sm">{generatedQR?.uniqueCode}</p>
                   </div>
                   
                   <div>
                     <Label className="text-white">Scan URL:</Label>
-                    <p className="text-gray-400 text-sm break-all">{generatedQR.scanUrl}</p>
+                    <p className="text-gray-400 text-sm break-all">{generatedQR?.scanUrl}</p>
                   </div>
                 </div>
 
