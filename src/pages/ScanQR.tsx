@@ -22,6 +22,13 @@ const ScanQR = () => {
   const [error, setError] = useState<string | null>(null);
   const { toast } = useToast();
 
+  // Add state for selected message
+  const messageChoices = [
+    'Please move your car',
+    'من فضلك حرك سيارتك'
+  ];
+  const [selectedMessage, setSelectedMessage] = useState(messageChoices[0]);
+
   useEffect(() => {
     const fetchQRData = async () => {
       if (!code) {
@@ -57,14 +64,9 @@ const ScanQR = () => {
 
   const handleSendMessage = () => {
     if (!qrData) return;
-
-    // Create SMS link that works offline
-    const message = encodeURIComponent(qrData.default_message);
+    const message = encodeURIComponent(selectedMessage);
     const smsUrl = `sms:${qrData.phone_number}?body=${message}`;
-    
-    // Try to open SMS app
     window.location.href = smsUrl;
-    
     toast({
       title: "Opening SMS App",
       description: "Your default messaging app should open now",
@@ -73,7 +75,7 @@ const ScanQR = () => {
 
   const handleSendWhatsApp = () => {
     if (!qrData) return;
-    const message = encodeURIComponent(qrData.default_message);
+    const message = encodeURIComponent(selectedMessage);
     const whatsappUrl = `https://wa.me/${qrData.phone_number}?text=${message}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -171,6 +173,22 @@ const ScanQR = () => {
               <CardDescription className="text-gray-400 text-lg mt-1">{qrData.name}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
+              <div className="mb-6">
+                <div className="text-center text-gray-300 text-base mb-2">Choose a message to send:</div>
+                <div className="flex gap-4 justify-center">
+                  {messageChoices.map(msg => (
+                    <Button
+                      key={msg}
+                      type="button"
+                      onClick={() => setSelectedMessage(msg)}
+                      className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${selectedMessage === msg ? 'bg-[#ff6b00] text-white' : 'bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700'}`}
+                      aria-pressed={selectedMessage === msg}
+                    >
+                      {msg}
+                    </Button>
+                  ))}
+                </div>
+              </div>
               <div className="text-center text-gray-300 text-base mb-2">
                 Choose how you'd like to contact:
               </div>
