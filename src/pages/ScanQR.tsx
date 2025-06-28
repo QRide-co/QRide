@@ -220,7 +220,7 @@ const ScanQR = () => {
       {/* Join QRide button fixed at bottom center */}
       <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
         <Link to="/" className="inline-flex items-center gap-2 px-8 py-3 bg-white text-gray-900 font-semibold rounded-full shadow-lg border border-gray-200 hover:bg-gray-100 text-lg transition-all">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M14 3v4a1 1 0 0 0 1 1h4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/><path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+          <svg className="w-6 h-6" fill="none" stroke="#204080" strokeWidth="2.5" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           Join QRide
         </Link>
       </div>
