@@ -74,12 +74,20 @@ const Index = () => {
             </div>
             <div className="flex items-center space-x-4">
               {isAdmin && adminAuth && (
-                <Link 
-                  to="/create?admin=1"
-                  className="bg-[#9cff1e] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] transition-all duration-300"
-                >
-                  Create QR Code
-                </Link>
+                <>
+                  <Link 
+                    to="/create?admin=1"
+                    className="bg-[#9cff1e] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] transition-all duration-300"
+                  >
+                    Create QR Code
+                  </Link>
+                  <Link
+                    to="/my-qr-codes?admin=1"
+                    className="bg-gray-800 text-[#9cff1e] px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] hover:text-black transition-all duration-300 ml-2"
+                  >
+                    My QR Codes
+                  </Link>
+                </>
               )}
             </div>
           </div>

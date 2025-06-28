@@ -8,6 +8,7 @@ import CreateQR from "./pages/CreateQR";
 import ScanQR from "./pages/ScanQR";
 import NotFound from "./pages/NotFound";
 import Subscribe from './pages/Subscribe';
+import MyQRCodes from './pages/MyQRCodes';
 
 const queryClient = new QueryClient();
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/edit/:id" element={<CreateQR />} />
           <Route path="/scan/:code" element={<ScanQR />} />
           <Route path="/subscribe/:code" element={<Subscribe />} />
+          <Route path="/my-qr-codes" element={<MyQRCodes />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
