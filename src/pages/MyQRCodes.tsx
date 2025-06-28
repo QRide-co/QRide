@@ -1,10 +1,11 @@
-
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Pencil, Lock } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Trash } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
 
 const MyQRCodes = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const MyQRCodes = () => {
   const [adminError, setAdminError] = useState('');
   const [qrCodes, setQrCodes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!isAdmin || !adminAuth) return;
@@ -33,6 +35,17 @@ const MyQRCodes = () => {
       setAdminError('');
     } else {
       setAdminError('Incorrect password.');
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm('Are you sure you want to delete this QR code?')) return;
+    const { error } = await supabase.from('qr_codes').delete().eq('id', id);
+    if (error) {
+      toast({ title: 'Error', description: 'Failed to delete QR code', variant: 'destructive' });
+    } else {
+      setQrCodes((prev: any[]) => prev.filter(qr => qr.id !== id));
+      toast({ title: 'Deleted', description: 'QR code deleted successfully' });
     }
   };
 
@@ -92,9 +105,14 @@ const MyQRCodes = () => {
                 <CardContent className="flex-1 flex flex-col gap-3 p-6">
                   <div className="flex items-center justify-between mb-2">
                     <div className="font-semibold text-lg text-gray-900 truncate max-w-[70%]">{qr.name}</div>
-                    <Link to={`/edit/${qr.id}?admin=1`} state={{ fromAdmin: true }} className="text-[#ff6b00] hover:text-[#ff5500]" aria-label="Edit QR Code">
-                      <Pencil className="w-5 h-5" />
-                    </Link>
+                    <div className="flex gap-2">
+                      <Link to={`/edit/${qr.id}?admin=1`} state={{ fromAdmin: true }} className="text-[#ff6b00] hover:text-[#ff5500]" aria-label="Edit QR Code">
+                        <Pencil className="w-5 h-5" />
+                      </Link>
+                      <button onClick={() => handleDelete(qr.id)} className="text-red-500 hover:text-red-700" aria-label="Delete QR Code">
+                        <Trash className="w-5 h-5" />
+                      </button>
+                    </div>
                   </div>
                   <div className="text-gray-600 text-xs break-all mb-2">{window.location.origin + '/scan/' + qr.unique_code}</div>
                   <div className="text-gray-600 text-xs">Phone: {qr.phone_number}</div>
