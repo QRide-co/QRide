@@ -9,6 +9,7 @@ import QRCode from 'qrcode';
 import { ArrowLeft, Download, Copy, Lock } from 'lucide-react';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import JSZip from 'jszip';
 
 const CreateQR = () => {
   const { id } = useParams<{ id?: string }>();
@@ -42,6 +43,8 @@ const CreateQR = () => {
   const [bulkCount, setBulkCount] = useState(10);
   const [bulkLoading, setBulkLoading] = useState(false);
   const [bulkQRCodes, setBulkQRCodes] = useState<any[]>([]);
+  const [bulkDownloadLoading, setBulkDownloadLoading] = useState(false);
+  const [bulkSuccess, setBulkSuccess] = useState(false);
 
   const defaultMessages = [
     'Please move your car',
@@ -245,11 +248,32 @@ const CreateQR = () => {
       if (error) throw error;
       setBulkQRCodes(data || []);
       setBulkModal(false);
+      setBulkSuccess(true);
       toast({ title: 'Success', description: `${codes.length} QR codes generated and saved!` });
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to generate QR codes', variant: 'destructive' });
     } finally {
       setBulkLoading(false);
+    }
+  };
+
+  const handleBulkDownload = async () => {
+    setBulkDownloadLoading(true);
+    try {
+      const zip = new JSZip();
+      for (const qr of bulkQRCodes) {
+        const url = `${window.location.origin}/scan/${qr.unique_code}`;
+        const png = await QRCode.toDataURL(url, { width: 300, margin: 2, color: { dark: '#000000', light: '#FFFFFF' } });
+        const base64 = png.split(',')[1];
+        zip.file(`${qr.name.replace(/\s+/g, '_')}.png`, base64, { base64: true });
+      }
+      const blob = await zip.generateAsync({ type: 'blob' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'bulk-qr-codes.zip';
+      link.click();
+    } finally {
+      setBulkDownloadLoading(false);
     }
   };
 
@@ -544,8 +568,14 @@ const CreateQR = () => {
                   </DialogContent>
                 </Dialog>
               )}
-              {/* Bulk QR Codes List */}
-              {bulkQRCodes.length > 0 && (
+              {bulkSuccess ? (
+                <div className="mt-8 text-center">
+                  <div className="text-green-600 text-lg font-semibold mb-4">QR codes generated and saved successfully!</div>
+                  <Button onClick={handleBulkDownload} disabled={bulkDownloadLoading} className="bg-[#ff6b00] text-white font-semibold px-8 py-3 rounded-lg text-lg">
+                    {bulkDownloadLoading ? 'Preparing Download...' : 'Download as PNG'}
+                  </Button>
+                </div>
+              ) : bulkQRCodes.length > 0 && (
                 <div className="mt-8">
                   <h3 className="text-lg font-semibold mb-4">Generated QR Codes</h3>
                   <div className="grid gap-4">
