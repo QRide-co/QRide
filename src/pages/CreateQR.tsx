@@ -52,6 +52,34 @@ const CreateQR = () => {
     'من فضلك حرك سيارتك'
   ];
 
+  // Add country list and state
+  const countryList = [
+    { name: 'Egypt', code: '+20' },
+    { name: 'Algeria', code: '+213' },
+    { name: 'Bahrain', code: '+973' },
+    { name: 'Canada', code: '+1' },
+    { name: 'France', code: '+33' },
+    { name: 'Germany', code: '+49' },
+    { name: 'Italy', code: '+39' },
+    { name: 'Jordan', code: '+962' },
+    { name: 'Kuwait', code: '+965' },
+    { name: 'Lebanon', code: '+961' },
+    { name: 'Libya', code: '+218' },
+    { name: 'Morocco', code: '+212' },
+    { name: 'Oman', code: '+968' },
+    { name: 'Qatar', code: '+974' },
+    { name: 'Saudi Arabia', code: '+966' },
+    { name: 'Sudan', code: '+249' },
+    { name: 'Syria', code: '+963' },
+    { name: 'Tunisia', code: '+216' },
+    { name: 'UAE', code: '+971' },
+    { name: 'United Kingdom', code: '+44' },
+    { name: 'United States', code: '+1' },
+    // ... add more countries as needed
+  ];
+  const sortedCountries = [countryList[0], ...countryList.slice(1).sort((a, b) => a.name.localeCompare(b.name))];
+  const [country, setCountry] = useState(sortedCountries[0]);
+
   useEffect(() => {
     // Check sessionStorage for admin auth
     if (isAdmin && sessionStorage.getItem('adminAuth') === 'true') {
@@ -376,16 +404,33 @@ const CreateQR = () => {
                 </div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="phone" className="text-gray-900">Phone Number *</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="+1 (555) 123-4567"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400"
+                <Label htmlFor="country" className="text-gray-900">Country *</Label>
+                <select
+                  id="country"
+                  value={country.name}
+                  onChange={e => setCountry(sortedCountries.find(c => c.name === e.target.value) || sortedCountries[0])}
+                  className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400 w-full px-4 py-3 rounded-lg"
                   required
-                />
+                >
+                  {sortedCountries.map(c => (
+                    <option key={c.name} value={c.name}>{c.name} ({c.code})</option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="phone" className="text-gray-900">Phone Number *</Label>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 rounded-l-lg border border-r-0 border-gray-300 bg-gray-100 text-gray-600 text-sm">{country.code}</span>
+                  <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="123-456-7890"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400 rounded-l-none"
+                    required
+                  />
+                </div>
               </div>
               {isAdmin && (
                 <div className="space-y-2">
