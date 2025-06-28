@@ -39,6 +39,8 @@ const CreateQR = () => {
   const [showAdminModal, setShowAdminModal] = useState(isAdmin);
   const [adminError, setAdminError] = useState('');
   const [bulkModal, setBulkModal] = useState(false);
+  const [bulkCount, setBulkCount] = useState(10);
+  const [bulkLoading, setBulkLoading] = useState(false);
   const [bulkQRCodes, setBulkQRCodes] = useState<any[]>([]);
 
   const defaultMessages = [
@@ -226,12 +228,29 @@ const CreateQR = () => {
   };
 
   const handleBulkGenerate = () => {
-    const codes = Array.from({ length: 10 }, (_, i) => ({
-      uniqueCode: generateUniqueCode(),
-      name: `Car QR Code ${i + 1}`,
-      phone: null,
-    }));
-    setBulkQRCodes(codes);
+    setBulkModal(true);
+  };
+
+  const confirmBulkGenerate = async () => {
+    setBulkLoading(true);
+    try {
+      const codes = Array.from({ length: bulkCount }, (_, i) => ({
+        name: `Car QR Code ${i + 1}`,
+        unique_code: generateUniqueCode(),
+        phone_number: null,
+        default_message: defaultMessages[0],
+        activated: false,
+      }));
+      const { error, data } = await supabase.from('qr_codes').insert(codes).select();
+      if (error) throw error;
+      setBulkQRCodes(data || []);
+      setBulkModal(false);
+      toast({ title: 'Success', description: `${codes.length} QR codes generated and saved!` });
+    } catch (error) {
+      toast({ title: 'Error', description: 'Failed to generate QR codes', variant: 'destructive' });
+    } finally {
+      setBulkLoading(false);
+    }
   };
 
   const handleBulkFieldChange = (idx: number, field: 'name' | 'phone', value: string) => {
@@ -501,6 +520,30 @@ const CreateQR = () => {
               <div className="flex gap-4 mb-6">
                 <Button onClick={handleBulkGenerate} variant="outline">Generate Bulk</Button>
               </div>
+              {bulkModal && (
+                <Dialog open={bulkModal} onOpenChange={setBulkModal}>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Generate Bulk QR Codes</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <Label htmlFor="bulk-count">Number of QR Codes</Label>
+                      <Input
+                        id="bulk-count"
+                        type="number"
+                        min={1}
+                        value={bulkCount}
+                        onChange={e => setBulkCount(Number(e.target.value))}
+                        className="w-full"
+                        disabled={bulkLoading}
+                      />
+                      <Button onClick={confirmBulkGenerate} className="w-full" disabled={bulkLoading}>
+                        {bulkLoading ? 'Generating...' : 'Generate'}
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )}
               {/* Bulk QR Codes List */}
               {bulkQRCodes.length > 0 && (
                 <div className="mt-8">
