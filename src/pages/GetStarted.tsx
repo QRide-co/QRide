@@ -22,9 +22,9 @@ const GetStarted = () => {
           <CardContent className="p-8 flex flex-col items-center">
             <h2 className="text-2xl font-semibold mb-4 text-gray-900">Activate Your Sticker</h2>
             <p className="text-gray-600 mb-6 text-center">Already have a QRide sticker? Activate it now to enable all features.</p>
-            <Link to="/create" className="w-full">
+            <Link to="/scan" className="w-full">
               <Button className="w-full bg-[#ff6b00] text-white hover:bg-orange-500 font-bold text-lg py-3 rounded-xl shadow-xl transition-all duration-200">
-                Activate Sticker
+                Scan QR Code
               </Button>
             </Link>
           </CardContent>
