@@ -384,93 +384,42 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-24 px-6 bg-gray-950">
+      {/* Pricing Section - Official Pricing */}
+      <section id="official-pricing" className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
-              Simple, Transparent Pricing
+              Official Pricing
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              One-time purchase, lifetime peace of mind. No subscriptions, no hidden fees.
+              Simple, transparent pricing. Activate your QR code for just <span className='text-[#9cff1e] font-bold'>10 EGP/month</span>.
             </p>
           </div>
-
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            <Card className="p-8 text-center bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
-              <h3 className="text-2xl font-bold mb-6 text-white">Starter</h3>
-              <div className="text-5xl font-bold mb-6 text-white">$9.99</div>
-              <ul className="space-y-4 mb-8 text-left">
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">1 QRide Sticker</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Weatherproof Design</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Easy Setup</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Lifetime Use</span>
-                </li>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-12">
+            <div className="bg-gray-900/80 border border-[#9cff1e]/30 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md">
+              <div className="text-2xl font-semibold text-[#9cff1e] mb-2">Basic</div>
+              <div className="text-5xl font-extrabold text-white mb-2 flex items-end gap-2">
+                <span>10</span>
+                <span className="text-2xl text-gray-300 font-medium">EGP</span>
+                <span className="text-lg text-gray-400 font-normal mb-1">/month</span>
+              </div>
+              <ul className="mb-8 space-y-3 w-full mt-6">
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Activate your QR code instantly</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Unlimited scans & contact options</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Secure & private communication</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Cancel anytime</li>
+                <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Priority support</li>
               </ul>
-              <Button className="w-full bg-gray-800 text-white hover:bg-gray-700 border border-gray-700">Get Started</Button>
-            </Card>
-
-            <Card className="p-8 text-center bg-gray-900/50 border-[#9cff1e]/30 hover:border-[#9cff1e]/50 transition-all duration-300 backdrop-blur-sm relative">
-              <Badge className="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-[#9cff1e] text-black font-medium">
-                Most Popular
-              </Badge>
-              <h3 className="text-2xl font-bold mb-6 text-white">Family Pack</h3>
-              <div className="text-5xl font-bold mb-6 text-white">$24.99</div>
-              <ul className="space-y-4 mb-8 text-left">
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">3 QRide Stickers</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Different Designs</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Premium Support</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Free Shipping</span>
-                </li>
-              </ul>
-              <Button className="w-full bg-[#9cff1e] text-black hover:bg-lime-400 font-medium">Choose Family Pack</Button>
-            </Card>
-
-            <Card className="p-8 text-center bg-gray-900/50 border-gray-800 hover:border-[#9cff1e]/30 transition-all duration-300 backdrop-blur-sm">
-              <h3 className="text-2xl font-bold mb-6 text-white">Business</h3>
-              <div className="text-5xl font-bold mb-6 text-white">$49.99</div>
-              <ul className="space-y-4 mb-8 text-left">
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">10 QRide Stickers</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Custom Branding</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Priority Support</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="w-5 h-5 text-[#9cff1e] mr-3" />
-                  <span className="text-gray-300">Bulk Discount</span>
-                </li>
-              </ul>
-              <Button variant="outline" className="w-full border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white">Contact Sales</Button>
-            </Card>
+              <a href="/subscribe/demo" className="w-full">
+                <button className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">
+                  Subscribe Now
+                </button>
+              </a>
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-400 mt-2">
+                <svg className="w-4 h-4 text-[#9cff1e]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11V17M12 7V7.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" /></svg>
+                Secure payment via Paymob
+              </div>
+            </div>
           </div>
         </div>
       </section>
