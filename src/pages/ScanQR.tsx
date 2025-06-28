@@ -153,18 +153,6 @@ const ScanQR = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 via-white to-gray-200 text-gray-900 flex flex-col">
-      {/* Header */}
-      <div className="border-b border-gray-200 backdrop-blur-sm bg-white/80">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Link to="/" className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff5a00] transition-colors">
-              <ArrowLeft className="w-4 h-4" />
-              QRide
-            </Link>
-          </div>
-        </div>
-      </div>
-
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-md mx-auto px-4 py-8">
           <Card className="bg-white border border-gray-200 shadow-xl rounded-2xl">
