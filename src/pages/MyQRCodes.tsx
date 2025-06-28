@@ -91,7 +91,7 @@ const MyQRCodes = () => {
                 <CardContent className="flex-1 flex flex-col gap-3 p-6">
                   <div className="flex items-center justify-between mb-2">
                     <div className="font-semibold text-lg text-white truncate max-w-[70%]">{qr.name}</div>
-                    <Link to={`/edit/${qr.id}?admin=1`} className="text-[#9cff1e] hover:text-[#8ae619]" aria-label="Edit QR Code">
+                    <Link to={`/edit/${qr.id}?admin=1`} state={{ fromAdmin: true }} className="text-[#9cff1e] hover:text-[#8ae619]" aria-label="Edit QR Code">
                       <Pencil className="w-5 h-5" />
                     </Link>
                   </div>
