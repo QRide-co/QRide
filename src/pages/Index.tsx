@@ -36,7 +36,7 @@ const Index = () => {
   const isAdmin = location.search.includes('admin=1');
   if (isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">404</h1>
           <p className="text-xl text-gray-400 mb-4">Page not found</p>
@@ -73,14 +73,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden relative">
       {/* Header */}
-      <nav className="relative z-10 border-b border-gray-800 backdrop-blur-sm bg-black/50">
+      <nav className="relative z-10 border-b border-gray-800 backdrop-blur-sm bg-background/50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="w-8 h-8 bg-[#ff6b00] rounded-lg flex items-center justify-center">
-                <span className="text-black font-bold text-sm">QR</span>
+                <span className="text-foreground font-bold text-sm">QR</span>
               </div>
               <h1 className="text-xl font-bold">QRide</h1>
             </div>
@@ -89,13 +89,13 @@ const Index = () => {
                 <>
                   <Link 
                     to="/create?admin=1"
-                    className="bg-[#ff6b00] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#ff4d00] transition-all duration-300"
+                    className="bg-[#ff6b00] text-foreground px-6 py-2 rounded-full font-semibold hover:bg-[#ff4d00] transition-all duration-300"
                   >
                     Create QR Code
                   </Link>
                   <Link
                     to="/my-qr-codes?admin=1"
-                    className="bg-gray-800 text-[#ff6b00] px-6 py-2 rounded-full font-semibold hover:bg-[#ff4d00] hover:text-black transition-all duration-300 ml-2"
+                    className="bg-gray-800 text-[#ff6b00] px-6 py-2 rounded-full font-semibold hover:bg-[#ff4d00] hover:text-foreground transition-all duration-300 ml-2"
                   >
                     My QR Codes
                   </Link>
@@ -113,7 +113,7 @@ const Index = () => {
             <DialogHeader className="text-center mb-2">
               <div className="flex flex-col items-center justify-center mb-2">
                 <Lock className="w-10 h-10 text-[#ff6b00] mb-2" />
-                <DialogTitle className="text-2xl font-bold text-white">Admin Login</DialogTitle>
+                <DialogTitle className="text-2xl font-bold text-foreground">Admin Login</DialogTitle>
               </div>
               <p className="text-gray-400 text-base">Enter the admin password to access this page.</p>
             </DialogHeader>
@@ -123,18 +123,18 @@ const Index = () => {
                 placeholder="Admin password"
                 value={adminPassword}
                 onChange={e => setAdminPassword(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b00]"
+                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-foreground text-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b00]"
                 autoFocus
               />
               {adminError && <div className="text-red-500 text-sm text-center font-medium">{adminError}</div>}
-              <button type="submit" className="w-full bg-[#ff6b00] text-black font-bold py-3 rounded-lg text-lg shadow hover:bg-[#ff4d00] transition-all">Continue</button>
+              <button type="submit" className="w-full bg-[#ff6b00] text-foreground font-bold py-3 rounded-lg text-lg shadow hover:bg-[#ff4d00] transition-all">Continue</button>
             </form>
           </DialogContent>
         </Dialog>
       )}
       {isAdmin && adminAuth && (
         <section className="container mx-auto px-4 py-12">
-          <h2 className="text-3xl font-bold mb-6 text-white flex items-center gap-3">
+          <h2 className="text-3xl font-bold mb-6 text-foreground flex items-center gap-3">
             <QrCode className="w-7 h-7 text-[#ff6b00]" />
             Your QR Codes
           </h2>
@@ -148,7 +148,7 @@ const Index = () => {
                 <Card key={qr.id} className="bg-gray-900/70 border-gray-800 rounded-xl shadow-md flex flex-col">
                   <CardContent className="flex-1 flex flex-col gap-3 p-6">
                     <div className="flex items-center justify-between mb-2">
-                      <div className="font-semibold text-lg text-white truncate max-w-[70%]">{qr.name}</div>
+                      <div className="font-semibold text-lg text-foreground truncate max-w-[70%]">{qr.name}</div>
                       <Link to={`/edit/${qr.id}?admin=1`} className="text-[#ff6b00] hover:text-[#ff4d00]" aria-label="Edit QR Code">
                         <Pencil className="w-5 h-5" />
                       </Link>
@@ -190,7 +190,7 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in-up">
-            <Button size="lg" className="bg-[#ff6b00] text-black hover:bg-orange-500 text-lg px-10 py-4 font-medium">
+            <Button size="lg" className="bg-[#ff6b00] text-foreground hover:bg-orange-500 text-lg px-10 py-4 font-medium">
               Get started →
             </Button>
           </div>
@@ -202,10 +202,10 @@ const Index = () => {
       </section>
 
       {/* Problem Section */}
-      <section className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
+      <section className="py-24 px-6 bg-gradient-to-b from-background to-gray-950">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               The silent problem
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -218,7 +218,7 @@ const Index = () => {
               <div className="w-16 h-16 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-red-500/20">
                 <Car className="w-8 h-8 text-red-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Blocked In</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Blocked In</h3>
               <p className="text-gray-400 leading-relaxed">
                 Someone parked behind you and you can't leave. No way to reach them.
               </p>
@@ -228,7 +228,7 @@ const Index = () => {
               <div className="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-orange-500/20">
                 <Clock className="w-8 h-8 text-orange-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Wasted Time</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Wasted Time</h3>
               <p className="text-gray-400 leading-relaxed">
                 Waiting around, honking, or leaving notes that might not be seen.
               </p>
@@ -238,7 +238,7 @@ const Index = () => {
               <div className="w-16 h-16 bg-yellow-500/10 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-yellow-500/20">
                 <MessageSquare className="w-8 h-8 text-yellow-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">No Communication</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">No Communication</h3>
               <p className="text-gray-400 leading-relaxed">
                 No easy way for drivers to communicate about parking situations.
               </p>
@@ -255,7 +255,7 @@ const Index = () => {
               <Badge className="mb-6 bg-[#ff6b00]/10 text-[#ff6b00] border-[#ff6b00]/20">
                 The Solution
               </Badge>
-              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-white">
+              <h2 className="text-4xl md:text-5xl font-bold mb-8 text-foreground">
                 QRide Smart Stickers
               </h2>
               <p className="text-xl text-gray-400 mb-8 leading-relaxed">
@@ -266,30 +266,30 @@ const Index = () => {
               <div className="space-y-6">
                 <div className="flex items-start space-x-4">
                   <div className="w-6 h-6 rounded-full bg-[#ff6b00] flex items-center justify-center mt-1">
-                    <CheckCircle className="w-4 h-4 text-black" />
+                    <CheckCircle className="w-4 h-4 text-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-2">Instant Communication</h4>
+                    <h4 className="font-semibold text-foreground mb-2">Instant Communication</h4>
                     <p className="text-gray-400">Scan and message in under 5 seconds</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-4">
                   <div className="w-6 h-6 rounded-full bg-[#ff6b00] flex items-center justify-center mt-1">
-                    <CheckCircle className="w-4 h-4 text-black" />
+                    <CheckCircle className="w-4 h-4 text-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-2">Privacy Protected</h4>
+                    <h4 className="font-semibold text-foreground mb-2">Privacy Protected</h4>
                     <p className="text-gray-400">Your contact info stays private until you choose to share</p>
                   </div>
                 </div>
                 
                 <div className="flex items-start space-x-4">
                   <div className="w-6 h-6 rounded-full bg-[#ff6b00] flex items-center justify-center mt-1">
-                    <CheckCircle className="w-4 h-4 text-black" />
+                    <CheckCircle className="w-4 h-4 text-foreground" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-white mb-2">Universal Compatibility</h4>
+                    <h4 className="font-semibold text-foreground mb-2">Universal Compatibility</h4>
                     <p className="text-gray-400">Works with WhatsApp, SMS, and all major messaging apps</p>
                   </div>
                 </div>
@@ -299,7 +299,7 @@ const Index = () => {
             <div className="relative">
               <div className="bg-gray-900/50 rounded-3xl p-8 border border-gray-800 backdrop-blur-sm">
                 <div className="text-center mb-8">
-                  <h3 className="text-lg font-semibold mb-4 text-white">QRide Sticker</h3>
+                  <h3 className="text-lg font-semibold mb-4 text-foreground">QRide Sticker</h3>
                   <div className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-12 border border-gray-700">
                     <QrCode className="w-32 h-32 mx-auto text-[#ff6b00] mb-6" />
                     <p className="text-sm text-gray-400">Scan to message car owner</p>
@@ -308,7 +308,7 @@ const Index = () => {
                 
                 <div className="bg-gray-800/50 rounded-xl p-6 border border-gray-700">
                   <p className="text-sm text-gray-400 mb-3">Pre-written message:</p>
-                  <p className="font-medium text-white">"Hi! Could you please move your car? I'm blocked in. Thanks!"</p>
+                  <p className="font-medium text-foreground">"Hi! Could you please move your car? I'm blocked in. Thanks!"</p>
                 </div>
               </div>
             </div>
@@ -317,10 +317,10 @@ const Index = () => {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 px-6 bg-black">
+      <section id="how-it-works" className="py-24 px-6 bg-background">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               How QRide Works
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -333,7 +333,7 @@ const Index = () => {
               <div className="w-20 h-20 bg-[#ff6b00]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#ff6b00]/20 group-hover:bg-[#ff6b00]/20 transition-all duration-300">
                 <span className="text-3xl font-bold text-[#ff6b00]">1</span>
               </div>
-              <h3 className="text-2xl font-semibold mb-6 text-white">Place Your Sticker</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-foreground">Place Your Sticker</h3>
               <p className="text-gray-400 mb-8 leading-relaxed">
                 Stick the QRide QR code on your car window. 
                 Weatherproof and designed to last.
@@ -347,7 +347,7 @@ const Index = () => {
               <div className="w-20 h-20 bg-[#ff6b00]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#ff6b00]/20 group-hover:bg-[#ff6b00]/20 transition-all duration-300">
                 <span className="text-3xl font-bold text-[#ff6b00]">2</span>
               </div>
-              <h3 className="text-2xl font-semibold mb-6 text-white">Someone Scans</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-foreground">Someone Scans</h3>
               <p className="text-gray-400 mb-8 leading-relaxed">
                 When someone needs to reach you, they scan your QR code with their phone camera.
               </p>
@@ -360,7 +360,7 @@ const Index = () => {
               <div className="w-20 h-20 bg-[#ff6b00]/10 rounded-3xl flex items-center justify-center mx-auto mb-8 border border-[#ff6b00]/20 group-hover:bg-[#ff6b00]/20 transition-all duration-300">
                 <span className="text-3xl font-bold text-[#ff6b00]">3</span>
               </div>
-              <h3 className="text-2xl font-semibold mb-6 text-white">Instant Message</h3>
+              <h3 className="text-2xl font-semibold mb-6 text-foreground">Instant Message</h3>
               <p className="text-gray-400 mb-8 leading-relaxed">
                 A pre-written message opens in their messaging app, ready to send instantly.
               </p>
@@ -373,13 +373,13 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
+      <section id="features" className="py-24 px-6 bg-gradient-to-b from-background to-gray-950">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <Badge className="mb-6 bg-gray-900 text-gray-400 border-gray-800">
               We specialize in
             </Badge>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Features that matter
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -392,7 +392,7 @@ const Index = () => {
               <div className="w-14 h-14 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-6 border border-blue-500/20">
                 <Shield className="w-7 h-7 text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Privacy First</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Privacy First</h3>
               <p className="text-gray-400 leading-relaxed">
                 Your contact information remains private. Others can message you without seeing your number.
               </p>
@@ -402,7 +402,7 @@ const Index = () => {
               <div className="w-14 h-14 bg-green-500/10 rounded-2xl flex items-center justify-center mb-6 border border-green-500/20">
                 <Zap className="w-7 h-7 text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Lightning Fast</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Lightning Fast</h3>
               <p className="text-gray-400 leading-relaxed">
                 Scan and send a message in under 5 seconds. No app downloads required.
               </p>
@@ -412,7 +412,7 @@ const Index = () => {
               <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center mb-6 border border-purple-500/20">
                 <Globe className="w-7 h-7 text-purple-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Universal</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Universal</h3>
               <p className="text-gray-400 leading-relaxed">
                 Works with any smartphone and messaging app. WhatsApp, SMS, Telegram - you choose.
               </p>
@@ -422,7 +422,7 @@ const Index = () => {
               <div className="w-14 h-14 bg-orange-500/10 rounded-2xl flex items-center justify-center mb-6 border border-orange-500/20">
                 <Award className="w-7 h-7 text-orange-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Weatherproof</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Weatherproof</h3>
               <p className="text-gray-400 leading-relaxed">
                 Durable, weather-resistant stickers that last for years without fading.
               </p>
@@ -432,7 +432,7 @@ const Index = () => {
               <div className="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mb-6 border border-red-500/20">
                 <Users className="w-7 h-7 text-red-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Community Friendly</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Community Friendly</h3>
               <p className="text-gray-400 leading-relaxed">
                 Promotes polite communication and reduces parking conflicts in your community.
               </p>
@@ -442,7 +442,7 @@ const Index = () => {
               <div className="w-14 h-14 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 border border-indigo-500/20">
                 <Clock className="w-7 h-7 text-indigo-400" />
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-white">Always Available</h3>
+              <h3 className="text-xl font-semibold mb-4 text-foreground">Always Available</h3>
               <p className="text-gray-400 leading-relaxed">
                 No batteries, no maintenance. Your QRide sticker works 24/7, every day of the year.
               </p>
@@ -452,10 +452,10 @@ const Index = () => {
       </section>
 
       {/* Pricing Section - Official Pricing */}
-      <section id="official-pricing" className="py-24 px-6 bg-gradient-to-b from-black to-gray-950">
+      <section id="official-pricing" className="py-24 px-6 bg-gradient-to-b from-background to-gray-950">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               Official Pricing
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
@@ -465,7 +465,7 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center justify-center gap-12">
             <div className="bg-gray-900/80 border border-[#ff6b00]/30 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md">
               <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
-              <div className="text-5xl font-extrabold text-white mb-2 flex items-end gap-2">
+              <div className="text-5xl font-extrabold text-foreground mb-2 flex items-end gap-2">
                 <span>10</span>
                 <span className="text-2xl text-gray-300 font-medium">EGP</span>
                 <span className="text-lg text-gray-400 font-normal mb-1">/month</span>
@@ -478,7 +478,7 @@ const Index = () => {
                 <li className="flex items-center gap-3 text-base text-gray-200"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Priority support</li>
               </ul>
               <a href="/subscribe/demo" className="w-full">
-                <button className="w-full bg-[#ff6b00] text-black hover:bg-[#ff4d00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">
+                <button className="w-full bg-[#ff6b00] text-foreground hover:bg-[#ff4d00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">
                   Subscribe Now
                 </button>
               </a>
@@ -492,10 +492,10 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-24 px-6 bg-black">
+      <section className="py-24 px-6 bg-background">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
               What Our Customers Say
             </h2>
           </div>
@@ -511,7 +511,7 @@ const Index = () => {
                 "QRide saved me so much frustration! No more waiting around when I'm blocked in. 
                 The person moved their car within minutes of me sending the message."
               </p>
-              <div className="font-semibold text-white">Sarah M.</div>
+              <div className="font-semibold text-foreground">Sarah M.</div>
               <div className="text-sm text-gray-500">Urban Professional</div>
             </Card>
 
@@ -525,7 +525,7 @@ const Index = () => {
                 "As a delivery driver, QRide has been a game-changer. 
                 People can easily reach me if I need to move my van. Brilliant solution!"
               </p>
-              <div className="font-semibold text-white">Mike T.</div>
+              <div className="font-semibold text-foreground">Mike T.</div>
               <div className="text-sm text-gray-500">Delivery Driver</div>
             </Card>
 
@@ -539,7 +539,7 @@ const Index = () => {
                 "Simple, effective, and privacy-friendly. 
                 Everyone in our apartment complex should have one of these!"
               </p>
-              <div className="font-semibold text-white">Jennifer L.</div>
+              <div className="font-semibold text-foreground">Jennifer L.</div>
               <div className="text-sm text-gray-500">Apartment Resident</div>
             </Card>
           </div>
@@ -558,11 +558,11 @@ const Index = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/create">
-                <button className="bg-[#ff6b00] text-black px-8 py-4 rounded-full font-bold text-lg hover:bg-[#ff4d00] transition-all duration-300 hover:scale-105">
+                <button className="bg-[#ff6b00] text-foreground px-8 py-4 rounded-full font-bold text-lg hover:bg-[#ff4d00] transition-all duration-300 hover:scale-105">
                   Get Your QR Sticker
                 </button>
               </Link>
-              <button className="border border-gray-700 text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300">
+              <button className="border border-gray-700 text-foreground px-8 py-4 rounded-full font-semibold hover:bg-gray-800 transition-all duration-300">
                 Watch Demo
               </button>
             </div>
@@ -571,15 +571,15 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-black border-t border-gray-900">
+      <footer className="py-16 px-6 bg-background border-t border-gray-900">
         <div className="container mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             <div>
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-8 h-8 bg-gradient-to-r from-[#ff6b00] to-orange-500 rounded-lg flex items-center justify-center">
-                  <QrCode className="w-5 h-5 text-black" />
+                  <QrCode className="w-5 h-5 text-foreground" />
                 </div>
-                <span className="text-xl font-bold text-white">QRide</span>
+                <span className="text-xl font-bold text-foreground">QRide</span>
               </div>
               <p className="text-gray-400">
                 Revolutionizing car communication, one QR code at a time.
@@ -587,7 +587,7 @@ const Index = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-6 text-white">Product</h4>
+              <h4 className="font-semibold mb-6 text-foreground">Product</h4>
               <ul className="space-y-3 text-gray-400">
                 <li><a href="#" className="hover:text-[#ff6b00] transition-colors">How it Works</a></li>
                 <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Features</a></li>
@@ -597,7 +597,7 @@ const Index = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-6 text-white">Company</h4>
+              <h4 className="font-semibold mb-6 text-foreground">Company</h4>
               <ul className="space-y-3 text-gray-400">
                 <li><a href="#" className="hover:text-[#ff6b00] transition-colors">About Us</a></li>
                 <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Contact</a></li>
@@ -607,7 +607,7 @@ const Index = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-6 text-white">Connect</h4>
+              <h4 className="font-semibold mb-6 text-foreground">Connect</h4>
               <ul className="space-y-3 text-gray-400">
                 <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Twitter</a></li>
                 <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Facebook</a></li>

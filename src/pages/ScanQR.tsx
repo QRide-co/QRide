@@ -85,7 +85,7 @@ const ScanQR = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff6b00] mx-auto mb-4"></div>
           <p className="text-gray-400">Loading QR code data...</p>
@@ -96,7 +96,7 @@ const ScanQR = () => {
 
   if (error || !qrData) {
     return (
-      <div className="min-h-screen bg-black text-white">
+      <div className="min-h-screen bg-background text-foreground">
         <div className="container mx-auto px-4 py-8">
           <div className="max-w-md mx-auto">
             <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
@@ -123,7 +123,7 @@ const ScanQR = () => {
 
   if (!qrData.activated) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
         <div className="w-full max-w-md mx-auto px-4 py-8">
           <Card className="bg-gray-900/70 border-gray-800 shadow-xl rounded-2xl">
             <CardHeader className="text-center">
@@ -150,7 +150,7 @@ const ScanQR = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-background via-gray-900 to-black text-foreground flex flex-col">
       {/* Header */}
       <div className="border-b border-gray-800 backdrop-blur-sm bg-black/50">
         <div className="container mx-auto px-4 py-4">

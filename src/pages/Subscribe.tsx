@@ -52,15 +52,15 @@ const Subscribe = () => {
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center text-foreground">Loading...</div>;
   }
 
   if (!qrData) {
-    return <div className="min-h-screen flex items-center justify-center text-white">QR code not found.</div>;
+    return <div className="min-h-screen flex items-center justify-center text-foreground">QR code not found.</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-background via-gray-900 to-background text-foreground flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl mx-auto">
         <Card className="bg-gray-900/80 border-gray-800 shadow-2xl rounded-3xl p-8">
           <CardHeader className="text-center mb-6">
@@ -137,7 +137,7 @@ const Subscribe = () => {
         </div>
         <div className="text-center mt-8">
           <Link to="/">
-            <Button variant="outline" className="border-gray-700 text-white hover:bg-gray-800">
+            <Button variant="outline" className="border-gray-700 text-foreground hover:bg-gray-800">
               Return to Home
             </Button>
           </Link>
