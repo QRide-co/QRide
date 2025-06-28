@@ -7,12 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import QRCode from 'qrcode';
 import { ArrowLeft, Download, Copy } from 'lucide-react';
-import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const CreateQR = () => {
   const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [defaultMessage, setDefaultMessage] = useState('');
@@ -51,11 +52,16 @@ const CreateQR = () => {
           });
           setQrImageUrl(qrUrl);
           setQrPassword((data as any).password || null);
-          setShowPasswordModal(true);
+          // Only show password modal if navigated from scan page
+          if (location.state && location.state.fromScan) {
+            setShowPasswordModal(true);
+          } else {
+            setIsAuthenticated(true);
+          }
         }
       })();
     }
-  }, [id]);
+  }, [id, location.state]);
 
   const generateUniqueCode = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
