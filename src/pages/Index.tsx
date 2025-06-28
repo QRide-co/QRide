@@ -15,14 +15,30 @@ import {
   Globe,
   Award,
   ArrowRight,
-  Play
+  Play,
+  Pencil
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 
 const Index = () => {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  const [qrCodes, setQrCodes] = useState<any[]>([]);
+  const [loadingQRCodes, setLoadingQRCodes] = useState(true);
+
+  useEffect(() => {
+    const fetchQRCodes = async () => {
+      setLoadingQRCodes(true);
+      const { data, error } = await supabase.from('qr_codes').select('*').order('created_at', { ascending: false });
+      if (!error && data) setQrCodes(data);
+      setLoadingQRCodes(false);
+    };
+    fetchQRCodes();
+  }, []);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
@@ -55,6 +71,37 @@ const Index = () => {
           </div>
         </div>
       </nav>
+
+      {/* QR Codes Management Section */}
+      <section className="container mx-auto px-4 py-12">
+        <h2 className="text-3xl font-bold mb-6 text-white flex items-center gap-3">
+          <QrCode className="w-7 h-7 text-[#9cff1e]" />
+          Your QR Codes
+        </h2>
+        {loadingQRCodes ? (
+          <div className="text-gray-400">Loading QR codes...</div>
+        ) : qrCodes.length === 0 ? (
+          <div className="text-gray-400">No QR codes found. <Link to='/create' className='text-[#9cff1e] underline'>Create one</Link>.</div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {qrCodes.map((qr) => (
+              <Card key={qr.id} className="bg-gray-900/70 border-gray-800 rounded-xl shadow-md flex flex-col">
+                <CardContent className="flex-1 flex flex-col gap-3 p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="font-semibold text-lg text-white truncate max-w-[70%]">{qr.name}</div>
+                    <Link to={`/edit/${qr.id}`} className="text-[#9cff1e] hover:text-[#8ae619]" aria-label="Edit QR Code">
+                      <Pencil className="w-5 h-5" />
+                    </Link>
+                  </div>
+                  <div className="text-gray-400 text-xs break-all mb-2">{window.location.origin + '/scan/' + qr.unique_code}</div>
+                  <div className="text-gray-400 text-xs">Phone: {qr.phone_number}</div>
+                  <div className="text-gray-400 text-xs">Default: {qr.default_message}</div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
+      </section>
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 min-h-screen flex items-center">

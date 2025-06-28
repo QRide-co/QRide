@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -8,9 +7,11 @@ import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import QRCode from 'qrcode';
 import { ArrowLeft, Download, Copy } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 
 const CreateQR = () => {
+  const { id } = useParams<{ id?: string }>();
+  const navigate = useNavigate();
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [defaultMessage, setDefaultMessage] = useState('');
@@ -21,6 +22,21 @@ const CreateQR = () => {
     scanUrl: string;
   } | null>(null);
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (id) {
+      // Editing mode: fetch QR code data
+      (async () => {
+        const { data, error } = await supabase.from('qr_codes').select('*').eq('id', id).single();
+        if (data) {
+          setName(data.name);
+          setPhoneNumber(data.phone_number);
+          setDefaultMessage(data.default_message);
+          setGeneratedQR(null);
+        }
+      })();
+    }
+  }, [id]);
 
   const generateUniqueCode = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
@@ -36,9 +52,23 @@ const CreateQR = () => {
       });
       return;
     }
-
     setIsLoading(true);
     try {
+      if (id) {
+        // Update existing QR code
+        const { error } = await supabase
+          .from('qr_codes')
+          .update({
+            name: name.trim(),
+            phone_number: phoneNumber.trim(),
+            default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
+          })
+          .eq('id', id);
+        if (error) throw error;
+        toast({ title: 'Updated!', description: 'QR code updated successfully.' });
+        navigate('/');
+        return;
+      }
       const uniqueCode = generateUniqueCode();
       const scanUrl = `${window.location.origin}/scan/${uniqueCode}`;
 
@@ -140,9 +170,9 @@ const CreateQR = () => {
           {!generatedQR ? (
             <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
               <CardHeader>
-                <CardTitle className="text-white">Generate Your QRide Sticker</CardTitle>
+                <CardTitle className="text-white">{id ? 'Edit QR Code' : 'Generate Your QRide Sticker'}</CardTitle>
                 <CardDescription className="text-gray-400">
-                  Create a QR code that allows others to contact you about your vehicle
+                  {id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle'}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -190,7 +220,7 @@ const CreateQR = () => {
                     disabled={isLoading}
                     className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
                   >
-                    {isLoading ? 'Generating...' : 'Generate QR Code'}
+                    {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
                   </Button>
                 </form>
               </CardContent>
