@@ -17,6 +17,9 @@ const MyQRCodes = () => {
   const [qrCodes, setQrCodes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteName, setDeleteName] = useState<string | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     // Check sessionStorage for admin auth
@@ -44,13 +47,21 @@ const MyQRCodes = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    if (!window.confirm('Are you sure you want to delete this QR code?')) return;
-    const { error } = await supabase.from('qr_codes').delete().eq('id', id);
+  const handleDelete = async (id: string, name: string) => {
+    setDeleteId(id);
+    setDeleteName(name);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+    setDeleteLoading(true);
+    const { error } = await supabase.from('qr_codes').delete().eq('id', deleteId);
+    setDeleteLoading(false);
+    setDeleteId(null);
+    setDeleteName(null);
     if (error) {
       toast({ title: 'Error', description: 'Failed to delete QR code', variant: 'destructive' });
     } else {
-      // Refresh the list from the database to ensure UI is in sync
       const { data } = await supabase.from('qr_codes').select('*').order('created_at', { ascending: false });
       setQrCodes(data || []);
       toast({ title: 'Deleted', description: 'QR code deleted successfully' });
@@ -117,7 +128,7 @@ const MyQRCodes = () => {
                       <Link to={`/edit/${qr.id}?admin=1`} state={{ fromAdmin: true }} className="text-[#ff6b00] hover:text-[#ff5500]" aria-label="Edit QR Code">
                         <Pencil className="w-5 h-5" />
                       </Link>
-                      <button onClick={() => handleDelete(qr.id)} className="text-red-500 hover:text-red-700" aria-label="Delete QR Code">
+                      <button onClick={() => handleDelete(qr.id, qr.name)} className="text-red-500 hover:text-red-700" aria-label="Delete QR Code">
                         <Trash className="w-5 h-5" />
                       </button>
                     </div>
@@ -130,6 +141,33 @@ const MyQRCodes = () => {
             ))}
           </div>
         )}
+        {/* Delete Confirmation Modal */}
+        <Dialog open={!!deleteId} onOpenChange={open => { if (!open) { setDeleteId(null); setDeleteName(null); } }}>
+          <DialogContent className="max-w-sm mx-auto p-8 rounded-2xl bg-white border border-gray-200 shadow-xl">
+            <DialogHeader className="text-center mb-2">
+              <DialogTitle className="text-2xl font-bold text-gray-900">Delete QR Code</DialogTitle>
+            </DialogHeader>
+            <div className="text-gray-700 text-base mb-6 text-center">
+              Are you sure you want to delete <span className="font-semibold text-[#ff6b00]">{deleteName}</span>? This action cannot be undone.
+            </div>
+            <div className="flex gap-4 justify-center">
+              <button
+                onClick={() => { setDeleteId(null); setDeleteName(null); }}
+                className="px-6 py-2 rounded-lg bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition-all"
+                disabled={deleteLoading}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-6 py-2 rounded-lg bg-red-500 text-white font-semibold hover:bg-red-600 transition-all"
+                disabled={deleteLoading}
+              >
+                {deleteLoading ? 'Deleting...' : 'Delete'}
+              </button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
