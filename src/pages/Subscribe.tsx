@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -52,92 +53,92 @@ const Subscribe = () => {
   };
 
   if (loading) {
-    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
+    return <div className="min-h-screen flex items-center justify-center text-gray-900 bg-gray-50">Loading...</div>;
   }
 
   if (!qrData) {
-    return <div className="min-h-screen flex items-center justify-center text-white">QR code not found.</div>;
+    return <div className="min-h-screen flex items-center justify-center text-gray-900 bg-gray-50">QR code not found.</div>;
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-gray-100 to-gray-50 text-gray-900 flex flex-col items-center justify-center px-4 py-12">
       <div className="w-full max-w-2xl mx-auto">
-        <Card className="bg-gray-900/80 border-gray-800 shadow-2xl rounded-3xl p-8">
+        <Card className="bg-white border-gray-200 shadow-2xl rounded-3xl p-8">
           <CardHeader className="text-center mb-6">
-            <CardTitle className="text-4xl font-bold mb-2">Unlock All Features</CardTitle>
-            <CardDescription className="text-lg text-gray-300 mb-4">
+            <CardTitle className="text-4xl font-bold mb-2 text-gray-900">Unlock All Features</CardTitle>
+            <CardDescription className="text-lg text-gray-700 mb-4">
               Subscribe to activate your QR code and enable instant contact.
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col md:flex-row gap-8 items-center justify-center">
             {/* Pricing Card */}
-            <div className="flex-1 bg-gradient-to-br from-[#ff6b00]/10 to-gray-900 rounded-2xl p-8 border border-[#ff6b00]/30 shadow-lg flex flex-col items-center">
+            <div className="flex-1 bg-gradient-to-br from-[#ff6b00]/10 to-gray-50 rounded-2xl p-8 border border-[#ff6b00]/30 shadow-lg flex flex-col items-center">
               <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
-              <div className="text-5xl font-extrabold text-white mb-2 flex items-end gap-2">
+              <div className="text-5xl font-extrabold text-gray-900 mb-2 flex items-end gap-2">
                 <span>10</span>
-                <span className="text-2xl text-gray-300 font-medium">EGP</span>
-                <span className="text-lg text-gray-400 font-normal mb-1">/month</span>
+                <span className="text-2xl text-gray-700 font-medium">EGP</span>
+                <span className="text-lg text-gray-600 font-normal mb-1">/month</span>
               </div>
-              <div className="text-gray-400 mb-6 text-center">Perfect for individuals who want to enable their QR code for full contact features.</div>
+              <div className="text-gray-600 mb-6 text-center">Perfect for individuals who want to enable their QR code for full contact features.</div>
               <ul className="mb-8 space-y-3 w-full">
                 {features.map((f, i) => (
-                  <li key={i} className="flex items-center gap-3 text-base text-gray-200">
+                  <li key={i} className="flex items-center gap-3 text-base text-gray-800">
                     <CheckCircle className="w-5 h-5 text-[#ff6b00]" /> {f}
                   </li>
                 ))}
               </ul>
               <Button
-                className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2"
+                className="w-full bg-[#ff6b00] text-white hover:bg-[#ff5a00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2"
                 size="lg"
                 onClick={handleSubscribe}
               >
                 Subscribe with Paymob
               </Button>
-              <div className="flex items-center justify-center gap-2 text-xs text-gray-400 mt-2">
-                <Lock className="w-4 h-4" /> Secure payment via Paymob
+              <div className="flex items-center justify-center gap-2 text-xs text-gray-600 mt-2">
+                <Lock className="w-4 h-4 text-[#ff6b00]" /> Secure payment via Paymob
               </div>
             </div>
             {/* QR Code Details */}
-            <div className="flex-1 bg-gray-800/60 rounded-2xl p-6 border border-gray-700 shadow flex flex-col items-center">
-              <div className="text-lg font-semibold mb-2 text-white">Your QR Code</div>
-              <div className="bg-white p-3 rounded-lg mb-4">
+            <div className="flex-1 bg-gray-50 rounded-2xl p-6 border border-gray-200 shadow flex flex-col items-center">
+              <div className="text-lg font-semibold mb-2 text-gray-900">Your QR Code</div>
+              <div className="bg-white p-3 rounded-lg mb-4 shadow-sm">
                 <img
                   src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(window.location.origin + '/scan/' + qrData.unique_code)}`}
                   alt="QR Code"
                   className="w-36 h-36"
                 />
               </div>
-              <div className="text-sm text-gray-300 mb-1"><b>Name:</b> {qrData.name}</div>
-              <div className="text-sm text-gray-300 mb-1"><b>Phone:</b> {qrData.phone_number}</div>
-              <div className="text-sm text-gray-300 mb-1"><b>Default Message:</b> {qrData.default_message}</div>
+              <div className="text-sm text-gray-700 mb-1"><b>Name:</b> {qrData.name}</div>
+              <div className="text-sm text-gray-700 mb-1"><b>Phone:</b> {qrData.phone_number}</div>
+              <div className="text-sm text-gray-700 mb-1"><b>Default Message:</b> {qrData.default_message}</div>
               <div className="text-xs text-gray-500 break-all"><b>Scan URL:</b> {window.location.origin + '/scan/' + qrData.unique_code}</div>
             </div>
           </CardContent>
         </Card>
         {/* FAQ / Benefits Section */}
-        <div className="max-w-2xl mx-auto mt-12 bg-gray-900/70 border border-gray-800 rounded-2xl p-8 shadow-lg">
+        <div className="max-w-2xl mx-auto mt-12 bg-white border border-gray-200 rounded-2xl p-8 shadow-lg">
           <div className="flex items-center gap-2 mb-6">
             <HelpCircle className="w-6 h-6 text-[#ff6b00]" />
-            <span className="text-xl font-bold text-white">Frequently Asked Questions</span>
+            <span className="text-xl font-bold text-gray-900">Frequently Asked Questions</span>
           </div>
           <ul className="space-y-6">
             {faqs.map((faq, i) => (
               <li key={i}>
-                <div className="font-semibold text-white mb-1">{faq.q}</div>
-                <div className="text-gray-300 text-base">{faq.a}</div>
+                <div className="font-semibold text-gray-900 mb-1">{faq.q}</div>
+                <div className="text-gray-700 text-base">{faq.a}</div>
               </li>
             ))}
           </ul>
         </div>
         {/* Trust signals */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-10 text-gray-400 text-sm">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mt-10 text-gray-600 text-sm">
           <div className="flex items-center gap-2"><Shield className="w-5 h-5 text-[#ff6b00]" /> 100% Secure Payment</div>
           <div className="flex items-center gap-2"><Zap className="w-5 h-5 text-[#ff6b00]" /> Instant Activation</div>
           <div className="flex items-center gap-2"><CheckCircle className="w-5 h-5 text-[#ff6b00]" /> Money-back Guarantee</div>
         </div>
         <div className="text-center mt-8">
           <Link to="/">
-            <Button variant="outline" className="border-gray-700 text-white hover:bg-gray-800">
+            <Button variant="outline" className="border-gray-300 text-gray-700 hover:bg-gray-100">
               Return to Home
             </Button>
           </Link>
@@ -147,4 +148,4 @@ const Subscribe = () => {
   );
 };
 
-export default Subscribe; 
+export default Subscribe;
