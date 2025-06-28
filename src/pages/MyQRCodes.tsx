@@ -19,6 +19,11 @@ const MyQRCodes = () => {
   const { toast } = useToast();
 
   useEffect(() => {
+    // Check sessionStorage for admin auth
+    if (isAdmin && sessionStorage.getItem('adminAuth') === 'true') {
+      setAdminAuth(true);
+      setShowAdminModal(false);
+    }
     if (!isAdmin || !adminAuth) return;
     (async () => {
       const { data } = await supabase.from('qr_codes').select('*').order('created_at', { ascending: false });
@@ -33,6 +38,7 @@ const MyQRCodes = () => {
       setAdminAuth(true);
       setShowAdminModal(false);
       setAdminError('');
+      sessionStorage.setItem('adminAuth', 'true');
     } else {
       setAdminError('Incorrect password.');
     }

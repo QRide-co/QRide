@@ -53,6 +53,11 @@ const CreateQR = () => {
   ];
 
   useEffect(() => {
+    // Check sessionStorage for admin auth
+    if (isAdmin && sessionStorage.getItem('adminAuth') === 'true') {
+      setAdminAuth(true);
+      setShowAdminModal(false);
+    }
     if (id) {
       // Editing mode: fetch QR code data
       (async () => {
@@ -80,7 +85,7 @@ const CreateQR = () => {
         }
       })();
     }
-  }, [id, location.state]);
+  }, [id, location.state, isAdmin]);
 
   const generateUniqueCode = () => {
     return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
@@ -103,6 +108,7 @@ const CreateQR = () => {
       setAdminAuth(true);
       setShowAdminModal(false);
       setAdminError('');
+      sessionStorage.setItem('adminAuth', 'true');
     } else {
       setAdminError('Incorrect password.');
     }
