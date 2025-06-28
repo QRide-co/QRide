@@ -37,7 +37,7 @@ const MyQRCodes = () => {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
+      <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">404</h1>
           <p className="text-xl text-gray-400 mb-4">Page not found</p>
@@ -75,7 +75,7 @@ const MyQRCodes = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-black text-white">
       <div className="container mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold mb-6 text-white flex items-center gap-3">
           My QR Codes
