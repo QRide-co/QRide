@@ -385,7 +385,7 @@ const CreateQR = () => {
           <div className="flex flex-col items-center mb-6">
             <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M9 12l2 2l4 -4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             <h2 className="text-2xl font-bold text-green-700 mb-2">Success!</h2>
-            <p className="text-lg text-gray-700">Scan QR code to be able to edit information</p>
+            <p className="text-lg text-gray-700">Scan QR code to be able to edit information later on</p>
           </div>
         </div>
       </div>
