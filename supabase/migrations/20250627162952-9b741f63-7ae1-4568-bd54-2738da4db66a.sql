@@ -31,3 +31,9 @@ CREATE POLICY "Anyone can create QR codes"
 
 -- Add unique constraint to name
 ALTER TABLE public.qr_codes ADD CONSTRAINT unique_qr_code_name UNIQUE (name);
+
+-- Delete all duplicate QR codes by name, keeping only the row with the lowest id
+DELETE FROM public.qr_codes a
+USING public.qr_codes b
+WHERE a.name = b.name
+  AND a.id > b.id;
