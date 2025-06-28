@@ -58,6 +58,7 @@ const GetStarted = () => {
             <p className="text-gray-600 mb-6 text-center">Already have a QRide sticker? Scan it now to activate and edit your info.</p>
             {scanning ? (
               <div className="w-full flex flex-col items-center">
+                <div className="mb-4 text-center text-gray-700 text-base font-medium">Scan your unactivated QR code.</div>
                 <div className="w-full" style={{ maxWidth: 400 }}>
                   <QrReader
                     constraints={{ facingMode: 'environment' }}
@@ -68,6 +69,14 @@ const GetStarted = () => {
                   />
                 </div>
                 <Button className="mt-4" variant="outline" onClick={() => setScanning(false)}>Cancel</Button>
+                <a
+                  href="https://wa.me/201094542810?text=I%20want%20to%20order%20a%20car%20qr%20code%20sticker"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 text-xs text-gray-500 hover:text-green-600 underline transition-colors"
+                >
+                  Don't have a QR code sticker?
+                </a>
               </div>
             ) : (
               <Button className="w-full bg-[#ff6b00] text-white hover:bg-orange-500 font-bold text-lg py-3 rounded-xl shadow-xl transition-all duration-200" onClick={() => { setScanning(true); setError(''); }}>
