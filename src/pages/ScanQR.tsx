@@ -203,7 +203,7 @@ const ScanQR = () => {
                 </Button>
                 <Button
                   onClick={handleSendMessage}
-                  className="w-full bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#ff6b00] focus:outline-none"
+                  className="w-full bg-blue-600 text-white hover:bg-blue-700 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
                   aria-label="Send SMS Message"
                 >
                   <Smartphone className="w-5 h-5 mr-3" />
@@ -211,7 +211,7 @@ const ScanQR = () => {
                 </Button>
                 <Button
                   onClick={handleCall}
-                  className="w-full border border-gray-300 text-gray-900 hover:bg-gray-100 py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-gray-300 focus:outline-none bg-gray-50"
+                  className="w-full bg-green-800 text-white hover:bg-green-900 font-semibold py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-green-800 focus:outline-none"
                   aria-label="Call Now"
                 >
                   <Phone className="w-5 h-5 mr-3" />
