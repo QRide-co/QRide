@@ -427,22 +427,6 @@ const CreateQR = () => {
                           required
                         />
                       </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="defaultMessage" className="text-gray-900">Default Message *</Label>
-                        <select
-                          id="defaultMessage"
-                          value={defaultMessage}
-                          onChange={e => setDefaultMessage(e.target.value)}
-                          className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400 w-full px-4 py-3 rounded-lg"
-                          required
-                        >
-                          {defaultMessages.map((msg) => (
-                            <option key={msg} value={msg}>{msg}</option>
-                          ))}
-                        </select>
-                      </div>
-
                       <div className="space-y-2">
                         <Label htmlFor="new-password" className="text-gray-900">{qrPassword ? 'Change Password' : 'Set Password'} (required to edit in future)</Label>
                         <Input
@@ -455,7 +439,6 @@ const CreateQR = () => {
                           minLength={4}
                         />
                       </div>
-
                       <Button
                         type="submit"
                         disabled={isLoading}
@@ -565,71 +548,6 @@ const CreateQR = () => {
                     </div>
                   </CardContent>
                 </Card>
-              )}
-              <div className="flex gap-4 mb-6">
-                <Button onClick={handleBulkGenerate} variant="outline">Generate Bulk</Button>
-              </div>
-              {bulkModal && (
-                <Dialog open={bulkModal} onOpenChange={setBulkModal}>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Generate Bulk QR Codes</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <Label htmlFor="bulk-count">Number of QR Codes</Label>
-                      <Input
-                        id="bulk-count"
-                        type="number"
-                        min={1}
-                        value={bulkCount}
-                        onChange={e => setBulkCount(Number(e.target.value))}
-                        className="w-full"
-                        disabled={bulkLoading}
-                      />
-                      <Button onClick={confirmBulkGenerate} className="w-full" disabled={bulkLoading}>
-                        {bulkLoading ? 'Generating...' : 'Generate'}
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              )}
-              {bulkSuccess ? (
-                <div className="mt-8 text-center">
-                  <div className="text-green-600 text-lg font-semibold mb-4">QR codes generated and saved successfully!</div>
-                  <Button onClick={handleBulkDownload} disabled={bulkDownloadLoading} className="bg-[#ff6b00] text-white font-semibold px-8 py-3 rounded-lg text-lg">
-                    {bulkDownloadLoading ? 'Preparing Download...' : 'Download as PNG'}
-                  </Button>
-                </div>
-              ) : bulkQRCodes.length > 0 && (
-                <div className="mt-8">
-                  <h3 className="text-lg font-semibold mb-4">Generated QR Codes</h3>
-                  <div className="grid gap-4">
-                    {bulkQRCodes.map((qr, idx) => (
-                      <Card key={qr.uniqueCode} className="p-4 flex flex-col md:flex-row items-center gap-4">
-                        <div className="flex-1 flex flex-col md:flex-row gap-4 items-center">
-                          <Input
-                            placeholder="Name"
-                            value={qr.name}
-                            onChange={e => handleBulkFieldChange(idx, 'name', e.target.value)}
-                            className="mb-2 md:mb-0"
-                          />
-                          <Input
-                            placeholder="Phone Number"
-                            value={qr.phone}
-                            onChange={e => handleBulkFieldChange(idx, 'phone', e.target.value)}
-                          />
-                        </div>
-                        <div className="flex-shrink-0">
-                          <img
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(window.location.origin + '/scan/' + qr.uniqueCode)}`}
-                            alt="QR Code"
-                            className="w-20 h-20"
-                          />
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
               )}
             </>
           )}
