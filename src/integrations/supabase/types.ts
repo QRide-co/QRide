@@ -11,28 +11,34 @@ export type Database = {
     Tables: {
       qr_codes: {
         Row: {
+          activated: boolean
           created_at: string
           default_message: string | null
           id: string
           name: string
+          password: string | null
           phone_number: string | null
           unique_code: string
           updated_at: string
         }
         Insert: {
+          activated?: boolean
           created_at?: string
           default_message?: string | null
           id?: string
           name: string
+          password?: string | null
           phone_number?: string | null
           unique_code: string
           updated_at?: string
         }
         Update: {
+          activated?: boolean
           created_at?: string
           default_message?: string | null
           id?: string
           name?: string
+          password?: string | null
           phone_number?: string | null
           unique_code?: string
           updated_at?: string
