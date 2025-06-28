@@ -107,7 +107,7 @@ const Index = () => {
             {/* Navigation Menu */}
             <div className="hidden md:flex items-center gap-8">
               <button onClick={() => scrollToSection('features')} className="text-gray-700 hover:text-[#ff6b00] font-semibold transition-colors">Features</button>
-              <button onClick={() => scrollToSection('pricing')} className="text-gray-700 hover:text-[#ff6b00] font-semibold transition-colors">Pricing</button>
+              <button onClick={() => scrollToSection('official-pricing')} className="text-gray-700 hover:text-[#ff6b00] font-semibold transition-colors">Pricing</button>
               <button onClick={() => scrollToSection('footer')} className="text-gray-700 hover:text-[#ff6b00] font-semibold transition-colors">Contact</button>
             </div>
           </div>
@@ -480,7 +480,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section - Update with link to create page */}
-      <section id="pricing" className="relative z-10 py-20">
+      <section id="official-pricing" className="relative z-10 py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-4xl font-bold mb-6 text-gray-900">
