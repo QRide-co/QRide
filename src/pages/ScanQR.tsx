@@ -87,10 +87,10 @@ const ScanQR = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-b from-gray-100 via-white to-gray-200 text-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#ff6b00] mx-auto mb-4"></div>
-          <p className="text-gray-400">Loading QR code data...</p>
+          <p className="text-gray-500">Loading QR code data...</p>
         </div>
       </div>
     );
