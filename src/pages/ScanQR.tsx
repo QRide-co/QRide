@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { MessageCircle, Info, ArrowLeft, Phone } from 'lucide-react';
+import { MessageCircle, Info, ArrowLeft, Phone, MessageSquare, Smartphone } from 'lucide-react';
 
 interface QRCodeData {
   id: string;
@@ -70,9 +69,11 @@ const ScanQR = () => {
     });
   };
 
-  const handleKnowMore = () => {
-    // Redirect to main website
-    window.location.href = '/';
+  const handleSendWhatsApp = () => {
+    if (!qrData) return;
+    const message = encodeURIComponent(qrData.default_message);
+    const whatsappUrl = `https://wa.me/${qrData.phone_number}?text=${message}`;
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleCall = () => {
@@ -119,7 +120,7 @@ const ScanQR = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white flex flex-col">
       {/* Header */}
       <div className="border-b border-gray-800 backdrop-blur-sm bg-black/50">
         <div className="container mx-auto px-4 py-4">
@@ -132,49 +133,43 @@ const ScanQR = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="max-w-md mx-auto">
-          <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
+      <div className="flex-1 flex items-center justify-center">
+        <div className="w-full max-w-md mx-auto px-4 py-8">
+          <Card className="bg-gray-900/70 border-gray-800 shadow-xl rounded-2xl">
             <CardHeader className="text-center">
-              <CardTitle className="text-white">Vehicle Contact</CardTitle>
-              <CardDescription className="text-gray-400">
-                {qrData.name}
-              </CardDescription>
+              <CardTitle className="text-white text-2xl font-bold">Contact Vehicle Owner</CardTitle>
+              <CardDescription className="text-gray-400 text-lg mt-1">{qrData.name}</CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-center text-gray-300 mb-6">
-                Choose how you'd like to contact the vehicle owner:
-              </p>
-
-              <div className="space-y-3">
+            <CardContent className="space-y-6">
+              <div className="text-center text-gray-300 text-base mb-2">
+                Choose how you'd like to contact:
+              </div>
+              <div className="flex flex-col gap-4">
+                <Button
+                  onClick={handleSendWhatsApp}
+                  className="w-full bg-[#25D366] text-white hover:bg-[#1ebe57] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#25D366] focus:outline-none"
+                  aria-label="Send WhatsApp Message"
+                >
+                  <MessageSquare className="w-5 h-5 mr-3" />
+                  WhatsApp
+                </Button>
                 <Button
                   onClick={handleSendMessage}
-                  className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold py-6"
+                  className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#9cff1e] focus:outline-none"
+                  aria-label="Send SMS Message"
                 >
-                  <MessageCircle className="w-5 h-5 mr-3" />
-                  Send Message
-                  <span className="text-xs ml-2 opacity-70">(Works Offline)</span>
+                  <Smartphone className="w-5 h-5 mr-3" />
+                  SMS
                 </Button>
-
                 <Button
                   onClick={handleCall}
-                  variant="outline"
-                  className="w-full border-gray-700 text-white hover:bg-gray-800 py-6"
+                  className="w-full border-gray-700 text-white hover:bg-gray-800 py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-gray-700 focus:outline-none"
+                  aria-label="Call Now"
                 >
                   <Phone className="w-5 h-5 mr-3" />
-                  Call Now
-                </Button>
-
-                <Button
-                  onClick={handleKnowMore}
-                  variant="ghost"
-                  className="w-full text-gray-400 hover:text-white hover:bg-gray-800 py-6"
-                >
-                  <Info className="w-5 h-5 mr-3" />
-                  Learn More About QRide
+                  Call
                 </Button>
               </div>
-
               <div className="mt-6 p-4 bg-gray-800/30 rounded-lg">
                 <p className="text-xs text-gray-400 text-center">
                   Default message: "{qrData.default_message}"
