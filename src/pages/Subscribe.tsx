@@ -10,7 +10,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 const features = [
   'Activate your QR code instantly',
   'Unlimited scans & contact options',
-  'Secure & private communication',
   'Cancel anytime',
   'Priority support',
 ];
