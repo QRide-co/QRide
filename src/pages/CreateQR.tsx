@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import QRCode from 'qrcode';
 import { ArrowLeft, Download, Copy } from 'lucide-react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const CreateQR = () => {
   const { id } = useParams<{ id?: string }>();
@@ -24,6 +25,12 @@ const CreateQR = () => {
   const { toast } = useToast();
   const [qrImageUrl, setQrImageUrl] = useState<string | null>(null);
   const [scanUrl, setScanUrl] = useState<string | null>(null);
+  const [authPassword, setAuthPassword] = useState('');
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [qrPassword, setQrPassword] = useState<string | null>(null);
+  const [newPassword, setNewPassword] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -43,6 +50,8 @@ const CreateQR = () => {
             color: { dark: '#000000', light: '#FFFFFF' },
           });
           setQrImageUrl(qrUrl);
+          setQrPassword((data as any).password || null);
+          setShowPasswordModal(true);
         }
       })();
     }
@@ -50,6 +59,17 @@ const CreateQR = () => {
 
   const generateUniqueCode = () => {
     return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+  };
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (authPassword === qrPassword) {
+      setIsAuthenticated(true);
+      setShowPasswordModal(false);
+      setPasswordError('');
+    } else {
+      setPasswordError('Incorrect password.');
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -66,17 +86,29 @@ const CreateQR = () => {
     try {
       if (id) {
         // Update existing QR code
+        const updateData: any = {
+          name: name.trim(),
+          phone_number: phoneNumber.trim(),
+          default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
+        };
+        if (newPassword.length >= 4) {
+          updateData.password = newPassword;
+        }
         const { error } = await supabase
           .from('qr_codes')
-          .update({
-            name: name.trim(),
-            phone_number: phoneNumber.trim(),
-            default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
-          })
+          .update(updateData)
           .eq('id', id);
         if (error) throw error;
         toast({ title: 'Updated!', description: 'QR code updated successfully.' });
         navigate('/');
+        return;
+      }
+      if (newPassword.length < 4) {
+        toast({
+          title: "Error",
+          description: "Please set a password of at least 4 characters",
+          variant: "destructive",
+        });
         return;
       }
       const uniqueCode = generateUniqueCode();
@@ -90,6 +122,7 @@ const CreateQR = () => {
           unique_code: uniqueCode,
           phone_number: phoneNumber.trim(),
           default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
+          password: newPassword,
         });
 
       if (error) throw error;
@@ -177,166 +210,206 @@ const CreateQR = () => {
 
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm mb-8">
-            <CardHeader>
-              <CardTitle className="text-white">{id ? 'Edit QR Code' : 'Generate Your QRide Sticker'}</CardTitle>
-              <CardDescription className="text-gray-400">
-                {id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle'}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name" className="text-white">QR Code Name *</Label>
+          {/* Password Modal for Edit */}
+          {id && showPasswordModal && !isAuthenticated && (
+            <Dialog open={showPasswordModal}>
+              <DialogContent className="max-w-sm mx-auto">
+                <DialogHeader>
+                  <DialogTitle>Enter Password to Edit QR Code</DialogTitle>
+                </DialogHeader>
+                <form onSubmit={handlePasswordSubmit} className="space-y-4">
                   <Input
-                    id="name"
-                    type="text"
-                    placeholder="e.g., My Car, Work Vehicle"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                    required
+                    type="password"
+                    placeholder="Enter password"
+                    value={authPassword}
+                    onChange={e => setAuthPassword(e.target.value)}
+                    className="w-full"
+                    autoFocus
                   />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone" className="text-white">Phone Number *</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="+1 (555) 123-4567"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message" className="text-white">Default Message (Optional)</Label>
-                  <Input
-                    id="message"
-                    type="text"
-                    placeholder="Custom message for people contacting you"
-                    value={defaultMessage}
-                    onChange={(e) => setDefaultMessage(e.target.value)}
-                    className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                  />
-                </div>
-
-                <Button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
-                >
-                  {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
-                </Button>
-              </form>
-            </CardContent>
-          </Card>
-          {/* Show QR code in edit mode or after creation */}
-          {(id && qrImageUrl && scanUrl) && (
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm mb-8">
-              <CardHeader>
-                <CardTitle className="text-white">Your QR Code</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Download and place this QR code on your vehicle
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-center">
-                  <div className="bg-white p-4 rounded-lg">
-                    <img src={qrImageUrl} alt="Generated QR Code" className="w-64 h-64" />
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-white">Scan URL:</Label>
-                    <p className="text-gray-400 text-sm break-all">{scanUrl}</p>
-                  </div>
-                </div>
-                <div className="flex gap-4">
-                  <Button
-                    onClick={() => {
-                      const link = document.createElement('a');
-                      link.download = `qride-${name.replace(/\s+/g, '-').toLowerCase()}.png`;
-                      link.href = qrImageUrl;
-                      link.click();
-                    }}
-                    className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download QR Code
-                  </Button>
-                  <Button
-                    onClick={async () => {
-                      await navigator.clipboard.writeText(scanUrl);
-                      toast({ title: 'Copied!', description: 'QR code link copied to clipboard' });
-                    }}
-                    variant="outline"
-                    className="flex-1 border-gray-700 text-white hover:bg-gray-800"
-                  >
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy Link
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
+                  {passwordError && <div className="text-red-500 text-sm">{passwordError}</div>}
+                  <Button type="submit" className="w-full bg-[#9cff1e] text-black font-semibold">Continue</Button>
+                </form>
+              </DialogContent>
+            </Dialog>
           )}
-          {!generatedQR && (
-            <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
-              <CardHeader>
-                <CardTitle className="text-white">Your QR Code is Ready!</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Download and place this QR code on your vehicle
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex justify-center">
-                  <div className="bg-white p-4 rounded-lg">
-                    <img src={generatedQR?.qrCodeUrl} alt="Generated QR Code" className="w-64 h-64" />
-                  </div>
-                </div>
+          {/* Only show the rest if authenticated or not editing */}
+          {(!id || isAuthenticated) && (
+            <>
+              <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm mb-8">
+                <CardHeader>
+                  <CardTitle className="text-white">{id ? 'Edit QR Code' : 'Generate Your QRide Sticker'}</CardTitle>
+                  <CardDescription className="text-gray-400">
+                    {id ? 'Update your QR code details below.' : 'Create a QR code that allows others to contact you about your vehicle'}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-white">QR Code Name *</Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="e.g., My Car, Work Vehicle"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                        required
+                      />
+                    </div>
 
-                <div className="space-y-4">
-                  <div>
-                    <Label className="text-white">QR Code ID:</Label>
-                    <p className="text-[#9cff1e] font-mono text-sm">{generatedQR?.uniqueCode}</p>
-                  </div>
-                  
-                  <div>
-                    <Label className="text-white">Scan URL:</Label>
-                    <p className="text-gray-400 text-sm break-all">{generatedQR?.scanUrl}</p>
-                  </div>
-                </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-white">Phone Number *</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        placeholder="+1 (555) 123-4567"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                        className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                        required
+                      />
+                    </div>
 
-                <div className="flex gap-4">
-                  <Button
-                    onClick={downloadQR}
-                    className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download QR Code
-                  </Button>
-                  <Button
-                    onClick={copyLink}
-                    variant="outline"
-                    className="flex-1 border-gray-700 text-white hover:bg-gray-800"
-                  >
-                    <Copy className="w-4 h-4 mr-2" />
-                    Copy Link
-                  </Button>
-                </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="message" className="text-white">Default Message (Optional)</Label>
+                      <Input
+                        id="message"
+                        type="text"
+                        placeholder="Custom message for people contacting you"
+                        value={defaultMessage}
+                        onChange={(e) => setDefaultMessage(e.target.value)}
+                        className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                      />
+                    </div>
 
-                <Button
-                  onClick={resetForm}
-                  variant="ghost"
-                  className="w-full text-gray-400 hover:text-white hover:bg-gray-800"
-                >
-                  Create Another QR Code
-                </Button>
-              </CardContent>
-            </Card>
+                    <div className="space-y-2">
+                      <Label htmlFor="new-password" className="text-white">{qrPassword ? 'Change Password' : 'Set Password'} (required to edit in future)</Label>
+                      <Input
+                        id="new-password"
+                        type="password"
+                        placeholder={qrPassword ? 'Enter new password (leave blank to keep current)' : 'Set a password'}
+                        value={newPassword}
+                        onChange={e => setNewPassword(e.target.value)}
+                        className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
+                        minLength={4}
+                      />
+                    </div>
+
+                    <Button
+                      type="submit"
+                      disabled={isLoading}
+                      className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                    >
+                      {isLoading ? (id ? 'Updating...' : 'Generating...') : (id ? 'Update QR Code' : 'Generate QR Code')}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+              {/* Show QR code in edit mode or after creation */}
+              {(id && qrImageUrl && scanUrl) && (
+                <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm mb-8">
+                  <CardHeader>
+                    <CardTitle className="text-white">Your QR Code</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Download and place this QR code on your vehicle
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="flex justify-center">
+                      <div className="bg-white p-4 rounded-lg">
+                        <img src={qrImageUrl} alt="Generated QR Code" className="w-64 h-64" />
+                      </div>
+                    </div>
+                    <div className="space-y-4">
+                      <div>
+                        <Label className="text-white">Scan URL:</Label>
+                        <p className="text-gray-400 text-sm break-all">{scanUrl}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <Button
+                        onClick={() => {
+                          const link = document.createElement('a');
+                          link.download = `qride-${name.replace(/\s+/g, '-').toLowerCase()}.png`;
+                          link.href = qrImageUrl;
+                          link.click();
+                        }}
+                        className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download QR Code
+                      </Button>
+                      <Button
+                        onClick={async () => {
+                          await navigator.clipboard.writeText(scanUrl);
+                          toast({ title: 'Copied!', description: 'QR code link copied to clipboard' });
+                        }}
+                        variant="outline"
+                        className="flex-1 border-gray-700 text-white hover:bg-gray-800"
+                      >
+                        <Copy className="w-4 h-4 mr-2" />
+                        Copy Link
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+              {!generatedQR && (
+                <Card className="bg-gray-900/50 border-gray-800 backdrop-blur-sm">
+                  <CardHeader>
+                    <CardTitle className="text-white">Your QR Code is Ready!</CardTitle>
+                    <CardDescription className="text-gray-400">
+                      Download and place this QR code on your vehicle
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="flex justify-center">
+                      <div className="bg-white p-4 rounded-lg">
+                        <img src={generatedQR?.qrCodeUrl} alt="Generated QR Code" className="w-64 h-64" />
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <div>
+                        <Label className="text-white">QR Code ID:</Label>
+                        <p className="text-[#9cff1e] font-mono text-sm">{generatedQR?.uniqueCode}</p>
+                      </div>
+                      
+                      <div>
+                        <Label className="text-white">Scan URL:</Label>
+                        <p className="text-gray-400 text-sm break-all">{generatedQR?.scanUrl}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <Button
+                        onClick={downloadQR}
+                        className="flex-1 bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold"
+                      >
+                        <Download className="w-4 h-4 mr-2" />
+                        Download QR Code
+                      </Button>
+                      <Button
+                        onClick={copyLink}
+                        variant="outline"
+                        className="flex-1 border-gray-700 text-white hover:bg-gray-800"
+                      >
+                        <Copy className="w-4 h-4 mr-2" />
+                        Copy Link
+                      </Button>
+                    </div>
+
+                    <Button
+                      onClick={resetForm}
+                      variant="ghost"
+                      className="w-full text-gray-400 hover:text-white hover:bg-gray-800"
+                    >
+                      Create Another QR Code
+                    </Button>
+                  </CardContent>
+                </Card>
+              )}
+            </>
           )}
         </div>
       </div>
