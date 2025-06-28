@@ -516,56 +516,23 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="py-16 px-6 bg-gray-50 border-t border-gray-200">
-        <div className="container mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-8 h-8 bg-gradient-to-r from-[#ff6b00] to-orange-500 rounded-lg flex items-center justify-center">
-                  <QrCode className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold text-gray-900">QRide</span>
-              </div>
-              <p className="text-gray-600">
-                Revolutionizing car communication, one QR code at a time.
-              </p>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-6 text-gray-900">Product</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">How it Works</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Features</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Pricing</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">FAQ</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-6 text-gray-900">Company</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">About Us</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Privacy Policy</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Terms of Service</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-6 text-gray-900">Connect</h4>
-              <ul className="space-y-3 text-gray-600">
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Twitter</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Facebook</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">Instagram</a></li>
-                <li><a href="#" className="hover:text-[#ff6b00] transition-colors">LinkedIn</a></li>
-              </ul>
-            </div>
+      <footer className="w-full bg-white border-t border-gray-200 mt-12 py-8 px-4 text-gray-700 text-sm">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:justify-between gap-8 md:gap-0">
+          <div className="flex flex-col gap-2">
+            <span className="font-semibold text-gray-900 mb-1">Legal</span>
+            <a href="#privacy" className="hover:underline">Privacy Policy</a>
+            <a href="#terms" className="hover:underline">Terms and Conditions</a>
+            <a href="#refund" className="hover:underline">Refund & Exchange Policy</a>
+            <a href="#service-duration" className="hover:underline">Service Duration Policy</a>
           </div>
-
-          <div className="border-t border-gray-200 mt-12 pt-8 text-center text-gray-500">
-            <p>&copy; 2024 QRide. All rights reserved.</p>
+          <div className="flex flex-col gap-2">
+            <span className="font-semibold text-gray-900 mb-1">Contact Us</span>
+            <span>Phone: <a href="tel:+201234567890" className="hover:underline">+20 123 456 7890</a></span>
+            <span>Email: <a href="mailto:info@qride.com" className="hover:underline">info@qride.com</a></span>
+            <span>Address: Cairo, Egypt</span>
           </div>
         </div>
+        <div className="mt-8 text-center text-gray-400 text-xs">&copy; {new Date().getFullYear()} QRide. All rights reserved.</div>
       </footer>
     </div>
   );
