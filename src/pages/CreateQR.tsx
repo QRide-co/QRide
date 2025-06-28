@@ -231,9 +231,9 @@ const CreateQR = () => {
   };
 
   const confirmBulkGenerate = () => {
-    const codes = Array.from({ length: bulkCount }, () => ({
+    const codes = Array.from({ length: bulkCount }, (_, i) => ({
       uniqueCode: generateUniqueCode(),
-      name: '',
+      name: `Car QR Code ${i + 1}`,
       phone: '',
     }));
     setBulkQRCodes(codes);
