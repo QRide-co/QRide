@@ -186,9 +186,9 @@ const Index = () => {
           </Badge>
           
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight animate-fade-in-up text-gray-900">
-            no more
+            Car-Blocking is
             <span className="block text-[#ff6b00] italic font-light">
-              solutions
+              gone
             </span>
           </h1>
           
