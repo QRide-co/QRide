@@ -69,6 +69,14 @@ const GetStarted = () => {
                   />
                 </div>
                 <Button className="mt-4" variant="outline" onClick={() => setScanning(false)}>Cancel</Button>
+                {error && (
+                  <div className="mt-4 text-center">
+                    <div className="text-red-600 text-sm mb-2">{error}</div>
+                    <Button size="sm" variant="outline" onClick={() => { setError(''); setScanning(false); setTimeout(() => setScanning(true), 100); }}>
+                      Retry
+                    </Button>
+                  </div>
+                )}
                 <a
                   href="https://wa.me/201094542810?text=I%20want%20to%20order%20a%20car%20qr%20code%20sticker"
                   target="_blank"
@@ -83,7 +91,6 @@ const GetStarted = () => {
                 Scan QR Code
               </Button>
             )}
-            {error && <div className="text-red-600 text-sm mt-4">{error}</div>}
           </CardContent>
         </Card>
       </div>
