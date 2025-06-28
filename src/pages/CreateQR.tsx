@@ -38,6 +38,9 @@ const CreateQR = () => {
   const [adminPassword, setAdminPassword] = useState('');
   const [showAdminModal, setShowAdminModal] = useState(isAdmin);
   const [adminError, setAdminError] = useState('');
+  const [bulkCount, setBulkCount] = useState(1);
+  const [bulkModal, setBulkModal] = useState(false);
+  const [bulkQRCodes, setBulkQRCodes] = useState<any[]>([]);
 
   const defaultMessages = [
     'Please move your car',
@@ -75,7 +78,7 @@ const CreateQR = () => {
   }, [id, location.state]);
 
   const generateUniqueCode = () => {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
   };
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
@@ -221,6 +224,28 @@ const CreateQR = () => {
     setPhoneNumber('');
     setDefaultMessage('');
     setGeneratedQR(null);
+  };
+
+  const handleBulkGenerate = () => {
+    setBulkModal(true);
+  };
+
+  const confirmBulkGenerate = () => {
+    const codes = Array.from({ length: bulkCount }, () => ({
+      uniqueCode: generateUniqueCode(),
+      name: '',
+      phone: '',
+    }));
+    setBulkQRCodes(codes);
+    setBulkModal(false);
+  };
+
+  const handleBulkFieldChange = (idx: number, field: 'name' | 'phone', value: string) => {
+    setBulkQRCodes((prev) => {
+      const updated = [...prev];
+      updated[idx][field] = value;
+      return updated;
+    });
   };
 
   if (!isAdmin) {
@@ -478,6 +503,63 @@ const CreateQR = () => {
                     </div>
                   </CardContent>
                 </Card>
+              )}
+              <div className="flex gap-4 mb-6">
+                <Button onClick={handleBulkGenerate} variant="outline">Generate Bulk</Button>
+              </div>
+              {/* Bulk Modal */}
+              {bulkModal && (
+                <Dialog open={bulkModal} onOpenChange={setBulkModal}>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Generate Bulk QR Codes</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <Label htmlFor="bulk-count">Number of QR Codes</Label>
+                      <Input
+                        id="bulk-count"
+                        type="number"
+                        min={1}
+                        value={bulkCount}
+                        onChange={e => setBulkCount(Number(e.target.value))}
+                        className="w-full"
+                      />
+                      <Button onClick={confirmBulkGenerate} className="w-full">Generate</Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              )}
+              {/* Bulk QR Codes List */}
+              {bulkQRCodes.length > 0 && (
+                <div className="mt-8">
+                  <h3 className="text-lg font-semibold mb-4">Generated QR Codes</h3>
+                  <div className="grid gap-4">
+                    {bulkQRCodes.map((qr, idx) => (
+                      <Card key={qr.uniqueCode} className="p-4 flex flex-col md:flex-row items-center gap-4">
+                        <div className="flex-1 flex flex-col md:flex-row gap-4 items-center">
+                          <Input
+                            placeholder="Name"
+                            value={qr.name}
+                            onChange={e => handleBulkFieldChange(idx, 'name', e.target.value)}
+                            className="mb-2 md:mb-0"
+                          />
+                          <Input
+                            placeholder="Phone Number"
+                            value={qr.phone}
+                            onChange={e => handleBulkFieldChange(idx, 'phone', e.target.value)}
+                          />
+                        </div>
+                        <div className="flex-shrink-0">
+                          <img
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(window.location.origin + '/scan/' + qr.uniqueCode)}`}
+                            alt="QR Code"
+                            className="w-20 h-20"
+                          />
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
               )}
             </>
           )}
