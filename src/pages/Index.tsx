@@ -198,9 +198,11 @@ const Index = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16 animate-fade-in-up">
-            <Button size="lg" className="bg-[#ff6b00] text-white hover:bg-orange-500 text-lg px-10 py-4 font-medium">
-              Get started →
-            </Button>
+            <Link to="/get-started">
+              <Button size="lg" className="bg-[#ff6b00] text-white hover:bg-orange-500 text-lg px-10 py-4 font-medium">
+                Get started →
+              </Button>
+            </Link>
           </div>
 
           <div className="text-center text-gray-500 text-sm animate-fade-in-up">

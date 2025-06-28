@@ -9,6 +9,7 @@ import ScanQR from "./pages/ScanQR";
 import NotFound from "./pages/NotFound";
 import Subscribe from './pages/Subscribe';
 import MyQRCodes from './pages/MyQRCodes';
+import GetStarted from './pages/GetStarted';
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/get-started" element={<GetStarted />} />
           <Route path="/create" element={<CreateQR />} />
           <Route path="/edit/:id" element={<CreateQR />} />
           <Route path="/scan/:code" element={<ScanQR />} />
