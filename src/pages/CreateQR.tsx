@@ -396,19 +396,21 @@ const CreateQR = () => {
                   </CardHeader>
                   <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="space-y-2">
-                        <Label htmlFor="name" className="text-gray-900">QR Code Name *</Label>
-                        <Input
-                          id="name"
-                          type="text"
-                          placeholder="e.g., My Car, Work Vehicle"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                          className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400"
-                          required
-                        />
-                      </div>
-
+                      {/* Only show QR Code Name input for admin */}
+                      {isAdmin && (
+                        <div className="space-y-2">
+                          <Label htmlFor="name" className="text-gray-900">QR Code Name *</Label>
+                          <Input
+                            id="name"
+                            type="text"
+                            placeholder="e.g., My Car, Work Vehicle"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400"
+                            required
+                          />
+                        </div>
+                      )}
                       <div className="space-y-2">
                         <Label htmlFor="phone" className="text-gray-900">Phone Number *</Label>
                         <Input
