@@ -38,7 +38,6 @@ const CreateQR = () => {
   const [adminPassword, setAdminPassword] = useState('');
   const [showAdminModal, setShowAdminModal] = useState(isAdmin);
   const [adminError, setAdminError] = useState('');
-  const [bulkCount, setBulkCount] = useState(1);
   const [bulkModal, setBulkModal] = useState(false);
   const [bulkQRCodes, setBulkQRCodes] = useState<any[]>([]);
 
@@ -227,31 +226,13 @@ const CreateQR = () => {
   };
 
   const handleBulkGenerate = () => {
-    setBulkModal(true);
-  };
-
-  const confirmBulkGenerate = () => {
-    const codes = Array.from({ length: bulkCount }, (_, i) => ({
+    const codes = Array.from({ length: 10 }, (_, i) => ({
       uniqueCode: generateUniqueCode(),
       name: `Car QR Code ${i + 1}`,
       phone: null,
     }));
     setBulkQRCodes(codes);
-    setBulkModal(false);
   };
-
-  // Automatically generate QR codes when bulkCount changes and modal is open
-  useEffect(() => {
-    if (bulkModal && bulkCount > 0) {
-      const codes = Array.from({ length: bulkCount }, (_, i) => ({
-        uniqueCode: generateUniqueCode(),
-        name: `Car QR Code ${i + 1}`,
-        phone: null,
-      }));
-      setBulkQRCodes(codes);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bulkCount, bulkModal]);
 
   const handleBulkFieldChange = (idx: number, field: 'name' | 'phone', value: string) => {
     setBulkQRCodes((prev) => {
@@ -520,28 +501,6 @@ const CreateQR = () => {
               <div className="flex gap-4 mb-6">
                 <Button onClick={handleBulkGenerate} variant="outline">Generate Bulk</Button>
               </div>
-              {/* Bulk Modal */}
-              {bulkModal && (
-                <Dialog open={bulkModal} onOpenChange={setBulkModal}>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Generate Bulk QR Codes</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <Label htmlFor="bulk-count">Number of QR Codes</Label>
-                      <Input
-                        id="bulk-count"
-                        type="number"
-                        min={1}
-                        value={bulkCount}
-                        onChange={e => setBulkCount(Number(e.target.value))}
-                        className="w-full"
-                      />
-                      <Button onClick={confirmBulkGenerate} className="w-full">Generate</Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              )}
               {/* Bulk QR Codes List */}
               {bulkQRCodes.length > 0 && (
                 <div className="mt-8">
