@@ -110,11 +110,10 @@ const CreateQR = () => {
           });
           setQrImageUrl(qrUrl);
           setQrPassword((data as any).password || null);
-          // Only show password modal if navigated from scan page
-          if ((location.state && location.state.fromScan) && (data.password && data.password.length > 0)) {
+          // Always require password if set (not null/empty) when editing
+          if (data.password && data.password.length > 0) {
             setShowPasswordModal(true);
-          } else if (!data.password || data.password.length === 0) {
-            setIsAuthenticated(true);
+            setIsAuthenticated(false);
           } else {
             setIsAuthenticated(true);
           }
@@ -516,10 +515,8 @@ const CreateQR = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold shadow transition-all duration-200 mt-1"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 14.487c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.21-.242-.58-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.205 5.077 4.372.71.306 1.263.489 1.695.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0-4.97-4.03-9-9-9s-9 4.03-9 9c0 1.591.416 3.086 1.144 4.382L3 21l4.755-1.244A8.963 8.963 0 0012 21c4.97 0 9-4.03 9-9z" />
-                    </svg>
+                    {/* Official WhatsApp SVG icon */}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="24" height="24" className="inline-block align-middle"><path fill="#fff" d="M16 3C9.373 3 4 8.373 4 15c0 2.385.668 4.605 1.826 6.5L4 29l7.74-1.792A12.94 12.94 0 0016 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22.917c-2.09 0-4.13-.547-5.89-1.583l-.42-.25-4.59 1.063 1.09-4.47-.27-.44A10.93 10.93 0 015.083 15C5.083 9.477 9.477 5.083 15 5.083S24.917 9.477 24.917 15 20.523 24.917 15 24.917zm6.09-7.13c-.334-.167-1.98-.98-2.287-1.092-.307-.112-.53-.167-.753.167-.223.334-.86 1.092-1.055 1.317-.195.223-.39.25-.724.084-.334-.167-1.41-.52-2.687-1.655-.993-.885-1.664-1.977-1.86-2.31-.195-.334-.021-.513.146-.68.15-.15.334-.39.501-.584.167-.195.223-.334.334-.557.112-.223.056-.418-.028-.584-.084-.167-.753-1.815-1.032-2.49-.272-.655-.55-.567-.753-.577l-.642-.011c-.195 0-.513.084-.782.39-.27.307-1.08 1.06-1.08 2.584 0 1.523 1.11 2.995 1.263 3.203.153.207 2.187 3.36 5.29 4.583.74.295 1.316.472 1.767.606.743.236 1.42.203 1.956.123.597-.089 1.84-.753 2.099-1.48.26-.728.26-1.35.182-1.48-.077-.13-.285-.207-.597-.356z"/></svg>
                     Chat on WhatsApp
                   </a>
                 </div>
