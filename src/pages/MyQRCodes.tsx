@@ -50,7 +50,9 @@ const MyQRCodes = () => {
     if (error) {
       toast({ title: 'Error', description: 'Failed to delete QR code', variant: 'destructive' });
     } else {
-      setQrCodes((prev: any[]) => prev.filter(qr => qr.id !== id));
+      // Refresh the list from the database to ensure UI is in sync
+      const { data } = await supabase.from('qr_codes').select('*').order('created_at', { ascending: false });
+      setQrCodes(data || []);
       toast({ title: 'Deleted', description: 'QR code deleted successfully' });
     }
   };
