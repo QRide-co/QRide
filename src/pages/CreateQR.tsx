@@ -234,11 +234,24 @@ const CreateQR = () => {
     const codes = Array.from({ length: bulkCount }, (_, i) => ({
       uniqueCode: generateUniqueCode(),
       name: `Car QR Code ${i + 1}`,
-      phone: '',
+      phone: null,
     }));
     setBulkQRCodes(codes);
     setBulkModal(false);
   };
+
+  // Automatically generate QR codes when bulkCount changes and modal is open
+  useEffect(() => {
+    if (bulkModal && bulkCount > 0) {
+      const codes = Array.from({ length: bulkCount }, (_, i) => ({
+        uniqueCode: generateUniqueCode(),
+        name: `Car QR Code ${i + 1}`,
+        phone: null,
+      }));
+      setBulkQRCodes(codes);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bulkCount, bulkModal]);
 
   const handleBulkFieldChange = (idx: number, field: 'name' | 'phone', value: string) => {
     setBulkQRCodes((prev) => {
