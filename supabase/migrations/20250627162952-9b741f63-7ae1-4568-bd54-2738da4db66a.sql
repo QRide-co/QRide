@@ -1,4 +1,3 @@
-
 -- Create a table for QR codes
 CREATE TABLE public.qr_codes (
   id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,

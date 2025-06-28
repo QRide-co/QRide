@@ -491,61 +491,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-24 px-6 bg-gray-50">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              What Our Customers Say
-            </h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="p-8 bg-white border-gray-200 backdrop-blur-sm shadow-sm">
-              <div className="flex items-center mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#ff6b00] fill-current" />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "QRide saved me so much frustration! No more waiting around when I'm blocked in. 
-                The person moved their car within minutes of me sending the message."
-              </p>
-              <div className="font-semibold text-gray-900">Sarah M.</div>
-              <div className="text-sm text-gray-500">Urban Professional</div>
-            </Card>
-
-            <Card className="p-8 bg-white border-gray-200 backdrop-blur-sm shadow-sm">
-              <div className="flex items-center mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#ff6b00] fill-current" />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "As a delivery driver, QRide has been a game-changer. 
-                People can easily reach me if I need to move my van. Brilliant solution!"
-              </p>
-              <div className="font-semibold text-gray-900">Mike T.</div>
-              <div className="text-sm text-gray-500">Delivery Driver</div>
-            </Card>
-
-            <Card className="p-8 bg-white border-gray-200 backdrop-blur-sm shadow-sm">
-              <div className="flex items-center mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-5 h-5 text-[#ff6b00] fill-current" />
-                ))}
-              </div>
-              <p className="text-gray-700 mb-6 leading-relaxed">
-                "Simple, effective, and privacy-friendly. 
-                Everyone in our apartment complex should have one of these!"
-              </p>
-              <div className="font-semibold text-gray-900">Jennifer L.</div>
-              <div className="text-sm text-gray-500">Apartment Resident</div>
-            </Card>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section - Update with link to create page */}
       <section className="relative z-10 py-20">
         <div className="container mx-auto px-4 text-center">
