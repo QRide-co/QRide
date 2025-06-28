@@ -173,15 +173,15 @@ const ScanQR = () => {
               <CardDescription className="text-gray-500 text-lg mt-1">{qrData.name}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="mb-6">
+              <div className="mb-6 w-full">
                 <div className="text-center text-gray-600 text-base mb-2">Choose a message to send:</div>
-                <div className="flex gap-4 justify-center">
+                <div className="flex gap-4 justify-center w-full">
                   {messageChoices.map(msg => (
                     <Button
                       key={msg}
                       type="button"
                       onClick={() => setSelectedMessage(msg)}
-                      className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${selectedMessage === msg ? 'bg-[#ff6b00] text-white' : 'bg-gray-100 text-gray-900 border-gray-300 hover:bg-gray-200'}`}
+                      className={`w-full max-w-xs px-4 py-2 rounded-lg font-semibold border transition-colors ${selectedMessage === msg ? 'bg-[#ff6b00] text-white' : 'bg-gray-100 text-gray-900 border-gray-300 hover:bg-gray-200'}`}
                       aria-pressed={selectedMessage === msg}
                     >
                       {msg}
@@ -211,7 +211,7 @@ const ScanQR = () => {
                 </Button>
                 <Button
                   onClick={handleCall}
-                  className="w-full bg-green-800 text-white hover:bg-green-900 font-semibold py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-green-800 focus:outline-none"
+                  className="w-full bg-green-500 text-white hover:bg-green-600 font-semibold py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
                   aria-label="Call Now"
                 >
                   <Phone className="w-5 h-5 mr-3" />
