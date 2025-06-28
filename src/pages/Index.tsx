@@ -516,23 +516,23 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="w-full bg-white border-t border-gray-200 mt-12 py-8 px-4 text-gray-700 text-sm">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:justify-between gap-8 md:gap-0">
-          <div className="flex flex-col gap-2">
-            <span className="font-semibold text-gray-900 mb-1">Legal</span>
+      <footer className="w-full bg-white border-t border-gray-200 mt-12 py-12 px-4 text-gray-700 text-sm">
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-0 items-start">
+          <div className="flex flex-col gap-4">
+            <span className="font-bold text-lg text-gray-900 mb-2">Legal</span>
             <a href="#privacy" className="hover:underline">Privacy Policy</a>
             <a href="#terms" className="hover:underline">Terms and Conditions</a>
             <a href="#refund" className="hover:underline">Refund & Exchange Policy</a>
             <a href="#service-duration" className="hover:underline">Service Duration Policy</a>
           </div>
-          <div className="flex flex-col gap-2">
-            <span className="font-semibold text-gray-900 mb-1">Contact Us</span>
+          <div className="flex flex-col gap-4 md:items-end">
+            <span className="font-bold text-lg text-gray-900 mb-2">Contact Us</span>
             <span>Phone: <a href="tel:+201234567890" className="hover:underline">+20 123 456 7890</a></span>
             <span>Email: <a href="mailto:info@qride.com" className="hover:underline">info@qride.com</a></span>
             <span>Address: Cairo, Egypt</span>
           </div>
         </div>
-        <div className="mt-8 text-center text-gray-400 text-xs">&copy; {new Date().getFullYear()} QRide. All rights reserved.</div>
+        <div className="mt-12 text-center text-gray-400 text-xs">&copy; {new Date().getFullYear()} QRide. All rights reserved.</div>
       </footer>
     </div>
   );
