@@ -29,6 +29,13 @@ CREATE POLICY "Anyone can create QR codes"
   TO anon, authenticated
   WITH CHECK (true);
 
+-- Create a policy that allows anyone to delete QR codes (for now)
+CREATE POLICY "Anyone can delete QR codes"
+  ON public.qr_codes
+  FOR DELETE
+  TO anon, authenticated
+  USING (true);
+
 -- Add unique constraint to name
 ALTER TABLE public.qr_codes ADD CONSTRAINT unique_qr_code_name UNIQUE (name);
 
