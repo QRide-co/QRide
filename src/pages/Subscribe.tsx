@@ -46,10 +46,12 @@ const Subscribe = () => {
   const handleSubscribe = async () => {
     if (!code) return;
     // Instantly activate the QR code (simulate payment success)
-    await supabase.from('qr_codes').update({ activated: true }).eq('unique_code', code);
+    const { data } = await supabase.from('qr_codes').update({ activated: true }).eq('unique_code', code).select();
     setQrData((prev: any) => ({ ...prev, activated: true }));
     alert('Subscription successful! Your QR code is now activated.');
-    // Optionally, redirect or update UI
+    if (data && data[0] && data[0].id) {
+      navigate(`/edit/${data[0].id}`);
+    }
   };
 
   if (loading) {
