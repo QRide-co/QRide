@@ -16,7 +16,8 @@ import {
   Award,
   ArrowRight,
   Play,
-  Pencil
+  Pencil,
+  Lock
 } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
@@ -97,21 +98,25 @@ const Index = () => {
       {/* QR Codes Management Section (admin only) */}
       {isAdmin && !adminAuth && (
         <Dialog open={showAdminModal}>
-          <DialogContent className="max-w-sm mx-auto">
-            <DialogHeader>
-              <DialogTitle>Admin Access</DialogTitle>
+          <DialogContent className="max-w-sm mx-auto p-8 rounded-2xl bg-gray-900 border border-gray-800">
+            <DialogHeader className="text-center mb-2">
+              <div className="flex flex-col items-center justify-center mb-2">
+                <Lock className="w-10 h-10 text-[#9cff1e] mb-2" />
+                <DialogTitle className="text-2xl font-bold text-white">Admin Login</DialogTitle>
+              </div>
+              <p className="text-gray-400 text-base">Enter the admin password to access this page.</p>
             </DialogHeader>
-            <form onSubmit={handleAdminPassword} className="space-y-4">
+            <form onSubmit={handleAdminPassword} className="space-y-5 mt-4">
               <input
                 type="password"
-                placeholder="Enter admin password"
+                placeholder="Admin password"
                 value={adminPassword}
                 onChange={e => setAdminPassword(e.target.value)}
-                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white"
+                className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white text-lg focus:outline-none focus:ring-2 focus:ring-[#9cff1e]"
                 autoFocus
               />
-              {adminError && <div className="text-red-500 text-sm">{adminError}</div>}
-              <button type="submit" className="w-full bg-[#9cff1e] text-black font-semibold py-2 rounded">Continue</button>
+              {adminError && <div className="text-red-500 text-sm text-center font-medium">{adminError}</div>}
+              <button type="submit" className="w-full bg-[#9cff1e] text-black font-bold py-3 rounded-lg text-lg shadow hover:bg-[#8ae619] transition-all">Continue</button>
             </form>
           </DialogContent>
         </Dialog>
