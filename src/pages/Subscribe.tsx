@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { CheckCircle, Lock, Shield, Zap, HelpCircle } from 'lucide-react';
+import { useToast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const features = [
   'Activate your QR code instantly',
@@ -33,6 +35,7 @@ const Subscribe = () => {
   const [qrData, setQrData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
     if (!code) return;
@@ -45,13 +48,14 @@ const Subscribe = () => {
 
   const handleSubscribe = async () => {
     if (!code) return;
-    // Instantly activate the QR code (simulate payment success)
     const { data } = await supabase.from('qr_codes').update({ activated: true }).eq('unique_code', code).select();
     setQrData((prev: any) => ({ ...prev, activated: true }));
-    alert('Subscription successful! Your QR code is now activated.');
-    if (data && data[0] && data[0].id) {
-      navigate(`/edit/${data[0].id}`);
-    }
+    setShowSuccess(true);
+    setTimeout(() => {
+      if (data && data[0] && data[0].id) {
+        navigate(`/edit/${data[0].id}`);
+      }
+    }, 1500);
   };
 
   if (loading) {
@@ -146,6 +150,15 @@ const Subscribe = () => {
           </Link>
         </div>
       </div>
+      {/* Success Dialog */}
+      <Dialog open={showSuccess}>
+        <DialogContent className="max-w-sm mx-auto p-8 rounded-2xl bg-white border border-gray-200 shadow-xl text-center">
+          <DialogHeader>
+            <DialogTitle className="text-green-600 text-2xl font-bold">Subscription Successful!</DialogTitle>
+          </DialogHeader>
+          <div className="text-gray-700 text-lg mt-2 mb-4">Your QR code is now activated. Redirecting...</div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
