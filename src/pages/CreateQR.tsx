@@ -10,6 +10,7 @@ import { ArrowLeft, Download, Copy, Lock } from 'lucide-react';
 import { Link, useParams, useNavigate, useLocation } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import JSZip from 'jszip';
+import _ from 'lodash';
 
 const CreateQR = () => {
   const { id } = useParams<{ id?: string }>();
@@ -237,8 +238,20 @@ const CreateQR = () => {
   const confirmBulkGenerate = async () => {
     setBulkLoading(true);
     try {
+      // Fetch all existing Car QR Code names
+      const { data: existing, error: fetchError } = await supabase.from('qr_codes').select('name');
+      if (fetchError) throw fetchError;
+      // Find the highest N in 'Car QR Code N'
+      const maxNum = _.max(
+        (existing || [])
+          .map((qr: any) => {
+            const match = qr.name && qr.name.match(/^Car QR Code (\d+)$/);
+            return match ? parseInt(match[1], 10) : 0;
+          })
+      ) || 0;
+      // Generate new names starting from maxNum + 1
       const codes = Array.from({ length: bulkCount }, (_, i) => ({
-        name: `Car QR Code ${i + 1}`,
+        name: `Car QR Code ${maxNum + i + 1}`,
         unique_code: generateUniqueCode(),
         phone_number: null,
         default_message: defaultMessages[0],
