@@ -170,7 +170,6 @@ const ScanQR = () => {
           <Card className="bg-white border border-gray-200 shadow-xl rounded-2xl">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold text-gray-900">Contact Vehicle Owner</CardTitle>
-              <CardDescription className="text-gray-500 text-lg mt-1">{qrData.name}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="mb-6 w-full">
@@ -225,9 +224,6 @@ const ScanQR = () => {
               >
                 <Link to={`/edit/${qrData.id}`}>Edit QR Code</Link>
               </Button>
-              <div className="text-center text-gray-400 text-sm mt-4">
-                Default message: "{qrData.default_message}"
-              </div>
             </CardContent>
           </Card>
         </div>
