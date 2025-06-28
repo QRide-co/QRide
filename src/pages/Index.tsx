@@ -42,14 +42,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
-      {/* Floating geometric elements */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl rotate-12 opacity-60 animate-float"></div>
-        <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full opacity-40 animate-float" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-br from-gray-900 to-black rounded-2xl rotate-45 opacity-50 animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-20 right-10 w-28 h-28 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full opacity-30 animate-float" style={{ animationDelay: '0.5s' }}></div>
-      </div>
-
       {/* Header */}
       <nav className="relative z-10 border-b border-gray-800 backdrop-blur-sm bg-black/50">
         <div className="container mx-auto px-4 py-4">
@@ -105,13 +97,6 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 min-h-screen flex items-center overflow-hidden">
-        {/* Floating geometric elements - now only in hero section */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl rotate-12 opacity-60 animate-float"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full opacity-40 animate-float" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-40 left-20 w-20 h-20 bg-gradient-to-br from-gray-900 to-black rounded-2xl rotate-45 opacity-50 animate-float" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute bottom-20 right-10 w-28 h-28 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full opacity-30 animate-float" style={{ animationDelay: '0.5s' }}></div>
-        </div>
         <div className="container mx-auto text-center relative z-10">
           <Badge className="mb-8 bg-gray-900 text-[#9cff1e] border-gray-800 text-sm font-medium">
             Revolutionary Car Communication
