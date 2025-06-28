@@ -39,6 +39,11 @@ const CreateQR = () => {
   const [showAdminModal, setShowAdminModal] = useState(isAdmin);
   const [adminError, setAdminError] = useState('');
 
+  const defaultMessages = [
+    'Please move your car',
+    'من فضلك حرك سيارتك'
+  ];
+
   useEffect(() => {
     if (id) {
       // Editing mode: fetch QR code data
@@ -134,6 +139,7 @@ const CreateQR = () => {
         });
         return;
       }
+      if (!defaultMessage) setDefaultMessage(defaultMessages[0]);
       const uniqueCode = generateUniqueCode();
       const scanUrl = `${window.location.origin}/scan/${uniqueCode}`;
 
@@ -336,15 +342,18 @@ const CreateQR = () => {
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="message" className="text-white">Default Message (Optional)</Label>
-                        <Input
-                          id="message"
-                          type="text"
-                          placeholder="Custom message for people contacting you"
+                        <Label htmlFor="defaultMessage" className="text-white">Default Message *</Label>
+                        <select
+                          id="defaultMessage"
                           value={defaultMessage}
-                          onChange={(e) => setDefaultMessage(e.target.value)}
-                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400"
-                        />
+                          onChange={e => setDefaultMessage(e.target.value)}
+                          className="bg-gray-800/50 border-gray-700 text-white placeholder:text-gray-400 w-full px-4 py-3 rounded-lg"
+                          required
+                        >
+                          {defaultMessages.map((msg) => (
+                            <option key={msg} value={msg}>{msg}</option>
+                          ))}
+                        </select>
                       </div>
 
                       <div className="space-y-2">
