@@ -97,6 +97,12 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 min-h-screen flex items-center overflow-hidden">
+        {/* Fixed geometric elements, only visible in hero section */}
+        <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0 hero-geo-mask">
+          <div className="absolute top-24 left-16 w-32 h-32 bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl rotate-12 opacity-60 animate-float"></div>
+          <div className="absolute top-40 right-24 w-24 h-24 bg-gradient-to-br from-gray-700 to-gray-800 rounded-full opacity-40 animate-float" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-32 left-1/2 w-28 h-28 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full opacity-30 animate-float" style={{ animationDelay: '0.5s', transform: 'translateX(-50%)' }}></div>
+        </div>
         <div className="container mx-auto text-center relative z-10">
           <Badge className="mb-8 bg-gray-900 text-[#9cff1e] border-gray-800 text-sm font-medium">
             Revolutionary Car Communication
