@@ -505,18 +505,38 @@ const CreateQR = () => {
               <DialogHeader>
                 <DialogTitle>Settings</DialogTitle>
               </DialogHeader>
-              <div className="space-y-6">
+              <div className="space-y-8">
+                {/* Contact QRide Option */}
                 <div className="flex flex-col gap-2">
+                  <span className="font-semibold text-gray-900">Contact QRide</span>
+                  <span className="text-gray-600 text-sm">If you have any issues, reach out to us directly on WhatsApp.</span>
+                  <a
+                    href="https://wa.me/201094542810"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg font-semibold shadow transition-all duration-200 mt-1"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 14.487c-.297-.149-1.758-.867-2.03-.967-.273-.099-.472-.148-.67.15-.198.297-.767.967-.94 1.166-.173.198-.347.223-.644.075-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.612-.916-2.21-.242-.58-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.099 3.205 5.077 4.372.71.306 1.263.489 1.695.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.288.173-1.413-.074-.124-.272-.198-.57-.347z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M21 12c0-4.97-4.03-9-9-9s-9 4.03-9 9c0 1.591.416 3.086 1.144 4.382L3 21l4.755-1.244A8.963 8.963 0 0012 21c4.97 0 9-4.03 9-9z" />
+                    </svg>
+                    Chat on WhatsApp
+                  </a>
+                </div>
+                {/* Deactivate Subscription Option */}
+                <div className="flex flex-col gap-2">
+                  <span className="font-semibold text-gray-900">Deactivate Subscription</span>
+                  <span className="text-gray-600 text-sm">You can request to cancel your subscription. It will remain active until the end of your current paid month.</span>
                   <Button
                     variant="destructive"
                     disabled={cancelLoading || cancelSuccess}
                     onClick={async () => {
                       setCancelLoading(true);
-                      // Set cancellation_requested flag in db
                       await supabase.from('qr_codes').update({ cancellation_requested: true }).eq('id', id);
                       setCancelLoading(false);
                       setCancelSuccess(true);
                     }}
+                    className="mt-1"
                   >
                     {cancelLoading ? 'Processing...' : cancelSuccess ? 'Cancellation Requested' : 'Cancel Subscription'}
                   </Button>
