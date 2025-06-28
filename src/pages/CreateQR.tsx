@@ -467,7 +467,7 @@ const CreateQR = () => {
                 </div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="new-password" className="text-gray-900">{qrPassword ? 'Change Password' : 'Set Password'} (required to edit in future)</Label>
+                <Label htmlFor="new-password" className="text-gray-900">{qrPassword ? 'Change Password' : 'Set Password (required to edit in future)'}{!qrPassword && <span className="text-red-500"> *</span>}</Label>
                 <Input
                   id="new-password"
                   type="password"
@@ -476,7 +476,7 @@ const CreateQR = () => {
                   onChange={e => setNewPassword(e.target.value)}
                   className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400"
                   minLength={4}
-                  required
+                  required={!qrPassword}
                 />
               </div>
               <Button
