@@ -152,9 +152,9 @@ const ScanQR = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-gray-100 via-white to-gray-200 text-gray-900 flex flex-col">
       {/* Header */}
-      <div className="border-b border-gray-800 backdrop-blur-sm bg-black/50">
+      <div className="border-b border-gray-200 backdrop-blur-sm bg-white/80">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-4">
             <Link to="/" className="flex items-center gap-2 text-[#ff6b00] hover:text-[#ff5a00] transition-colors">
@@ -167,21 +167,21 @@ const ScanQR = () => {
 
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-md mx-auto px-4 py-8">
-          <Card className="bg-gray-900/70 border-gray-800 shadow-xl rounded-2xl">
+          <Card className="bg-white border border-gray-200 shadow-xl rounded-2xl">
             <CardHeader className="text-center">
-              <CardTitle className="text-white text-2xl font-bold">Contact Vehicle Owner</CardTitle>
-              <CardDescription className="text-gray-400 text-lg mt-1">{qrData.name}</CardDescription>
+              <CardTitle className="text-2xl font-bold text-gray-900">Contact Vehicle Owner</CardTitle>
+              <CardDescription className="text-gray-500 text-lg mt-1">{qrData.name}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="mb-6">
-                <div className="text-center text-gray-300 text-base mb-2">Choose a message to send:</div>
+                <div className="text-center text-gray-600 text-base mb-2">Choose a message to send:</div>
                 <div className="flex gap-4 justify-center">
                   {messageChoices.map(msg => (
                     <Button
                       key={msg}
                       type="button"
                       onClick={() => setSelectedMessage(msg)}
-                      className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${selectedMessage === msg ? 'bg-[#ff6b00] text-white' : 'bg-gray-800 text-gray-200 border-gray-700 hover:bg-gray-700'}`}
+                      className={`px-4 py-2 rounded-lg font-semibold border transition-colors ${selectedMessage === msg ? 'bg-[#ff6b00] text-white' : 'bg-gray-100 text-gray-900 border-gray-300 hover:bg-gray-200'}`}
                       aria-pressed={selectedMessage === msg}
                     >
                       {msg}
@@ -189,7 +189,7 @@ const ScanQR = () => {
                   ))}
                 </div>
               </div>
-              <div className="text-center text-gray-300 text-base mb-2">
+              <div className="text-center text-gray-600 text-base mb-2">
                 Choose how you'd like to contact:
               </div>
               <div className="flex flex-col gap-4">
@@ -203,7 +203,7 @@ const ScanQR = () => {
                 </Button>
                 <Button
                   onClick={handleSendMessage}
-                  className="w-full bg-[#ff6b00] text-black hover:bg-[#ff5a00] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#ff6b00] focus:outline-none"
+                  className="w-full bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#ff6b00] focus:outline-none"
                   aria-label="Send SMS Message"
                 >
                   <Smartphone className="w-5 h-5 mr-3" />
@@ -211,22 +211,22 @@ const ScanQR = () => {
                 </Button>
                 <Button
                   onClick={handleCall}
-                  className="w-full border-gray-700 text-white hover:bg-gray-800 py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-gray-700 focus:outline-none"
+                  className="w-full border border-gray-300 text-gray-900 hover:bg-gray-100 py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-gray-300 focus:outline-none bg-gray-50"
                   aria-label="Call Now"
                 >
                   <Phone className="w-5 h-5 mr-3" />
                   Call
                 </Button>
-                <Link to={`/edit/${qrData.id}`} state={{ fromScan: true }} className="w-full block mt-2">
-                  <Button className="w-full bg-gray-800 text-[#ff6b00] hover:bg-gray-900 hover:text-white font-semibold py-4 flex items-center justify-center text-base rounded-lg border border-[#ff6b00] focus:ring-2 focus:ring-[#ff6b00] focus:outline-none" aria-label="Edit QR Code">
-                    Edit QR Code
-                  </Button>
-                </Link>
               </div>
-              <div className="mt-6 p-4 bg-gray-800/30 rounded-lg">
-                <p className="text-xs text-gray-400 text-center">
-                  Default message: "{qrData.default_message}"
-                </p>
+              <Button
+                asChild
+                variant="outline"
+                className="w-full border-2 border-[#ff6b00] text-[#ff6b00] hover:bg-orange-50 font-semibold py-4 text-lg rounded-lg mt-4"
+              >
+                <Link to={`/edit/${qrData.id}`}>Edit QR Code</Link>
+              </Button>
+              <div className="text-center text-gray-400 text-sm mt-4">
+                Default message: "{qrData.default_message}"
               </div>
             </CardContent>
           </Card>
