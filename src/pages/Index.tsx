@@ -389,16 +389,6 @@ const Index = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <Card className="p-8 bg-white border-gray-200 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm shadow-sm">
-              <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mb-6 border border-blue-200">
-                <Shield className="w-7 h-7 text-blue-500" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-900">Privacy First</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Your contact information remains private. Others can message you without seeing your number.
-              </p>
-            </Card>
-
-            <Card className="p-8 bg-white border-gray-200 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm shadow-sm">
               <div className="w-14 h-14 bg-green-50 rounded-2xl flex items-center justify-center mb-6 border border-green-200">
                 <Zap className="w-7 h-7 text-green-500" />
               </div>
@@ -425,16 +415,6 @@ const Index = () => {
               <h3 className="text-xl font-semibold mb-4 text-gray-900">Weatherproof</h3>
               <p className="text-gray-600 leading-relaxed">
                 Durable, weather-resistant stickers that last for years without fading.
-              </p>
-            </Card>
-
-            <Card className="p-8 bg-white border-gray-200 hover:border-[#ff6b00]/30 transition-all duration-300 backdrop-blur-sm shadow-sm">
-              <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center mb-6 border border-red-200">
-                <Users className="w-7 h-7 text-red-500" />
-              </div>
-              <h3 className="text-xl font-semibold mb-4 text-gray-900">Community Friendly</h3>
-              <p className="text-gray-600 leading-relaxed">
-                Promotes polite communication and reduces parking conflicts in your community.
               </p>
             </Card>
 
