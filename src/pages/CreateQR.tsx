@@ -427,6 +427,25 @@ const CreateQR = () => {
                           required
                         />
                       </div>
+
+                      {/* Only show Default Message input for admin */}
+                      {isAdmin && (
+                        <div className="space-y-2">
+                          <Label htmlFor="defaultMessage" className="text-gray-900">Default Message *</Label>
+                          <select
+                            id="defaultMessage"
+                            value={defaultMessage}
+                            onChange={e => setDefaultMessage(e.target.value)}
+                            className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400 w-full px-4 py-3 rounded-lg"
+                            required
+                          >
+                            {defaultMessages.map((msg) => (
+                              <option key={msg} value={msg}>{msg}</option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+
                       <div className="space-y-2">
                         <Label htmlFor="new-password" className="text-gray-900">{qrPassword ? 'Change Password' : 'Set Password'} (required to edit in future)</Label>
                         <Input
@@ -439,6 +458,7 @@ const CreateQR = () => {
                           minLength={4}
                         />
                       </div>
+
                       <Button
                         type="submit"
                         disabled={isLoading}
