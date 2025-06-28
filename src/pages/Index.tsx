@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -169,9 +168,9 @@ const Index = () => {
       <section className="relative pt-32 pb-20 px-6 min-h-screen flex items-center overflow-hidden">
         {/* Absolutely positioned geometric elements, only in hero section */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-24 left-16 w-32 h-32 bg-gradient-to-br from-gray-200 to-gray-300 rounded-3xl rotate-12 opacity-60 animate-float"></div>
-          <div className="absolute top-40 right-24 w-24 h-24 bg-gradient-to-br from-gray-300 to-gray-400 rounded-full opacity-40 animate-float" style={{ animationDelay: '1s' }}></div>
-          <div className="absolute bottom-32 left-1/2 w-28 h-28 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full opacity-30 animate-float" style={{ animationDelay: '0.5s', transform: 'translateX(-50%)' }}></div>
+          <div className="absolute top-24 left-16 w-32 h-32 bg-gradient-to-br from-gray-100 to-gray-200 rounded-3xl rotate-12 opacity-20 animate-float"></div>
+          <div className="absolute top-40 right-24 w-24 h-24 bg-gradient-to-br from-gray-200 to-gray-300 rounded-full opacity-10 animate-float" style={{ animationDelay: '1s' }}></div>
+          <div className="absolute bottom-32 left-1/2 w-28 h-28 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full opacity-10 animate-float" style={{ animationDelay: '0.5s', transform: 'translateX(-50%)' }}></div>
         </div>
         <div className="container mx-auto text-center relative z-10">
           <Badge className="mb-8 bg-gray-100 text-[#ff6b00] border-gray-200 text-sm font-medium">
