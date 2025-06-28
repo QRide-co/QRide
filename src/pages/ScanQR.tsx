@@ -12,6 +12,7 @@ interface QRCodeData {
   phone_number: string;
   default_message: string;
   activated: boolean;
+  unique_code: string;
 }
 
 const ScanQR = () => {
@@ -134,7 +135,7 @@ const ScanQR = () => {
             <CardContent className="space-y-6">
               <Button
                 className="w-full bg-[#9cff1e] text-black hover:bg-[#8ae619] font-semibold py-4 text-lg rounded-lg shadow-md"
-                onClick={() => window.location.href = '/subscribe'}
+                onClick={() => window.location.href = `/subscribe/${qrData.unique_code}`}
               >
                 Activate QR Code
               </Button>

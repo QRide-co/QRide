@@ -22,7 +22,7 @@ const App = () => (
           <Route path="/create" element={<CreateQR />} />
           <Route path="/edit/:id" element={<CreateQR />} />
           <Route path="/scan/:code" element={<ScanQR />} />
-          <Route path="/subscribe" element={<Subscribe />} />
+          <Route path="/subscribe/:code" element={<Subscribe />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
