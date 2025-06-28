@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import Subscribe from './pages/Subscribe';
 import MyQRCodes from './pages/MyQRCodes';
 import GetStarted from './pages/GetStarted';
+import ScanEntry from './pages/ScanEntry';
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/get-started" element={<GetStarted />} />
+          <Route path="/scan" element={<ScanEntry />} />
           <Route path="/create" element={<CreateQR />} />
           <Route path="/edit/:id" element={<CreateQR />} />
           <Route path="/scan/:code" element={<ScanQR />} />
