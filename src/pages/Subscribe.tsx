@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -44,12 +43,13 @@ const Subscribe = () => {
     })();
   }, [code]);
 
-  const handleSubscribe = () => {
-    // Integrate Paymob here
-    alert('Redirecting to Paymob payment... (placeholder)');
-    // After successful payment, activate QR code and redirect
-    // await supabase.from('qr_codes').update({ activated: true }).eq('unique_code', code);
-    // navigate(`/scan/${code}`);
+  const handleSubscribe = async () => {
+    if (!code) return;
+    // Instantly activate the QR code (simulate payment success)
+    await supabase.from('qr_codes').update({ activated: true }).eq('unique_code', code);
+    setQrData((prev: any) => ({ ...prev, activated: true }));
+    alert('Subscription successful! Your QR code is now activated.');
+    // Optionally, redirect or update UI
   };
 
   if (loading) {
