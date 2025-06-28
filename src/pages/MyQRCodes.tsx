@@ -20,6 +20,7 @@ const MyQRCodes = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [deleteName, setDeleteName] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [search, setSearch] = useState('');
 
   useEffect(() => {
     // Check sessionStorage for admin auth
@@ -113,13 +114,24 @@ const MyQRCodes = () => {
         <h2 className="text-3xl font-bold mb-6 text-gray-900 flex items-center gap-3">
           My QR Codes
         </h2>
+        <input
+          type="text"
+          placeholder="Search by name, phone, or ID..."
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="mb-8 w-full max-w-md px-4 py-3 rounded-lg border border-gray-300 text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b00] focus:border-transparent"
+        />
         {loading ? (
           <div className="text-gray-600">Loading QR codes...</div>
         ) : qrCodes.length === 0 ? (
           <div className="text-gray-600">No QR codes found.</div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {qrCodes.map((qr) => (
+            {qrCodes.filter(qr =>
+              qr.name?.toLowerCase().includes(search.toLowerCase()) ||
+              qr.phone_number?.toLowerCase().includes(search.toLowerCase()) ||
+              qr.id?.toLowerCase().includes(search.toLowerCase())
+            ).map((qr) => (
               <Card key={qr.id} className="bg-white border-gray-200 rounded-xl shadow-md flex flex-col">
                 <CardContent className="flex-1 flex flex-col gap-3 p-6">
                   <div className="flex items-center justify-between mb-2">
