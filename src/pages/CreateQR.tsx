@@ -46,6 +46,7 @@ const CreateQR = () => {
   const [bulkQRCodes, setBulkQRCodes] = useState<any[]>([]);
   const [bulkDownloadLoading, setBulkDownloadLoading] = useState(false);
   const [bulkSuccess, setBulkSuccess] = useState(false);
+  const [fetchingQR, setFetchingQR] = useState(false);
 
   const defaultMessages = [
     'Please move your car',
@@ -87,6 +88,7 @@ const CreateQR = () => {
       setShowAdminModal(false);
     }
     if (id) {
+      setFetchingQR(true);
       // Editing mode: fetch QR code data
       (async () => {
         const { data, error } = await supabase.from('qr_codes').select('*').eq('id', id).single();
@@ -113,6 +115,7 @@ const CreateQR = () => {
             setIsAuthenticated(true);
           }
         }
+        setFetchingQR(false);
       })();
     }
   }, [id, location.state, isAdmin]);
@@ -334,7 +337,7 @@ const CreateQR = () => {
     });
   };
 
-  if (id && !name && !isLoading && !isAdmin) {
+  if (id && !name && !isLoading && !isAdmin && !fetchingQR) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
