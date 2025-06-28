@@ -1,33 +1,7 @@
-import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { QrReader } from 'react-qr-reader';
-import { useNavigate } from 'react-router-dom';
 
 const GetStarted = () => {
-  const [scanning, setScanning] = useState(false);
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
-
-  const handleScan = (data: string | null) => {
-    if (data) {
-      // Extract code from URL or raw code
-      const match = data.match(/scan\/(.+)$/);
-      const code = match ? match[1] : data;
-      if (code) {
-        navigate(`/edit/${code}`);
-      } else {
-        setError('Invalid QR code.');
-      }
-      setScanning(false);
-    }
-  };
-
-  const handleError = (err: any) => {
-    setError('Camera error. Please allow camera access and try again.');
-    setScanning(false);
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200 py-12 px-4">
       <div className="w-full max-w-lg mx-auto space-y-8">
@@ -49,48 +23,6 @@ const GetStarted = () => {
                 Buy on WhatsApp
               </Button>
             </a>
-          </CardContent>
-        </Card>
-        {/* Activate Your Sticker Card */}
-        <Card>
-          <CardContent className="p-8 flex flex-col items-center">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-900">Activate Your Sticker</h2>
-            <p className="text-gray-600 mb-6 text-center">Already have a QRide sticker? Scan it now to activate and edit your info.</p>
-            {scanning ? (
-              <div className="w-full flex flex-col items-center">
-                <div className="mb-4 text-center text-gray-700 text-base font-medium">Scan your unactivated QR code.</div>
-                <div className="w-full" style={{ maxWidth: 400 }}>
-                  <QrReader
-                    constraints={{ facingMode: 'environment' }}
-                    onResult={(result, error) => {
-                      if (!!result) handleScan(result.getText());
-                      if (!!error) handleError(error);
-                    }}
-                  />
-                </div>
-                <Button className="mt-4" variant="outline" onClick={() => setScanning(false)}>Cancel</Button>
-                {error && (
-                  <div className="mt-4 text-center">
-                    <div className="text-red-600 text-sm mb-2">{error}</div>
-                    <Button size="sm" variant="outline" onClick={() => { setError(''); setScanning(false); setTimeout(() => setScanning(true), 100); }}>
-                      Retry
-                    </Button>
-                  </div>
-                )}
-                <a
-                  href="https://wa.me/201094542810?text=I%20want%20to%20order%20a%20car%20qr%20code%20sticker"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 text-xs text-gray-500 hover:text-green-600 underline transition-colors"
-                >
-                  Don't have a QR code sticker?
-                </a>
-              </div>
-            ) : (
-              <Button className="w-full bg-[#ff6b00] text-white hover:bg-orange-500 font-bold text-lg py-3 rounded-xl shadow-xl transition-all duration-200" onClick={() => { setScanning(true); setError(''); }}>
-                Scan QR Code
-              </Button>
-            )}
           </CardContent>
         </Card>
       </div>
