@@ -21,6 +21,7 @@ import {
 import { Link, useLocation } from "react-router-dom";
 import React, { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 
 const Index = () => {
   const scrollToSection = (id: string) => {
@@ -33,6 +34,11 @@ const Index = () => {
   const location = useLocation();
   const isAdmin = location.search.includes('admin=1');
 
+  const [adminAuth, setAdminAuth] = useState(false);
+  const [adminPassword, setAdminPassword] = useState('');
+  const [showAdminModal, setShowAdminModal] = useState(isAdmin);
+  const [adminError, setAdminError] = useState('');
+
   useEffect(() => {
     const fetchQRCodes = async () => {
       setLoadingQRCodes(true);
@@ -42,6 +48,17 @@ const Index = () => {
     };
     fetchQRCodes();
   }, []);
+
+  const handleAdminPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (adminPassword === 'admin123') {
+      setAdminAuth(true);
+      setShowAdminModal(false);
+      setAdminError('');
+    } else {
+      setAdminError('Incorrect password.');
+    }
+  };
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative">
@@ -56,7 +73,7 @@ const Index = () => {
               <h1 className="text-xl font-bold">QRide</h1>
             </div>
             <div className="flex items-center space-x-4">
-              {isAdmin && (
+              {isAdmin && adminAuth && (
                 <Link 
                   to="/create?admin=1"
                   className="bg-[#9cff1e] text-black px-6 py-2 rounded-full font-semibold hover:bg-[#8ae619] transition-all duration-300"
@@ -70,7 +87,28 @@ const Index = () => {
       </nav>
 
       {/* QR Codes Management Section (admin only) */}
-      {isAdmin && (
+      {isAdmin && !adminAuth && (
+        <Dialog open={showAdminModal}>
+          <DialogContent className="max-w-sm mx-auto">
+            <DialogHeader>
+              <DialogTitle>Admin Access</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleAdminPassword} className="space-y-4">
+              <input
+                type="password"
+                placeholder="Enter admin password"
+                value={adminPassword}
+                onChange={e => setAdminPassword(e.target.value)}
+                className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white"
+                autoFocus
+              />
+              {adminError && <div className="text-red-500 text-sm">{adminError}</div>}
+              <button type="submit" className="w-full bg-[#9cff1e] text-black font-semibold py-2 rounded">Continue</button>
+            </form>
+          </DialogContent>
+        </Dialog>
+      )}
+      {isAdmin && adminAuth && (
         <section className="container mx-auto px-4 py-12">
           <h2 className="text-3xl font-bold mb-6 text-white flex items-center gap-3">
             <QrCode className="w-7 h-7 text-[#9cff1e]" />

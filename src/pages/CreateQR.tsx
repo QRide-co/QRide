@@ -33,6 +33,10 @@ const CreateQR = () => {
   const [qrPassword, setQrPassword] = useState<string | null>(null);
   const [newPassword, setNewPassword] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [adminAuth, setAdminAuth] = useState(false);
+  const [adminPassword, setAdminPassword] = useState('');
+  const [showAdminModal, setShowAdminModal] = useState(isAdmin);
+  const [adminError, setAdminError] = useState('');
 
   useEffect(() => {
     if (id) {
@@ -76,6 +80,17 @@ const CreateQR = () => {
       setPasswordError('');
     } else {
       setPasswordError('Incorrect password.');
+    }
+  };
+
+  const handleAdminPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (adminPassword === 'admin123') {
+      setAdminAuth(true);
+      setShowAdminModal(false);
+      setAdminError('');
+    } else {
+      setAdminError('Incorrect password.');
     }
   };
 
@@ -210,6 +225,30 @@ const CreateQR = () => {
           <a href="/" className="text-[#9cff1e] hover:text-[#8ae619] underline">Return to Home</a>
         </div>
       </div>
+    );
+  }
+
+  if (isAdmin && !adminAuth) {
+    return (
+      <Dialog open={showAdminModal}>
+        <DialogContent className="max-w-sm mx-auto">
+          <DialogHeader>
+            <DialogTitle>Admin Access</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleAdminPassword} className="space-y-4">
+            <input
+              type="password"
+              placeholder="Enter admin password"
+              value={adminPassword}
+              onChange={e => setAdminPassword(e.target.value)}
+              className="w-full px-3 py-2 rounded bg-gray-800 border border-gray-700 text-white"
+              autoFocus
+            />
+            {adminError && <div className="text-red-500 text-sm">{adminError}</div>}
+            <button type="submit" className="w-full bg-[#9cff1e] text-black font-semibold py-2 rounded">Continue</button>
+          </form>
+        </DialogContent>
+      </Dialog>
     );
   }
 
