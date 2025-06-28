@@ -1,7 +1,9 @@
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { useState } from 'react';
 
 const GetStarted = () => {
+  const [showActivate, setShowActivate] = useState(false);
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-100 via-white to-gray-200 py-12 px-4">
       <div className="w-full max-w-lg mx-auto space-y-8">
@@ -23,6 +25,29 @@ const GetStarted = () => {
                 Buy on WhatsApp
               </Button>
             </a>
+          </CardContent>
+        </Card>
+        {/* Activate QR Code Card */}
+        <Card>
+          <CardContent className="p-8 flex flex-col items-center">
+            <h2 className="text-2xl font-semibold mb-4 text-gray-900">Activate QR Code</h2>
+            {!showActivate ? (
+              <Button className="w-full bg-[#ff6b00] text-white hover:bg-orange-500 font-bold text-lg py-3 rounded-xl shadow-xl transition-all duration-200" onClick={() => setShowActivate(true)}>
+                Activate QR Code
+              </Button>
+            ) : (
+              <>
+                <div className="text-gray-700 text-base text-center mb-4">To activate your QR code sticker, scan it and follow the steps.</div>
+                <a
+                  href="https://wa.me/201094542810?text=I%20want%20to%20order%20a%20car%20qr%20code%20sticker"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 text-xs text-gray-500 hover:text-green-600 underline transition-colors"
+                >
+                  Don't have a QR code sticker?
+                </a>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
