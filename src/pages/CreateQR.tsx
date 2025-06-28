@@ -304,7 +304,7 @@ const CreateQR = () => {
     });
   };
 
-  if (!isAdmin) {
+  if (id && !name && !isLoading && !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
