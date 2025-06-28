@@ -24,8 +24,8 @@ const ScanQR = () => {
 
   // Add state for selected message
   const messageChoices = [
-    'Please move your car',
-    'من فضلك حرك سيارتك'
+    '🛑 Please move your car 🛑',
+    '🛑 من فضلك حرك سيارتك 🛑'
   ];
   const [selectedMessage, setSelectedMessage] = useState(messageChoices[0]);
 
