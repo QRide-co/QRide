@@ -552,6 +552,32 @@ const CreateQR = () => {
             </DialogContent>
           </Dialog>
         )}
+        {bulkModal && (
+          <Dialog open={bulkModal} onOpenChange={setBulkModal}>
+            <DialogContent className="max-w-sm mx-auto">
+              <DialogHeader>
+                <DialogTitle>Generate Bulk QR Codes</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <label className="block text-gray-900 font-semibold mb-1">How many QR codes do you want to generate?</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={100}
+                  value={bulkCount}
+                  onChange={e => setBulkCount(Number(e.target.value))}
+                  className="w-full px-4 py-2 rounded-lg border border-gray-300 text-gray-900 text-lg focus:outline-none focus:ring-2 focus:ring-[#ff6b00] focus:border-transparent"
+                />
+                <div className="flex gap-4 justify-end mt-4">
+                  <Button variant="outline" onClick={() => setBulkModal(false)} disabled={bulkLoading}>Cancel</Button>
+                  <Button className="bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold" onClick={confirmBulkGenerate} disabled={bulkLoading}>
+                    {bulkLoading ? 'Generating...' : 'Generate'}
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
     </div>
   );
