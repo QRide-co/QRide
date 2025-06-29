@@ -35,6 +35,7 @@ const Subscribe = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [showSuccess, setShowSuccess] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<'basic' | 'advanced'>(qrData?.package || 'basic');
 
   useEffect(() => {
     if (!code) return;
@@ -47,8 +48,8 @@ const Subscribe = () => {
 
   const handleSubscribe = async () => {
     if (!code) return;
-    const { data } = await supabase.from('qr_codes').update({ activated: true }).eq('unique_code', code).select();
-    setQrData((prev: any) => ({ ...prev, activated: true }));
+    const { data } = await supabase.from('qr_codes').update({ activated: true, package: selectedPackage }).eq('unique_code', code).select();
+    setQrData((prev: any) => ({ ...prev, activated: true, package: selectedPackage }));
     setShowSuccess(true);
     setTimeout(() => {
       if (data && data[0] && data[0].id) {
@@ -76,24 +77,60 @@ const Subscribe = () => {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col md:flex-row gap-8 items-center justify-center">
-            {/* Pricing Card */}
+            <div className="w-full mb-6">
+              <label className="block text-gray-900 font-semibold mb-2 text-center">Choose your package</label>
+              <div className="flex flex-col md:flex-row gap-4 items-center justify-center">
+                <button
+                  type="button"
+                  className={`flex-1 border-2 rounded-xl p-6 text-center transition-all ${selectedPackage === 'basic' ? 'border-[#ff6b00] bg-[#ff6b00]/10' : 'border-gray-200 bg-white'} hover:border-[#ff6b00]`}
+                  onClick={() => setSelectedPackage('basic')}
+                >
+                  <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
+                  <div className="text-4xl font-extrabold text-gray-900 mb-2 flex items-end gap-2">
+                    <span>10</span>
+                    <span className="text-lg text-gray-700 font-medium">EGP</span>
+                    <span className="text-base text-gray-600 font-normal mb-1">/month</span>
+                  </div>
+                  <div className="text-gray-600 mb-2 text-center">All contact options</div>
+                </button>
+                <button
+                  type="button"
+                  className={`flex-1 border-2 rounded-xl p-6 text-center transition-all ${selectedPackage === 'advanced' ? 'border-blue-600 bg-blue-50' : 'border-gray-200 bg-white'} hover:border-blue-600`}
+                  onClick={() => setSelectedPackage('advanced')}
+                >
+                  <div className="text-2xl font-semibold text-blue-600 mb-2">Advanced</div>
+                  <div className="text-4xl font-extrabold text-gray-900 mb-2 flex items-end gap-2">
+                    <span>20</span>
+                    <span className="text-lg text-gray-700 font-medium">EGP</span>
+                    <span className="text-base text-gray-600 font-normal mb-1">/month</span>
+                  </div>
+                  <div className="text-gray-600 mb-2 text-center">SMS relay only (privacy enhanced)</div>
+                </button>
+              </div>
+            </div>
             <div className="flex-1 bg-gradient-to-br from-[#ff6b00]/10 to-gray-50 rounded-2xl p-8 border border-[#ff6b00]/30 shadow-lg flex flex-col items-center">
-              <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
+              <div className="text-2xl font-semibold text-[#ff6b00] mb-2">{selectedPackage === 'basic' ? 'Basic' : 'Advanced'}</div>
               <div className="text-5xl font-extrabold text-gray-900 mb-2 flex items-end gap-2">
-                <span>10</span>
+                <span>{selectedPackage === 'basic' ? '10' : '20'}</span>
                 <span className="text-2xl text-gray-700 font-medium">EGP</span>
                 <span className="text-lg text-gray-600 font-normal mb-1">/month</span>
               </div>
-              <div className="text-gray-600 mb-6 text-center">Perfect for individuals who want to enable their QR code for full contact features.</div>
+              <div className="text-gray-600 mb-6 text-center">
+                {selectedPackage === 'basic' ? 'Perfect for individuals who want to enable their QR code for full contact features.' : 'For privacy-focused users. Only SMS relay is enabled; your phone number is never shown.'}
+              </div>
               <ul className="mb-8 space-y-3 w-full">
-                {features.map((f, i) => (
+                {selectedPackage === 'basic' ? features.map((f, i) => (
                   <li key={i} className="flex items-center gap-3 text-base text-gray-800">
                     <CheckCircle className="w-5 h-5 text-[#ff6b00]" /> {f}
                   </li>
-                ))}
+                )) : (
+                  <li className="flex items-center gap-3 text-base text-gray-800">
+                    <CheckCircle className="w-5 h-5 text-blue-600" /> SMS relay only (privacy enhanced)
+                  </li>
+                )}
               </ul>
               <Button
-                className="w-full bg-[#ff6b00] text-white hover:bg-[#ff5a00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2"
+                className={`w-full ${selectedPackage === 'basic' ? 'bg-[#ff6b00] hover:bg-[#ff5a00]' : 'bg-blue-600 hover:bg-blue-700'} text-white font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2`}
                 size="lg"
                 onClick={handleSubscribe}
               >
