@@ -407,6 +407,13 @@ const CreateQR = () => {
             </CardDescription>
           </CardHeader>
           <CardContent>
+            {isAdmin && !id && (
+              <div className="mb-6 flex justify-center">
+                <Button variant="outline" className="border-2 border-[#ff6b00] text-[#ff6b00] hover:bg-orange-50 font-semibold px-6 py-3 rounded-lg" onClick={handleBulkGenerate}>
+                  Generate Bulk QR Codes
+                </Button>
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="space-y-6">
               {/* Only show QR Code Name input for admin */}
               {isAdmin && (
