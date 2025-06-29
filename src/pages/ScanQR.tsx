@@ -13,6 +13,7 @@ interface QRCodeData {
   default_message: string;
   activated: boolean;
   unique_code: string;
+  package: string;
 }
 
 const ScanQR = () => {
@@ -83,6 +84,27 @@ const ScanQR = () => {
   const handleCall = () => {
     if (!qrData) return;
     window.location.href = `tel:${qrData.phone_number}`;
+  };
+
+  const handleSendRelaySMS = async () => {
+    if (!qrData) return;
+    try {
+      await fetch('/api/send-message', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: qrData.unique_code, message: selectedMessage }),
+      });
+      toast({
+        title: 'Message Queued',
+        description: 'Your message will be sent via SMS shortly.',
+      });
+    } catch (e) {
+      toast({
+        title: 'Error',
+        description: 'Failed to queue SMS. Please try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   if (isLoading) {
@@ -180,30 +202,43 @@ const ScanQR = () => {
                 Choose how you'd like to contact:
               </div>
               <div className="flex flex-col gap-4">
-                <Button
-                  onClick={handleSendWhatsApp}
-                  className="w-full bg-[#25D366] text-white hover:bg-[#1ebe57] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#25D366] focus:outline-none"
-                  aria-label="Send WhatsApp Message"
-                >
-                  <MessageSquare className="w-5 h-5 mr-3" />
-                  WhatsApp
-                </Button>
-                <Button
-                  onClick={handleSendMessage}
-                  className="w-full bg-blue-600 text-white hover:bg-blue-700 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
-                  aria-label="Send SMS Message"
-                >
-                  <Smartphone className="w-5 h-5 mr-3" />
-                  SMS
-                </Button>
-                <Button
-                  onClick={handleCall}
-                  className="w-full bg-green-500 text-white hover:bg-green-600 font-semibold py-6 flex items-center justify-center text-lg rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none"
-                  aria-label="Call Now"
-                >
-                  <Phone className="w-5 h-5 mr-3" />
-                  Call
-                </Button>
+                {qrData.package === 'advanced' ? (
+                  <Button
+                    onClick={handleSendRelaySMS}
+                    className="w-full bg-blue-600 text-white hover:bg-blue-700 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    aria-label="Send SMS Message"
+                  >
+                    <Smartphone className="w-5 h-5 mr-3" />
+                    SMS (Private)
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      onClick={handleSendWhatsApp}
+                      className="w-full bg-[#25D366] text-white hover:bg-[#1ebe57] font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-[#25D366] focus:outline-none"
+                      aria-label="Send WhatsApp Message"
+                    >
+                      <MessageSquare className="w-5 h-5 mr-3" />
+                      WhatsApp
+                    </Button>
+                    <Button
+                      onClick={handleSendMessage}
+                      className="w-full bg-blue-600 text-white hover:bg-blue-700 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      aria-label="Send SMS Message"
+                    >
+                      <Smartphone className="w-5 h-5 mr-3" />
+                      SMS
+                    </Button>
+                    <Button
+                      onClick={handleCall}
+                      className="w-full bg-green-400 text-white hover:bg-green-500 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-green-400 focus:outline-none"
+                      aria-label="Call"
+                    >
+                      <Phone className="w-5 h-5 mr-3" />
+                      Call
+                    </Button>
+                  </>
+                )}
               </div>
               <Button
                 asChild
