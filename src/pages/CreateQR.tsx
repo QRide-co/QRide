@@ -123,6 +123,20 @@ const CreateQR = () => {
     }
   }, [id, location.state, isAdmin]);
 
+  useEffect(() => {
+    if (bulkSuccess) {
+      toast({
+        title: 'Bulk QR Codes Generated!',
+        description: 'Your bulk QR codes have been generated successfully.',
+        duration: 2000,
+        variant: 'success',
+      });
+      setTimeout(() => {
+        navigate('/my-qr-codes' + (isAdmin ? '?admin=1' : ''));
+      }, 2000);
+    }
+  }, [bulkSuccess, isAdmin, navigate, toast]);
+
   const generateUniqueCode = () => {
     return Math.random().toString(36).substring(2, 10) + Date.now().toString(36);
   };
@@ -582,18 +596,7 @@ const CreateQR = () => {
           </Dialog>
         )}
         {bulkSuccess && (
-          <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-100 via-white to-green-200">
-            <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center">
-              <div className="flex flex-col items-center mb-6">
-                <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M9 12l2 2l4 -4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-                <h2 className="text-2xl font-bold text-green-700 mb-2">Bulk QR Codes Generated!</h2>
-                <p className="text-lg text-gray-700 mb-4">Your bulk QR codes have been generated successfully.</p>
-                <Button className="bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold px-6 py-3 rounded-lg mt-2" onClick={() => navigate('/my-qr-codes' + (isAdmin ? '?admin=1' : ''))}>
-                  Go to My QR Codes
-                </Button>
-              </div>
-            </div>
-          </div>
+          <></>
         )}
       </div>
     </div>
