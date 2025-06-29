@@ -103,21 +103,6 @@ const Subscribe = () => {
                 <Lock className="w-4 h-4 text-[#ff6b00]" /> Secure payment via Paymob
               </div>
             </div>
-            {/* QR Code Details */}
-            <div className="flex-1 bg-gray-50 rounded-2xl p-6 border border-gray-200 shadow flex flex-col items-center">
-              <div className="text-lg font-semibold mb-2 text-gray-900">Your QR Code</div>
-              <div className="bg-white p-3 rounded-lg mb-4 shadow-sm">
-                <img
-                  src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(window.location.origin + '/scan/' + qrData.unique_code)}`}
-                  alt="QR Code"
-                  className="w-36 h-36"
-                />
-              </div>
-              <div className="text-sm text-gray-700 mb-1"><b>Name:</b> {qrData.name}</div>
-              <div className="text-sm text-gray-700 mb-1"><b>Phone:</b> {qrData.phone_number}</div>
-              <div className="text-sm text-gray-700 mb-1"><b>Default Message:</b> {qrData.default_message}</div>
-              <div className="text-xs text-gray-500 break-all"><b>Scan URL:</b> {window.location.origin + '/scan/' + qrData.unique_code}</div>
-            </div>
           </CardContent>
         </Card>
         {/* FAQ / Benefits Section */}
