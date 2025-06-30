@@ -34,7 +34,23 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { code, message } = req.body;
+    let code, message;
+    if (req.body) {
+      ({ code, message } = req.body);
+    } else {
+      try {
+        const body = await new Promise((resolve, reject) => {
+          let data = '';
+          req.on('data', chunk => { data += chunk; });
+          req.on('end', () => resolve(JSON.parse(data)));
+          req.on('error', reject);
+        });
+        ({ code, message } = body as any);
+      } catch (e) {
+        res.status(400).json({ error: "Invalid JSON body" });
+        return;
+      }
+    }
     if (!code || !message) {
       res.status(400).json({ error: "Missing code or message" });
       return;
