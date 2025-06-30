@@ -86,6 +86,16 @@ const CreateQR = () => {
   const sortedCountries = [countryList[0], ...countryList.slice(1).sort((a, b) => a.name.localeCompare(b.name))];
   const [country, setCountry] = useState(sortedCountries[0]);
 
+  const stripCountryCode = (number: string, countryCode: string) => {
+    if (!number) return '';
+    let n = number.replace(/\D/g, '');
+    const cc = countryCode.replace('+', '');
+    if (n.startsWith(cc)) {
+      n = n.slice(cc.length);
+    }
+    return n;
+  };
+
   useEffect(() => {
     // Check sessionStorage for admin auth
     if (isAdmin && sessionStorage.getItem('adminAuth') === 'true') {
@@ -99,7 +109,7 @@ const CreateQR = () => {
         const { data, error } = await supabase.from('qr_codes').select('*').eq('id', id).single();
         if (data) {
           setName(data.name);
-          setPhoneNumber(data.phone_number);
+          setPhoneNumber(stripCountryCode(data.phone_number, country.code));
           setDefaultMessage(data.default_message);
           const url = `${window.location.origin}/scan/${data.unique_code}`;
           setScanUrl(url);
