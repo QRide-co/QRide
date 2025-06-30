@@ -7,7 +7,7 @@ const SUPABASE_URL = process.env.SUPABASE_URL || "https://uipodeoczfvqikkxvgsq.s
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY";
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-export default async function handler(req, res) {
+export default async function (req, res) {
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
