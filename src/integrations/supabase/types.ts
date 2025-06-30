@@ -16,12 +16,11 @@ export type Database = {
           default_message: string | null
           id: string
           name: string
+          package: string
           password: string | null
           phone_number: string | null
           unique_code: string
           updated_at: string
-          cancellation_requested?: boolean
-          package: string // 'basic' or 'advanced'
         }
         Insert: {
           activated?: boolean
@@ -29,12 +28,11 @@ export type Database = {
           default_message?: string | null
           id?: string
           name: string
+          package?: string
           password?: string | null
           phone_number?: string | null
           unique_code: string
           updated_at?: string
-          cancellation_requested?: boolean
-          package?: string // 'basic' or 'advanced'
         }
         Update: {
           activated?: boolean
@@ -42,12 +40,11 @@ export type Database = {
           default_message?: string | null
           id?: string
           name?: string
+          package?: string
           password?: string | null
           phone_number?: string | null
           unique_code?: string
           updated_at?: string
-          cancellation_requested?: boolean
-          package?: string // 'basic' or 'advanced'
         }
         Relationships: []
       }
