@@ -156,6 +156,12 @@ const CreateQR = () => {
     }
   };
 
+  const formatPhoneNumberWithCountryCode = (number: string, countryCode: string) => {
+    let n = number.trim().replace(/\D/g, '');
+    n = n.replace(/^0+/, '');
+    return `${countryCode}${n}`;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !phoneNumber.trim()) {
@@ -168,11 +174,12 @@ const CreateQR = () => {
     }
     setIsLoading(true);
     try {
+      const formattedPhone = formatPhoneNumberWithCountryCode(phoneNumber, country.code);
       if (id) {
         // Update existing QR code
         const updateData: any = {
           name: name.trim(),
-          phone_number: phoneNumber.trim(),
+          phone_number: formattedPhone,
           default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
           package: packageType,
         };
@@ -206,7 +213,7 @@ const CreateQR = () => {
         .insert({
           name: name.trim(),
           unique_code: uniqueCode,
-          phone_number: phoneNumber.trim(),
+          phone_number: formattedPhone,
           default_message: defaultMessage.trim() || 'Hello! I need to contact you regarding your vehicle.',
           password: newPassword,
           activated: false,
@@ -343,7 +350,12 @@ const CreateQR = () => {
   const handleBulkFieldChange = (idx: number, field: 'name' | 'phone', value: string) => {
     setBulkQRCodes((prev) => {
       const updated = [...prev];
-      updated[idx][field] = value;
+      if (field === 'phone') {
+        const countryCode = country?.code || '+20';
+        updated[idx][field] = formatPhoneNumberWithCountryCode(value, countryCode);
+      } else {
+        updated[idx][field] = value;
+      }
       return updated;
     });
   };
