@@ -4,7 +4,7 @@ import path from "path";
 const MESSAGES_PATH = path.join(process.cwd(), "messages.json");
 const SECRET = process.env.SMS_RELAY_SECRET || "changeme";
 
-export default async function handler(req, res) {
+export default async function (req, res) {
   if (req.method !== "GET") {
     res.status(405).json({ error: "Method not allowed" });
     return;
