@@ -1,7 +1,7 @@
-import { promises as fs } from "fs";
-import path from "path";
+import { createClient } from '@supabase/supabase-js';
 
-const MESSAGES_PATH = path.join(process.cwd(), "messages.json");
+const SUPABASE_URL = process.env.SUPABASE_URL || "https://uipodeoczfvqikkxvgsq.supabase.co";
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY";
 const SECRET = process.env.SMS_RELAY_SECRET || "changeme";
 
 export default async function (req, res) {
@@ -16,15 +16,34 @@ export default async function (req, res) {
     return;
   }
 
-  let messages = [];
-  try {
-    const data = await fs.readFile(MESSAGES_PATH, "utf-8");
-    messages = JSON.parse(data);
-  } catch {
-    messages = [];
-  }
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  // Clear the queue after fetching
-  await fs.writeFile(MESSAGES_PATH, "[]");
-  res.status(200).json({ messages });
+  try {
+    // Fetch all messages
+    const { data: messages, error } = await supabase
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: true });
+    if (error) {
+      res.status(500).json({ error: "Failed to fetch messages" });
+      return;
+    }
+
+    // Delete all fetched messages
+    if (messages.length > 0) {
+      const ids = messages.map((msg: any) => msg.id);
+      const { error: deleteError } = await supabase
+        .from('messages')
+        .delete()
+        .in('id', ids);
+      if (deleteError) {
+        res.status(500).json({ error: "Failed to clear messages" });
+        return;
+      }
+    }
+
+    res.status(200).json({ messages });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 } 

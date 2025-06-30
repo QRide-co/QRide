@@ -1,8 +1,5 @@
-import { promises as fs } from "fs";
-import path from "path";
 import { createClient } from '@supabase/supabase-js';
 
-const MESSAGES_PATH = path.join(process.cwd(), "messages.json");
 const SUPABASE_URL = process.env.SUPABASE_URL || "https://uipodeoczfvqikkxvgsq.supabase.co";
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY";
 
@@ -86,28 +83,19 @@ export default async function handler(req, res) {
       return;
     }
 
-    // Handle file operations
-    let messages: Array<{ code: string; phone_number: string | null; message: string; createdAt: string }> = [];
+    // Insert message into Supabase messages table
     try {
-      const data = await fs.readFile(MESSAGES_PATH, "utf-8");
-      messages = JSON.parse(data);
+      const { error } = await supabase
+        .from('messages')
+        .insert({ code, phone_number, message });
+      if (error) {
+        console.error('Failed to insert message:', error);
+        res.status(500).json({ error: "Failed to queue message" });
+        return;
+      }
     } catch (error) {
-      console.log('Messages file not found or invalid, starting with empty array');
-      messages = [];
-    }
-
-    messages.push({
-      code,
-      phone_number,
-      message,
-      createdAt: new Date().toISOString(),
-    });
-
-    try {
-      await fs.writeFile(MESSAGES_PATH, JSON.stringify(messages, null, 2));
-    } catch (error) {
-      console.error('Failed to write messages file:', error);
-      res.status(500).json({ error: "Failed to save message" });
+      console.error('Failed to insert message:', error);
+      res.status(500).json({ error: "Failed to queue message" });
       return;
     }
 
