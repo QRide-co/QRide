@@ -1,4 +1,3 @@
-
 import { promises as fs } from "fs";
 import path from "path";
 import { createClient } from '@supabase/supabase-js';
@@ -10,7 +9,7 @@ const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || "eyJhbGciOiJIUzI1NiIsIn
 export default async function handler(req, res) {
   // Add CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   // Handle OPTIONS request for CORS
@@ -72,7 +71,7 @@ export default async function handler(req, res) {
     }
 
     // Handle file operations
-    let messages = [];
+    let messages: Array<{ code: string; phone_number: string | null; message: string; createdAt: string }> = [];
     try {
       const data = await fs.readFile(MESSAGES_PATH, "utf-8");
       messages = JSON.parse(data);
