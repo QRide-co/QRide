@@ -3,6 +3,7 @@ import time
 import os
 import json
 from datetime import datetime
+import socket
 
 API_URL = "https://qride.vercel.app/api/fetch-messages?secret=changeme"  # Replace with your actual URL
 POLL_INTERVAL = 10  # seconds
@@ -41,8 +42,28 @@ def send_whatsapp(phone, message):
     result = os.system(f'termux-open-url "{url}"')
     return result == 0
 
+def is_connected():
+    try:
+        # Try to connect to a public DNS server
+        socket.create_connection(("8.8.8.8", 53), timeout=2)
+        return True
+    except OSError:
+        return False
+
 def main():
+    was_online = None
     while True:
+        online = is_connected()
+        if not online:
+            if was_online is not False:
+                print("⛔️Offline")
+            was_online = False
+            time.sleep(POLL_INTERVAL)
+            continue
+        else:
+            if was_online is not True:
+                print("✅Back Online")
+            was_online = True
         try:
             resp = requests.get(API_URL)
             data = resp.json()
