@@ -546,7 +546,7 @@ const CreateQR = () => {
               </Button>
             </form>
             {!isAdmin && id && (
-              <div className="flex justify-center mb-4">
+              <div className="flex justify-center mt-[5px] mb-4">
                 <Button variant="outline" size="sm" onClick={() => setShowSettings(true)}>
                   Settings
                 </Button>
