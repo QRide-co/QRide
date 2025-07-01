@@ -511,20 +511,6 @@ const CreateQR = () => {
                 </div>
               )}
               <div className="space-y-2">
-                <Label htmlFor="packageType" className="text-gray-900">QR Code Package *</Label>
-                <select
-                  id="packageType"
-                  value={packageType}
-                  onChange={e => setPackageType(e.target.value as 'basic' | 'advanced')}
-                  className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400 w-full px-4 py-3 rounded-lg"
-                  required
-                  disabled={!!id}
-                >
-                  <option value="basic">Basic (All contact options)</option>
-                  <option value="advanced">Advanced (SMS relay only, privacy enhanced)</option>
-                </select>
-              </div>
-              <div className="space-y-2">
                 <Label htmlFor="new-password" className="text-gray-900">{qrPassword ? 'Change Password' : 'Set Password (required to edit in future)'}{!qrPassword && <span className="text-red-500"> *</span>}</Label>
                 <Input
                   id="new-password"
@@ -561,6 +547,13 @@ const CreateQR = () => {
                 <DialogTitle>Settings</DialogTitle>
               </DialogHeader>
               <div className="space-y-8">
+                {/* Show current package in a modern way if editing */}
+                {id && (
+                  <div className="flex flex-col gap-2">
+                    <span className="font-semibold text-gray-900">Current Package</span>
+                    <span className={`text-lg font-bold ${packageType === 'basic' ? 'text-blue-600' : 'text-orange-500'}`}>{packageType === 'basic' ? 'Basic' : 'Advanced'}</span>
+                  </div>
+                )}
                 {/* Contact QRide Option */}
                 <div className="flex flex-col gap-2">
                   <span className="font-semibold text-gray-900">Contact QRide</span>
