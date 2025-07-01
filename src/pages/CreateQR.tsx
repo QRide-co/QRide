@@ -576,6 +576,24 @@ const CreateQR = () => {
                     Chat on WhatsApp
                   </a>
                 </div>
+                {/* Change Package Option (edit mode only) */}
+                {id && scanUrl && (
+                  <div className="flex flex-col gap-2">
+                    <span className="font-semibold text-gray-900">Change Package</span>
+                    <span className="text-gray-600 text-sm">Upgrade or downgrade your QR code package.</span>
+                    <Button
+                      variant="outline"
+                      className="mt-1 border-[#ff6b00] text-[#ff6b00] hover:bg-orange-50 font-semibold"
+                      onClick={() => {
+                        // Extract unique_code from scanUrl
+                        const code = scanUrl.split('/scan/')[1];
+                        if (code) navigate(`/subscribe/${code}`);
+                      }}
+                    >
+                      Change Package
+                    </Button>
+                  </div>
+                )}
                 {/* Deactivate Subscription Option */}
                 <div className="flex flex-col gap-2">
                   <span className="font-semibold text-gray-900">Deactivate Subscription</span>
