@@ -94,21 +94,9 @@ def main():
                     print(f"Sending WhatsApp to {phone}: {text}")
                     wa_success = send_whatsapp(phone, text)
                     log_status(phone, text, "whatsapp_sent" if wa_success else "whatsapp_failed")
-                    # Wait up to 60 seconds for SMS reply
-                    import time as pytime
-                    since_ts = int(pytime.time())
-                    replied = False
-                    for _ in range(12):  # check every 5s for 1 min
-                        pytime.sleep(5)
-                        if has_sms_reply(phone, since_ts):
-                            replied = True
-                            print(f"Reply received from {phone} after WhatsApp.")
-                            log_status(phone, text, "reply_received")
-                            break
-                    if not replied:
-                        print(f"No reply from {phone} after WhatsApp, sending SMS.")
-                        sms_success = send_sms(phone, text)
-                        log_status(phone, text, "sms_success" if sms_success else "sms_failed")
+                    print(f"Sending SMS to {phone}: {text}")
+                    sms_success = send_sms(phone, text)
+                    log_status(phone, text, "sms_success" if sms_success else "sms_failed")
         except Exception as e:
             print("Error:", e)
         time.sleep(POLL_INTERVAL)
