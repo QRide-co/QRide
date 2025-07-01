@@ -518,6 +518,7 @@ const CreateQR = () => {
                   onChange={e => setPackageType(e.target.value as 'basic' | 'advanced')}
                   className="bg-gray-50 border-gray-300 text-gray-900 placeholder:text-gray-400 w-full px-4 py-3 rounded-lg"
                   required
+                  disabled={!!id}
                 >
                   <option value="basic">Basic (All contact options)</option>
                   <option value="advanced">Advanced (SMS relay only, privacy enhanced)</option>
