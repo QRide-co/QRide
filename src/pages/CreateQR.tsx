@@ -418,9 +418,11 @@ const CreateQR = () => {
             <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M9 12l2 2l4 -4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             <h2 className="text-2xl font-bold text-green-700 mb-2">Success!</h2>
             <p className="text-lg text-gray-700 mb-4">Your QR code(s) have been generated successfully.</p>
-            <Button className="bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold px-6 py-3 rounded-lg mt-2" onClick={() => navigate('/my-qr-codes' + (isAdmin ? '?admin=1' : ''))}>
-              Go to My QR Codes
-            </Button>
+            {!id && (
+              <Button className="bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold px-6 py-3 rounded-lg mt-2" onClick={() => navigate('/my-qr-codes' + (isAdmin ? '?admin=1' : ''))}>
+                Go to My QR Codes
+              </Button>
+            )}
           </div>
         </div>
       </div>

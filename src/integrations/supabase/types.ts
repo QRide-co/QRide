@@ -21,6 +21,7 @@ export type Database = {
           phone_number: string | null
           unique_code: string
           updated_at: string
+          cancellation_requested: boolean | null
         }
         Insert: {
           activated?: boolean
@@ -33,6 +34,7 @@ export type Database = {
           phone_number?: string | null
           unique_code: string
           updated_at?: string
+          cancellation_requested?: boolean | null
         }
         Update: {
           activated?: boolean
@@ -45,6 +47,7 @@ export type Database = {
           phone_number?: string | null
           unique_code?: string
           updated_at?: string
+          cancellation_requested?: boolean | null
         }
         Relationships: []
       }
