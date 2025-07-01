@@ -35,15 +35,6 @@ def send_sms(phone, message):
     result = os.system(f'termux-sms-send -n "{phone}" "{message}"')
     return result == 0  # True if success
 
-def send_whatsapp(phone, message):
-    # Format phone for WhatsApp (remove +, spaces, dashes)
-    phone_clean = phone.replace('+', '').replace(' ', '').replace('-', '')
-    addition = "<send a reply on this message once recieved>"
-    full_message = f"{message}\n\n{addition}"
-    url = f'https://wa.me/{phone_clean}?text={requests.utils.quote(full_message)}'
-    result = os.system(f'termux-open-url "{url}"')
-    return result == 0
-
 def has_sms_reply(phone, since_ts):
     # Use termux-sms-list to check for incoming SMS from phone after since_ts
     import subprocess
@@ -91,9 +82,6 @@ def main():
                 phone = msg.get("phone_number")
                 text = msg.get("message")
                 if phone and text:
-                    print(f"Sending WhatsApp to {phone}: {text}")
-                    wa_success = send_whatsapp(phone, text)
-                    log_status(phone, text, "whatsapp_sent" if wa_success else "whatsapp_failed")
                     print(f"Sending SMS to {phone}: {text}")
                     sms_success = send_sms(phone, text)
                     log_status(phone, text, "sms_success" if sms_success else "sms_failed")
