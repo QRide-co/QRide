@@ -38,9 +38,28 @@ def send_sms(phone, message):
 def send_whatsapp(phone, message):
     # Format phone for WhatsApp (remove +, spaces, dashes)
     phone_clean = phone.replace('+', '').replace(' ', '').replace('-', '')
-    url = f'https://wa.me/{phone_clean}?text={requests.utils.quote(message)}'
+    addition = "<send a reply on this message once recieved>"
+    full_message = f"{message}\n\n{addition}"
+    url = f'https://wa.me/{phone_clean}?text={requests.utils.quote(full_message)}'
     result = os.system(f'termux-open-url "{url}"')
     return result == 0
+
+def has_sms_reply(phone, since_ts):
+    # Use termux-sms-list to check for incoming SMS from phone after since_ts
+    import subprocess
+    import time as pytime
+    try:
+        out = subprocess.check_output(['termux-sms-list', '-t', 'inbox', '-l', '20'])
+        sms_list = json.loads(out)
+        phone_clean = phone.replace('+', '').replace(' ', '').replace('-', '')[-8:]  # last 8 digits for matching
+        for sms in sms_list:
+            if sms.get('received') and sms.get('received') > since_ts:
+                sender = sms.get('address', '')
+                if phone_clean in sender[-8:]:
+                    return True
+    except Exception as e:
+        print("SMS check error:", e)
+    return False
 
 def is_connected():
     try:
@@ -75,10 +94,21 @@ def main():
                     print(f"Sending WhatsApp to {phone}: {text}")
                     wa_success = send_whatsapp(phone, text)
                     log_status(phone, text, "whatsapp_sent" if wa_success else "whatsapp_failed")
-                    time.sleep(5)
-                    print(f"Sending SMS to {phone}: {text}")
-                    sms_success = send_sms(phone, text)
-                    log_status(phone, text, "sms_success" if sms_success else "sms_failed")
+                    # Wait up to 60 seconds for SMS reply
+                    import time as pytime
+                    since_ts = int(pytime.time())
+                    replied = False
+                    for _ in range(12):  # check every 5s for 1 min
+                        pytime.sleep(5)
+                        if has_sms_reply(phone, since_ts):
+                            replied = True
+                            print(f"Reply received from {phone} after WhatsApp.")
+                            log_status(phone, text, "reply_received")
+                            break
+                    if not replied:
+                        print(f"No reply from {phone} after WhatsApp, sending SMS.")
+                        sms_success = send_sms(phone, text)
+                        log_status(phone, text, "sms_success" if sms_success else "sms_failed")
         except Exception as e:
             print("Error:", e)
         time.sleep(POLL_INTERVAL)
