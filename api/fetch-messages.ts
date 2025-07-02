@@ -19,10 +19,11 @@ export default async function (req, res) {
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   try {
-    // Fetch all messages
+    // Fetch only pending messages
     const { data: messages, error } = await supabase
       .from('messages')
       .select('*')
+      .eq('status', 'pending')
       .order('created_at', { ascending: true });
     if (error) {
       res.status(500).json({ error: "Failed to fetch messages" });
