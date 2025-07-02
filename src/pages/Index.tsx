@@ -516,8 +516,8 @@ const Index = () => {
           </div>
           <div className="flex flex-col gap-4 md:items-end">
             <span className="font-bold text-lg text-gray-900 mb-2">Contact Us</span>
-            <span>Phone: <a href="tel:+201234567890" className="hover:underline">+20 123 456 7890</a></span>
-            <span>Email: <a href="mailto:info@qride.com" className="hover:underline">info@qride.com</a></span>
+            <span>Phone: <a href="tel:+201558591741" className="hover:underline">+20 155 859 1741</a></span>
+            <span>Email: <a href="mailto:qride.co@gmail.com" className="hover:underline">qride.co@gmail.com</a></span>
             <span>Address: Cairo, Egypt</span>
           </div>
         </div>
