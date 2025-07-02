@@ -30,6 +30,9 @@ const ScanQR = () => {
   ];
   const [selectedMessage, setSelectedMessage] = useState(messageChoices[0]);
 
+  const [isSending, setIsSending] = useState(false);
+  const [relaySuccess, setRelaySuccess] = useState(false);
+
   useEffect(() => {
     const fetchQRData = async () => {
       if (!code) {
@@ -88,6 +91,8 @@ const ScanQR = () => {
 
   const handleSendRelaySMS = async () => {
     if (!qrData) return;
+    setIsSending(true);
+    setRelaySuccess(false);
     try {
       await fetch('/api/send-message', {
         method: 'POST',
@@ -95,16 +100,48 @@ const ScanQR = () => {
         body: JSON.stringify({ code: qrData.unique_code, message: selectedMessage }),
       });
       toast({
-        title: 'Message Queued',
-        description: 'Your message will be sent via SMS shortly.',
+        title: 'Sending...'
       });
+      // Start polling for message delivery confirmation
+      pollForMessageDelivery();
     } catch (e) {
+      setIsSending(false);
       toast({
         title: 'Error',
         description: 'Failed to queue SMS. Please try again.',
         variant: 'destructive',
       });
     }
+  };
+
+  // Polling function for message delivery
+  const pollForMessageDelivery = () => {
+    let attempts = 0;
+    const maxAttempts = 10;
+    const interval = setInterval(async () => {
+      attempts++;
+      // Replace with your actual API endpoint to check delivery
+      const res = await fetch(`/api/fetch-messages?code=${qrData.unique_code}`);
+      const data = await res.json();
+      if (data && data.status === 'delivered') {
+        clearInterval(interval);
+        setIsSending(false);
+        setRelaySuccess(true);
+        toast({
+          title: 'Message Delivered!',
+          description: 'Your message was sent successfully.',
+          variant: 'success',
+        });
+      } else if (attempts >= maxAttempts) {
+        clearInterval(interval);
+        setIsSending(false);
+        toast({
+          title: 'Timeout',
+          description: 'Message delivery could not be confirmed.',
+          variant: 'destructive',
+        });
+      }
+    }, 2000);
   };
 
   if (isLoading) {
@@ -207,9 +244,19 @@ const ScanQR = () => {
                     onClick={handleSendRelaySMS}
                     className="w-full bg-blue-600 text-white hover:bg-blue-700 font-semibold py-6 flex items-center justify-center text-lg rounded-lg shadow-md focus:ring-2 focus:ring-blue-600 focus:outline-none"
                     aria-label="Send SMS Message"
+                    disabled={isSending}
                   >
-                    <Smartphone className="w-5 h-5 mr-3" />
-                    SMS (Private)
+                    {isSending ? (
+                      <>
+                        <svg className="animate-spin h-5 w-5 mr-3 text-white" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" /></svg>
+                        Sending...
+                      </>
+                    ) : (
+                      <>
+                        <Smartphone className="w-5 h-5 mr-3" />
+                        SMS (Private)
+                      </>
+                    )}
                   </Button>
                 ) : (
                   <>
@@ -242,7 +289,6 @@ const ScanQR = () => {
               </div>
               <Button
                 asChild
-                variant="outline"
                 className="w-full border-2 border-[#ff6b00] text-[#ff6b00] hover:bg-orange-50 font-semibold py-2 text-base rounded-md mt-4"
               >
                 <Link to={`/edit/${qrData.id}`}>Edit QR Code</Link>
@@ -259,6 +305,12 @@ const ScanQR = () => {
           Join QRide
         </Link>
       </div>
+
+      {relaySuccess && (
+        <div className="text-green-600 text-center font-semibold mt-2" role="status" aria-live="polite">
+          Message delivered successfully!
+        </div>
+      )}
     </div>
   );
 };
