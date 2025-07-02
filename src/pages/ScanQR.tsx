@@ -123,14 +123,16 @@ const ScanQR = () => {
       // Replace with your actual API endpoint to check delivery
       const res = await fetch(`/api/fetch-messages?code=${qrData.unique_code}`);
       const data = await res.json();
-      if (data && data.status === 'delivered') {
+      // Find the message with the same content and status 'sent'
+      const found = data.messages && data.messages.find((m: any) => m.message === selectedMessage && m.status === 'sent');
+      if (found) {
         clearInterval(interval);
         setIsSending(false);
         setRelaySuccess(true);
         toast({
           title: 'Message Delivered!',
           description: 'Your message was sent successfully.',
-          variant: 'success',
+          variant: 'default',
         });
       } else if (attempts >= maxAttempts) {
         clearInterval(interval);

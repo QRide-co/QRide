@@ -29,18 +29,7 @@ export default async function (req, res) {
       return;
     }
 
-    // Delete all fetched messages
-    if (messages.length > 0) {
-      const ids = messages.map((msg: any) => msg.id);
-      const { error: deleteError } = await supabase
-        .from('messages')
-        .delete()
-        .in('id', ids);
-      if (deleteError) {
-        res.status(500).json({ error: "Failed to clear messages" });
-        return;
-      }
-    }
+    // Do NOT delete messages here; keep them for status tracking
 
     res.status(200).json({ messages });
   } catch (error) {
