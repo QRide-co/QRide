@@ -34,19 +34,7 @@ const Index = () => {
 
   const location = useLocation();
   const isAdmin = location.search.includes('admin=1');
-  if (isAdmin) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-900">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">404</h1>
-          <p className="text-xl text-gray-600 mb-4">Page not found</p>
-          <a href="/" className="text-[#ff6b00] hover:text-[#ff4d00] underline">Return to Home</a>
-        </div>
-      </div>
-    );
-  }
-
-  const [adminAuth, setAdminAuth] = useState(false);
+    const [adminAuth, setAdminAuth] = useState(false);
   const [adminPassword, setAdminPassword] = useState('');
   const [showAdminModal, setShowAdminModal] = useState(isAdmin);
   const [adminError, setAdminError] = useState('');
@@ -60,6 +48,17 @@ const Index = () => {
     };
     fetchQRCodes();
   }, []);
+  if (isAdmin) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-900">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold mb-4">404</h1>
+          <p className="text-xl text-gray-600 mb-4">Page not found</p>
+          <a href="/" className="text-[#ff6b00] hover:text-[#ff4d00] underline">Return to Home</a>
+        </div>
+      </div>
+    );
+  }
 
   const handleAdminPassword = (e: React.FormEvent) => {
     e.preventDefault();
