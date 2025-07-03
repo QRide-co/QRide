@@ -9,7 +9,7 @@ API_URL = "https://qride.vercel.app/api/fetch-messages?secret=changeme"  # Repla
 SUPABASE_URL = "https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/messages"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY"
 SUPABASE_STATUS_URL = "https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/delivery_status"
-POLL_INTERVAL = 10  # seconds
+POLL_INTERVAL = 1  # seconds
 LOG_PATH = "/storage/emulated/0/QRide/sms_status.json"
 
 def log_status(phone, message, status):
