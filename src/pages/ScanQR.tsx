@@ -333,7 +333,7 @@ const ScanQR = () => {
               </div>
               <Button
                 asChild
-                className="w-full border-2 border-[#ff6b00] text-[#ff6b00] hover:bg-orange-50 font-semibold py-2 text-base rounded-md mt-4"
+                className="w-full border-2 border-[#ff6b00] text-[#ff6b00] bg-white hover:bg-orange-50 font-semibold py-2 text-base rounded-md mt-4 transition-colors"
               >
                 <Link to={`/edit/${qrData.id}`}>Edit QR Code</Link>
               </Button>
