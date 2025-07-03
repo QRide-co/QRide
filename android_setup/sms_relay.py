@@ -125,8 +125,12 @@ def main():
                         insert_delivery_status(code, text, "sent")
                     else:
                         insert_delivery_status(code, text, "failed")
-        except Exception as e:
-            print("Error:", e)
+        except Exception:
+            if was_online is not False:
+                print("⛔️Offline")
+            was_online = False
+            time.sleep(POLL_INTERVAL)
+            continue
         time.sleep(POLL_INTERVAL)
 
 if __name__ == "__main__":
