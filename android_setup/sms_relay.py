@@ -125,10 +125,14 @@ def main():
                         set_message_status(msg_id, "sent")
                     else:
                         set_message_status(msg_id, "failed")
-        except Exception:
-            if was_online is not False:
-                print("⛔️Offline")
-            was_online = False
+        except Exception as e:
+            # On error, re-check network before printing Offline
+            if not is_connected():
+                if was_online is not False:
+                    print("⛔️Offline")
+                was_online = False
+            else:
+                print(f"Error fetching messages: {e}")
             time.sleep(POLL_INTERVAL)
             continue
         time.sleep(POLL_INTERVAL)
