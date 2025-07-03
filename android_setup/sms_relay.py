@@ -73,6 +73,15 @@ def set_message_status(message_id, status):
     resp = requests.patch(url, headers=headers, json=data)
     return resp.status_code == 204
 
+def delete_message(message_id):
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+    }
+    url = f"{SUPABASE_URL}?id=eq.{message_id}"
+    resp = requests.delete(url, headers=headers)
+    return resp.status_code == 204
+
 def main():
     was_online = None
     while True:
@@ -104,6 +113,8 @@ def main():
                         set_message_status(msg_id, "sent")
                     else:
                         set_message_status(msg_id, "failed")
+                    # Delete message from DB after processing
+                    delete_message(msg_id)
         except Exception as e:
             print("Error:", e)
         time.sleep(POLL_INTERVAL)
