@@ -120,11 +120,11 @@ def main():
                     print(f"Sending SMS to {phone}: {text}")
                     sms_success = send_sms(phone, text)
                     log_status(phone, text, "sms_success" if sms_success else "sms_failed")
-                    # Insert delivery status for website polling
+                    # Update status in DB for website polling
                     if sms_success:
-                        insert_delivery_status(code, text, "sent")
+                        set_message_status(msg_id, "sent")
                     else:
-                        insert_delivery_status(code, text, "failed")
+                        set_message_status(msg_id, "failed")
         except Exception:
             if was_online is not False:
                 print("⛔️Offline")

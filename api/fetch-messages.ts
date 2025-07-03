@@ -19,8 +19,8 @@ export default async function (req, res) {
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   try {
-    // Only fetch and delete messages with status 'pending'
-    let query = supabase.from('messages').select('*').eq('status', 'pending').order('created_at', { ascending: true });
+    // Only fetch the oldest pending message
+    let query = supabase.from('messages').select('*').eq('status', 'pending').order('created_at', { ascending: true }).limit(1);
     if (code) {
       query = query.eq('code', code);
     }
@@ -29,22 +29,8 @@ export default async function (req, res) {
       res.status(500).json({ error: "Failed to fetch messages" });
       return;
     }
-    if (!messages || messages.length === 0) {
-      res.status(200).json({ messages: [] });
-      return;
-    }
-    // Atomically delete messages after fetching
-    const ids = messages.map((msg: any) => msg.id);
-    const { error: deleteError } = await supabase
-      .from('messages')
-      .delete()
-      .in('id', ids);
-    if (deleteError) {
-      res.status(500).json({ error: "Failed to delete messages after fetch" });
-      return;
-    }
-    // Return only the messages just fetched (now deleted)
-    res.status(200).json({ messages: messages });
+    // Return the message (do not delete)
+    res.status(200).json({ messages: messages || [] });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

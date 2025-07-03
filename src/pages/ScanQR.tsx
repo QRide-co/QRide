@@ -97,16 +97,18 @@ const ScanQR = () => {
     setIsSending(true);
     setRelaySuccess(false);
     try {
-      await fetch('/api/send-message', {
+      const response = await fetch('/api/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: qrData.unique_code, message: selectedMessage }),
       });
+      const result = await response.json();
+      const messageId = result.id; // Expect API to return the message id
       toast({
         title: 'Sending...'
       });
-      // Start polling for message delivery confirmation
-      pollForMessageDelivery();
+      // Start polling for message delivery confirmation by id
+      pollForMessageDelivery(messageId);
     } catch (e) {
       setIsSending(false);
       toast({
@@ -118,21 +120,21 @@ const ScanQR = () => {
   };
 
   // Polling function for message delivery
-  const pollForMessageDelivery = () => {
+  const pollForMessageDelivery = (messageId: string) => {
     let attempts = 0;
     const maxAttempts = 20;
     const interval = setInterval(async () => {
       attempts++;
-      // Poll delivery_status table for confirmation
-      const res = await fetch(`https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/delivery_status?code=eq.${qrData.unique_code}&message=eq.${encodeURIComponent(selectedMessage)}`, {
+      // Poll messages table for confirmation by id
+      const res = await fetch(`https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/messages?id=eq.${messageId}`, {
         headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY' }
       });
       const data = await res.json();
-      const found = data && data.find((m: any) => m.status === 'sent');
-      if (found) {
+      const found = data && data[0];
+      if (found && (found.status === 'sent' || found.status === 'failed')) {
         clearInterval(interval);
         setIsSending(false);
-        setRelaySuccess(true);
+        setRelaySuccess(found.status === 'sent');
         setShowSuccessPopup(true);
       } else if (attempts >= maxAttempts) {
         clearInterval(interval);

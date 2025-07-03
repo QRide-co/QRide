@@ -85,21 +85,22 @@ export default async function handler(req, res) {
 
     // Insert message into Supabase messages table
     try {
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from('messages')
-        .insert({ code, phone_number, message, status: 'pending' });
+        .insert({ code, phone_number, message, status: 'pending' })
+        .select('id')
+        .single();
       if (error) {
         console.error('Failed to insert message:', error);
         res.status(500).json({ error: "Failed to queue message" });
         return;
       }
+      res.status(200).json({ success: true, id: data.id });
     } catch (error) {
       console.error('Failed to insert message:', error);
       res.status(500).json({ error: "Failed to queue message" });
       return;
     }
-
-    res.status(200).json({ success: true });
   } catch (error) {
     console.error('Unexpected error in send-message API:', error);
     res.status(500).json({ 
