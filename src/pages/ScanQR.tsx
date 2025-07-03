@@ -109,7 +109,7 @@ const ScanQR = () => {
     setRelaySuccess(false);
     let messageToSend = selectedMessage;
     if (qrData.package === 'advanced' && scannerPhone) {
-      messageToSend += `\nCall QR code scanner on ${scannerPhone}`;
+      messageToSend += `\nSomeone scanned your QR code. Call them: ${scannerPhone}`;
     }
     try {
       const response = await fetch('/api/send-message', {
