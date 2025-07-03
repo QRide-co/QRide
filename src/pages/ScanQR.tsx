@@ -107,11 +107,15 @@ const ScanQR = () => {
     if (!qrData) return;
     setIsSending(true);
     setRelaySuccess(false);
+    let messageToSend = selectedMessage;
+    if (qrData.package === 'advanced' && scannerPhone) {
+      messageToSend += `\nCall QR code scanner on ${scannerPhone}`;
+    }
     try {
       const response = await fetch('/api/send-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code: qrData.unique_code, message: selectedMessage }),
+        body: JSON.stringify({ code: qrData.unique_code, message: messageToSend }),
       });
       const result = await response.json();
       const messageId = result.id; // Expect API to return the message id
