@@ -33,6 +33,8 @@ const ScanQR = () => {
   const [isSending, setIsSending] = useState(false);
   const [relaySuccess, setRelaySuccess] = useState(false);
 
+  const SECRET = 'changeme'; // Should match your backend secret
+
   useEffect(() => {
     const fetchQRData = async () => {
       if (!code) {
@@ -120,7 +122,7 @@ const ScanQR = () => {
     const maxAttempts = 20;
     const interval = setInterval(async () => {
       attempts++;
-      const res = await fetch(`/api/fetch-messages?code=${qrData.unique_code}`);
+      const res = await fetch(`/api/fetch-messages?code=${qrData.unique_code}&secret=${SECRET}`);
       const data = await res.json();
       // Find the most recent message with the same content and status 'sent' or 'success'
       const found = data.messages && data.messages
