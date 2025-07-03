@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
-import { MessageCircle, Info, ArrowLeft, Phone, MessageSquare, Smartphone } from 'lucide-react';
+import { MessageCircle, Info, ArrowLeft, Phone, MessageSquare, Smartphone, CheckCircle } from 'lucide-react';
 
 interface QRCodeData {
   id: string;
@@ -32,6 +32,7 @@ const ScanQR = () => {
 
   const [isSending, setIsSending] = useState(false);
   const [relaySuccess, setRelaySuccess] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const SECRET = 'changeme'; // Should match your backend secret
 
@@ -132,11 +133,7 @@ const ScanQR = () => {
         clearInterval(interval);
         setIsSending(false);
         setRelaySuccess(true);
-        toast({
-          title: 'Message Delivered!',
-          description: 'Your message was sent successfully.',
-          variant: 'default',
-        });
+        setShowSuccessPopup(true);
       } else if (attempts >= maxAttempts) {
         clearInterval(interval);
         setIsSending(false);
@@ -217,6 +214,22 @@ const ScanQR = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-100 via-white to-gray-200 text-gray-900 flex flex-col">
+      {showSuccessPopup && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-30">
+          <div className="bg-white rounded-2xl shadow-2xl border-2 border-orange-400 p-8 max-w-sm w-full flex flex-col items-center animate-fade-in">
+            <CheckCircle className="w-14 h-14 text-orange-500 mb-4" />
+            <div className="text-2xl font-bold text-orange-600 mb-2">Message Delivered!</div>
+            <div className="text-gray-700 text-lg mb-4 text-center">Your message was sent successfully.</div>
+            <button
+              className="mt-2 px-6 py-2 bg-orange-500 text-white rounded-lg font-semibold shadow hover:bg-orange-600 transition"
+              onClick={() => setShowSuccessPopup(false)}
+              autoFocus
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
       <div className="flex-1 flex items-center justify-center">
         <div className="w-full max-w-md mx-auto px-4 py-8">
           <Card className="bg-white border border-gray-200 shadow-xl rounded-2xl">
