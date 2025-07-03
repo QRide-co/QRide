@@ -310,12 +310,6 @@ const ScanQR = () => {
           Join QRide
         </Link>
       </div>
-
-      {relaySuccess && (
-        <div className="text-green-600 text-center font-semibold mt-2" role="status" aria-live="polite">
-          Message delivered successfully!
-        </div>
-      )}
     </div>
   );
 };
