@@ -371,7 +371,7 @@ const ScanQR = () => {
               ×
             </button>
             <div className="text-2xl font-bold text-orange-600 mb-2">Enter your phone number</div>
-            <div className="text-gray-700 text-base mb-4">So the car owner can easily contact you</div>
+            <div className="text-gray-700 text-base mb-4 font-bold">So the car owner can easily contact you</div>
             <input
               type="tel"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 mb-2"
