@@ -123,12 +123,12 @@ const ScanQR = () => {
     const maxAttempts = 20;
     const interval = setInterval(async () => {
       attempts++;
-      const res = await fetch(`/api/fetch-messages?code=${qrData.unique_code}&secret=${SECRET}`);
+      // Poll delivery_status table for confirmation
+      const res = await fetch(`https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/delivery_status?code=eq.${qrData.unique_code}&message=eq.${encodeURIComponent(selectedMessage)}`, {
+        headers: { 'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY' }
+      });
       const data = await res.json();
-      // Find the most recent message with the same content and status 'sent' or 'success'
-      const found = data.messages && data.messages
-        .filter((m: any) => m.message === selectedMessage && (m.status === 'sent' || m.status === 'success'))
-        .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
+      const found = data && data.find((m: any) => m.status === 'sent');
       if (found) {
         clearInterval(interval);
         setIsSending(false);

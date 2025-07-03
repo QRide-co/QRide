@@ -8,6 +8,7 @@ import socket
 API_URL = "https://qride.vercel.app/api/fetch-messages?secret=changeme"  # Replace with your actual URL
 SUPABASE_URL = "https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/messages"
 SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcG9kZW9jemZ2cWlra3h2Z3NxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTEwMzk1MTYsImV4cCI6MjA2NjYxNTUxNn0.Sgcx8LM4DvJIWxWZbxePLCdeMHmGwZgXfqHycuuMhMY"
+SUPABASE_STATUS_URL = "https://uipodeoczfvqikkxvgsq.supabase.co/rest/v1/delivery_status"
 POLL_INTERVAL = 10  # seconds
 LOG_PATH = "/storage/emulated/0/QRide/sms_status.json"
 
@@ -82,6 +83,16 @@ def delete_message(message_id):
     resp = requests.delete(url, headers=headers)
     return resp.status_code == 204
 
+def insert_delivery_status(code, message, status):
+    headers = {
+        "apikey": SUPABASE_KEY,
+        "Authorization": f"Bearer {SUPABASE_KEY}",
+        "Content-Type": "application/json"
+    }
+    data = {"code": code, "message": message, "status": status}
+    resp = requests.post(SUPABASE_STATUS_URL, headers=headers, json=data)
+    return resp.status_code in (200, 201)
+
 def main():
     was_online = None
     while True:
@@ -104,17 +115,16 @@ def main():
                 phone = msg.get("phone_number")
                 text = msg.get("message")
                 msg_id = msg.get("id")
-                if phone and text and msg_id:
+                code = msg.get("code")
+                if phone and text and msg_id and code:
                     print(f"Sending SMS to {phone}: {text}")
                     sms_success = send_sms(phone, text)
                     log_status(phone, text, "sms_success" if sms_success else "sms_failed")
-                    # Update status in DB
+                    # Insert delivery status for website polling
                     if sms_success:
-                        set_message_status(msg_id, "sent")
+                        insert_delivery_status(code, text, "sent")
                     else:
-                        set_message_status(msg_id, "failed")
-                    # Delete message from DB after processing
-                    delete_message(msg_id)
+                        insert_delivery_status(code, text, "failed")
         except Exception as e:
             print("Error:", e)
         time.sleep(POLL_INTERVAL)

@@ -19,7 +19,7 @@ export default async function (req, res) {
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   try {
-    // Only claim messages with status 'pending'
+    // Only fetch and delete messages with status 'pending'
     let query = supabase.from('messages').select('*').eq('status', 'pending').order('created_at', { ascending: true });
     if (code) {
       query = query.eq('code', code);
@@ -33,17 +33,17 @@ export default async function (req, res) {
       res.status(200).json({ messages: [] });
       return;
     }
-    // Atomically claim messages by setting status to 'processing'
+    // Atomically delete messages after fetching
     const ids = messages.map((msg: any) => msg.id);
-    const { error: updateError } = await supabase
+    const { error: deleteError } = await supabase
       .from('messages')
-      .update({ status: 'processing' })
+      .delete()
       .in('id', ids);
-    if (updateError) {
-      res.status(500).json({ error: "Failed to claim messages" });
+    if (deleteError) {
+      res.status(500).json({ error: "Failed to delete messages after fetch" });
       return;
     }
-    // Return only the messages just claimed
+    // Return only the messages just fetched (now deleted)
     res.status(200).json({ messages: messages });
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
