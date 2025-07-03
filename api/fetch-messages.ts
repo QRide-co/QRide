@@ -10,7 +10,7 @@ export default async function (req, res) {
     return;
   }
 
-  const { secret } = req.query;
+  const { secret, code } = req.query;
   if (secret !== SECRET) {
     res.status(401).json({ error: "Unauthorized" });
     return;
@@ -19,12 +19,11 @@ export default async function (req, res) {
   const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   try {
-    // Fetch only pending messages
-    const { data: messages, error } = await supabase
-      .from('messages')
-      .select('*')
-      .eq('status', 'pending')
-      .order('created_at', { ascending: true });
+    let query = supabase.from('messages').select('*').order('created_at', { ascending: true });
+    if (code) {
+      query = query.eq('code', code);
+    }
+    const { data: messages, error } = await query;
     if (error) {
       res.status(500).json({ error: "Failed to fetch messages" });
       return;
