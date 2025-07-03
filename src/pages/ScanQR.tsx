@@ -118,6 +118,15 @@ const ScanQR = () => {
         body: JSON.stringify({ code: qrData.unique_code, message: messageToSend }),
       });
       const result = await response.json();
+      if (!response.ok && result.error === 'Maximum attempts in current period') {
+        setIsSending(false);
+        toast({
+          title: 'Limit reached',
+          description: 'Maximum attempts in current period. Please try again later.',
+          variant: 'destructive',
+        });
+        return;
+      }
       const messageId = result.id; // Expect API to return the message id
       toast({
         title: 'Sending...'

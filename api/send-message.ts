@@ -83,6 +83,22 @@ export default async function handler(req, res) {
       return;
     }
 
+    // Enforce 2 messages per code every 30 minutes
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+    const { count, error: countError } = await supabase
+      .from('messages')
+      .select('id', { count: 'exact', head: true })
+      .eq('code', code)
+      .gte('created_at', thirtyMinutesAgo);
+    if (countError) {
+      res.status(500).json({ error: "Failed to check message limit" });
+      return;
+    }
+    if ((count ?? 0) >= 2) {
+      res.status(429).json({ error: "Maximum attempts in current period" });
+      return;
+    }
+
     // Insert message into Supabase messages table
     try {
       const { data, error } = await supabase
