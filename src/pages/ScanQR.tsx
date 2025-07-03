@@ -37,7 +37,6 @@ const ScanQR = () => {
 
   const SECRET = 'changeme'; // Should match your backend secret
 
-  const [showPhoneModal, setShowPhoneModal] = useState(false);
   const [scannerPhone, setScannerPhone] = useState('');
   const [phoneError, setPhoneError] = useState('');
 
@@ -74,12 +73,6 @@ const ScanQR = () => {
     fetchQRData();
   }, [code]);
 
-  useEffect(() => {
-    if (qrData && qrData.package === 'advanced') {
-      setShowPhoneModal(true);
-    }
-  }, [qrData]);
-
   const handleSendMessage = () => {
     if (!qrData) return;
     const message = encodeURIComponent(selectedMessage);
@@ -109,6 +102,11 @@ const ScanQR = () => {
     setRelaySuccess(false);
     let messageToSend = selectedMessage;
     if (qrData.package === 'advanced' && scannerPhone) {
+      if (!scannerPhone.match(/^\+?\d{7,15}$/)) {
+        setPhoneError('Please enter a valid phone number');
+        setIsSending(false);
+        return;
+      }
       messageToSend += `\nSomeone scanned your QR code. Call them: ${scannerPhone}`;
     }
     try {
@@ -170,15 +168,6 @@ const ScanQR = () => {
         });
       }
     }, 2000);
-  };
-
-  const handlePhoneSubmit = () => {
-    if (!scannerPhone.match(/^\+?\d{7,15}$/)) {
-      setPhoneError('Please enter a valid phone number');
-      return;
-    }
-    setShowPhoneModal(false);
-    setPhoneError('');
   };
 
   if (isLoading) {
@@ -287,6 +276,20 @@ const ScanQR = () => {
                     </Button>
                   ))}
                 </div>
+                {/* Phone number input for advanced package */}
+                {qrData?.package === 'advanced' && (
+                  <div className="mt-6">
+                    <div className="text-orange-600 font-bold mb-2">Note: So the car owner can easily contact you</div>
+                    <input
+                      type="tel"
+                      className="w-full px-4 py-3 rounded-lg border border-gray-300 text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 mb-2"
+                      placeholder="e.g. +201234567890"
+                      value={scannerPhone}
+                      onChange={e => { setScannerPhone(e.target.value); setPhoneError(''); }}
+                    />
+                    {phoneError && <div className="text-red-500 text-sm mb-2">{phoneError}</div>}
+                  </div>
+                )}
               </div>
               <div className="text-center text-gray-600 text-base mb-2">
                 Choose how you'd like to contact:
@@ -358,39 +361,6 @@ const ScanQR = () => {
           Join QRide
         </Link>
       </div>
-
-      {/* Phone number input modal for advanced package */}
-      {showPhoneModal && (
-        <Dialog open={showPhoneModal} onOpenChange={setShowPhoneModal}>
-          <DialogContent className="max-w-sm mx-auto p-8 rounded-2xl bg-white border border-gray-200 shadow-xl text-center">
-            <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-2xl font-bold"
-              onClick={() => setShowPhoneModal(false)}
-              aria-label="Close"
-            >
-              ×
-            </button>
-            <div className="text-2xl font-bold text-orange-600 mb-2">Enter your phone number</div>
-            <div className="text-gray-700 text-base mb-4 font-bold">So the car owner can easily contact you</div>
-            <input
-              type="tel"
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 text-lg focus:outline-none focus:ring-2 focus:ring-orange-500 mb-2"
-              placeholder="e.g. +201234567890"
-              value={scannerPhone}
-              onChange={e => { setScannerPhone(e.target.value); setPhoneError(''); }}
-              autoFocus
-            />
-            {phoneError && <div className="text-red-500 text-sm mb-2">{phoneError}</div>}
-            <button
-              className="w-full bg-orange-500 text-white font-semibold py-3 rounded-lg shadow hover:bg-orange-600 transition mt-2"
-              onClick={handlePhoneSubmit}
-              disabled={!scannerPhone}
-            >
-              Submit
-            </button>
-          </DialogContent>
-        </Dialog>
-      )}
     </div>
   );
 };
