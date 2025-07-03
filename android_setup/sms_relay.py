@@ -95,8 +95,7 @@ def main():
                 phone = msg.get("phone_number")
                 text = msg.get("message")
                 msg_id = msg.get("id")
-                status = msg.get("status")
-                if phone and text and msg_id and status == "processing":
+                if phone and text and msg_id:
                     print(f"Sending SMS to {phone}: {text}")
                     sms_success = send_sms(phone, text)
                     log_status(phone, text, "sms_success" if sms_success else "sms_failed")
