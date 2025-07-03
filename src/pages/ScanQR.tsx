@@ -117,14 +117,15 @@ const ScanQR = () => {
   // Polling function for message delivery
   const pollForMessageDelivery = () => {
     let attempts = 0;
-    const maxAttempts = 10;
+    const maxAttempts = 20;
     const interval = setInterval(async () => {
       attempts++;
-      // Replace with your actual API endpoint to check delivery
       const res = await fetch(`/api/fetch-messages?code=${qrData.unique_code}`);
       const data = await res.json();
-      // Find the message with the same content and status 'sent'
-      const found = data.messages && data.messages.find((m: any) => m.message === selectedMessage && m.status === 'sent');
+      // Find the most recent message with the same content and status 'sent' or 'success'
+      const found = data.messages && data.messages
+        .filter((m: any) => m.message === selectedMessage && (m.status === 'sent' || m.status === 'success'))
+        .sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
       if (found) {
         clearInterval(interval);
         setIsSending(false);

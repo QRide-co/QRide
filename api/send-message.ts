@@ -87,7 +87,7 @@ export default async function handler(req, res) {
     try {
       const { error } = await supabase
         .from('messages')
-        .insert({ code, phone_number, message });
+        .insert({ code, phone_number, message, status: 'pending' });
       if (error) {
         console.error('Failed to insert message:', error);
         res.status(500).json({ error: "Failed to queue message" });
