@@ -426,15 +426,63 @@ const CreateQR = () => {
             <svg className="w-16 h-16 text-green-500 mb-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/><path d="M9 12l2 2l4 -4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             <h2 className="text-2xl font-bold text-green-700 mb-2">Success!</h2>
             <p className="text-lg text-gray-700 mb-4">Your QR code(s) have been generated successfully.</p>
+            {/* QR Color Option in Download Container */}
             {!id && generatedQR && (
-              <Button
-                className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-6 py-3 rounded-lg mt-2 w-full flex items-center justify-center gap-2"
-                onClick={downloadQR}
-                aria-label="Download QR as PNG"
-              >
-                <Download className="w-5 h-5 mr-2" />
-                Download QR as PNG
-              </Button>
+              <div className="w-full flex flex-col items-center gap-2 mb-2">
+                <div className="flex gap-4 justify-center mb-2">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      id="qr-color-black"
+                      name="qr-color"
+                      value="black"
+                      checked={qrColor === 'black'}
+                      onChange={async () => {
+                        setQrColor('black');
+                        // Regenerate QR code preview
+                        const qrCodeUrl = await QRCode.toDataURL(generatedQR.scanUrl, {
+                          width: 300,
+                          margin: 2,
+                          color: { dark: '#FFFFFF', light: '#000000' },
+                        });
+                        setGeneratedQR({ ...generatedQR, qrCodeUrl });
+                      }}
+                      className="accent-black"
+                    />
+                    <span className="text-gray-900">Black (white QR on black background)</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      id="qr-color-white"
+                      name="qr-color"
+                      value="white"
+                      checked={qrColor === 'white'}
+                      onChange={async () => {
+                        setQrColor('white');
+                        // Regenerate QR code preview
+                        const qrCodeUrl = await QRCode.toDataURL(generatedQR.scanUrl, {
+                          width: 300,
+                          margin: 2,
+                          color: { dark: '#000000', light: '#FFFFFF' },
+                        });
+                        setGeneratedQR({ ...generatedQR, qrCodeUrl });
+                      }}
+                      className="accent-white"
+                    />
+                    <span className="text-gray-900">White (black QR on white background)</span>
+                  </label>
+                </div>
+                <img src={generatedQR.qrCodeUrl} alt="QR Preview" className="mx-auto rounded-lg border border-gray-300 bg-white p-2 w-48 h-48 object-contain" />
+                <Button
+                  className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-6 py-3 rounded-lg mt-2 w-full flex items-center justify-center gap-2"
+                  onClick={downloadQR}
+                  aria-label="Download QR as PNG"
+                >
+                  <Download className="w-5 h-5 mr-2" />
+                  Download QR as PNG
+                </Button>
+              </div>
             )}
             {!id && (
               <Button className="bg-[#ff6b00] text-white hover:bg-orange-500 font-semibold px-6 py-3 rounded-lg mt-2 w-full" onClick={() => navigate('/my-qr-codes' + (isAdmin ? '?admin=1' : ''))}>
@@ -540,35 +588,6 @@ const CreateQR = () => {
                   minLength={4}
                   required={!qrPassword}
                 />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="qr-color" className="text-gray-900">QR Color *</Label>
-                <div className="flex gap-4">
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      id="qr-color-black"
-                      name="qr-color"
-                      value="black"
-                      checked={qrColor === 'black'}
-                      onChange={() => setQrColor('black')}
-                      className="accent-black"
-                    />
-                    <span className="text-gray-900">Black (white QR on black background)</span>
-                  </label>
-                  <label className="flex items-center gap-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      id="qr-color-white"
-                      name="qr-color"
-                      value="white"
-                      checked={qrColor === 'white'}
-                      onChange={() => setQrColor('white')}
-                      className="accent-white"
-                    />
-                    <span className="text-gray-900">White (black QR on white background)</span>
-                  </label>
-                </div>
               </div>
               <Button
                 type="submit"
