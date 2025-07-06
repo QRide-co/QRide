@@ -52,6 +52,7 @@ const CreateQR = () => {
   const [cancelLoading, setCancelLoading] = useState(false);
   const [cancelSuccess, setCancelSuccess] = useState(false);
   const [packageType, setPackageType] = useState<'basic' | 'advanced'>('basic');
+  const [qrColor, setQrColor] = useState<'black' | 'white'>('black');
 
   const defaultMessages = [
     'Please move your car',
@@ -117,7 +118,9 @@ const CreateQR = () => {
           const qrUrl = await QRCode.toDataURL(url, {
             width: 300,
             margin: 2,
-            color: { dark: '#000000', light: '#FFFFFF' },
+            color: qrColor === 'black'
+              ? { dark: '#FFFFFF', light: '#000000' }
+              : { dark: '#000000', light: '#FFFFFF' },
           });
           setQrImageUrl(qrUrl);
           setQrPassword((data as any).password || null);
@@ -236,10 +239,9 @@ const CreateQR = () => {
       const qrCodeUrl = await QRCode.toDataURL(scanUrl, {
         width: 300,
         margin: 2,
-        color: {
-          dark: '#000000',
-          light: '#FFFFFF',
-        },
+        color: qrColor === 'black'
+          ? { dark: '#FFFFFF', light: '#000000' }
+          : { dark: '#000000', light: '#FFFFFF' },
       });
 
       setGeneratedQR({
@@ -343,7 +345,13 @@ const CreateQR = () => {
       const zip = new JSZip();
       for (const qr of bulkQRCodes) {
         const url = `${window.location.origin}/scan/${qr.unique_code}`;
-        const png = await QRCode.toDataURL(url, { width: 300, margin: 2, color: { dark: '#000000', light: '#FFFFFF' } });
+        const png = await QRCode.toDataURL(url, {
+          width: 300,
+          margin: 2,
+          color: qrColor === 'black'
+            ? { dark: '#FFFFFF', light: '#000000' }
+            : { dark: '#000000', light: '#FFFFFF' },
+        });
         const base64 = png.split(',')[1];
         zip.file(`${qr.name.replace(/\s+/g, '_')}.png`, base64, { base64: true });
       }
@@ -532,6 +540,35 @@ const CreateQR = () => {
                   minLength={4}
                   required={!qrPassword}
                 />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="qr-color" className="text-gray-900">QR Color *</Label>
+                <div className="flex gap-4">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      id="qr-color-black"
+                      name="qr-color"
+                      value="black"
+                      checked={qrColor === 'black'}
+                      onChange={() => setQrColor('black')}
+                      className="accent-black"
+                    />
+                    <span className="text-gray-900">Black (white QR on black background)</span>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      id="qr-color-white"
+                      name="qr-color"
+                      value="white"
+                      checked={qrColor === 'white'}
+                      onChange={() => setQrColor('white')}
+                      className="accent-white"
+                    />
+                    <span className="text-gray-900">White (black QR on white background)</span>
+                  </label>
+                </div>
               </div>
               <Button
                 type="submit"
