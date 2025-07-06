@@ -441,39 +441,48 @@ const Index = () => {
       </section>
 
       {/* Pricing Section - Official Pricing */}
-      <section id="official-pricing" className="py-24 px-6 bg-gradient-to-b from-gray-50 to-gray-100">
-        <div className="container mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Official Pricing
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Simple, transparent pricing. Activate your QR code for just <span className='text-[#ff6b00] font-bold'>10 EGP/month</span>.
-            </p>
-          </div>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-12">
-            <div className="bg-white border border-[#ff6b00]/30 rounded-3xl shadow-2xl p-10 flex flex-col items-center w-full max-w-md">
-              <div className="text-2xl font-semibold text-[#ff6b00] mb-2">Basic</div>
+      <section className="py-24 px-6 bg-white">
+        <div className="container mx-auto text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Official Pricing</h2>
+          <p className="text-xl text-gray-600 mb-8">Simple, transparent pricing. Activate your QR code for just <span className="text-[#ff6b00] font-bold">10 EGP/month</span>.</p>
+          <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
+            {/* Basic Package Card */}
+            <div className="flex-1 bg-white rounded-2xl p-10 border border-gray-200 shadow-xl flex flex-col items-center max-w-md mx-auto">
+              <div className="text-2xl font-semibold text-orange-600 mb-2">Basic</div>
               <div className="text-5xl font-extrabold text-gray-900 mb-2 flex items-end gap-2">
                 <span>10</span>
                 <span className="text-2xl text-gray-700 font-medium">EGP</span>
                 <span className="text-lg text-gray-600 font-normal mb-1">/month</span>
               </div>
-              <ul className="mb-8 space-y-3 w-full mt-6">
-                <li className="flex items-center gap-3 text-base text-gray-800"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Activate your QR code instantly</li>
-                <li className="flex items-center gap-3 text-base text-gray-800"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Unlimited scans & contact options</li>
-                <li className="flex items-center gap-3 text-base text-gray-800"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Secure & private communication</li>
-                <li className="flex items-center gap-3 text-base text-gray-800"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Cancel anytime</li>
-                <li className="flex items-center gap-3 text-base text-gray-800"><svg className="w-5 h-5 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>Priority support</li>
+              <ul className="mb-8 space-y-3 w-full text-left">
+                <li className="flex items-center gap-3 text-base text-gray-800">Activate your QR code instantly</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Unlimited scans & contact options</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Secure & private communication</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Cancel anytime</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Priority support</li>
               </ul>
-              <a href="/subscribe/demo" className="w-full">
-                <button className="w-full bg-[#ff6b00] text-white hover:bg-[#ff4d00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">
-                  Subscribe Now
-                </button>
-              </a>
+              <button className="w-full bg-[#ff6b00] text-white hover:bg-[#ff5a00] font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">Subscribe Now</button>
               <div className="flex items-center justify-center gap-2 text-xs text-gray-600 mt-2">
-                <svg className="w-4 h-4 text-[#ff6b00]" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 11V17M12 7V7.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z" /></svg>
-                Secure payment via Paymob
+                <span className="w-4 h-4 text-[#ff6b00]">&#128274;</span> Secure payment via Paymob
+              </div>
+            </div>
+            {/* Advanced Package Card */}
+            <div className="flex-1 bg-blue-50 rounded-2xl p-10 border border-blue-200 shadow-xl flex flex-col items-center max-w-md mx-auto">
+              <div className="text-2xl font-semibold text-blue-700 mb-2">Advanced</div>
+              <div className="text-5xl font-extrabold text-gray-900 mb-2 flex items-end gap-2">
+                <span>20</span>
+                <span className="text-2xl text-gray-700 font-medium">EGP</span>
+                <span className="text-lg text-gray-600 font-normal mb-1">/month</span>
+              </div>
+              <ul className="mb-8 space-y-3 w-full text-left">
+                <li className="flex items-center gap-3 text-base text-gray-800">SMS relay only (privacy enhanced)</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Your phone number is never shown</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Cancel anytime</li>
+                <li className="flex items-center gap-3 text-base text-gray-800">Priority support</li>
+              </ul>
+              <button className="w-full bg-blue-600 text-white hover:bg-blue-700 font-bold text-lg py-4 rounded-xl shadow-xl transition-all duration-200 mb-2">Subscribe Now</button>
+              <div className="flex items-center justify-center gap-2 text-xs text-blue-700 mt-2">
+                <span className="w-4 h-4 text-blue-600">&#128274;</span> Secure payment via Paymob
               </div>
             </div>
           </div>
