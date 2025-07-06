@@ -714,6 +714,33 @@ const CreateQR = () => {
                 </DialogTitle>
               </DialogHeader>
               <p className="text-lg text-gray-700 mb-4 text-center">Your bulk QR codes have been generated successfully.</p>
+              {/* QR Color Option for Bulk Download */}
+              <div className="flex gap-4 justify-center mb-2">
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    id="bulk-qr-color-black"
+                    name="bulk-qr-color"
+                    value="black"
+                    checked={qrColor === 'black'}
+                    onChange={() => setQrColor('black')}
+                    className="accent-black"
+                  />
+                  <span className="text-gray-900">Black (white QR on black background)</span>
+                </label>
+                <label className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    id="bulk-qr-color-white"
+                    name="bulk-qr-color"
+                    value="white"
+                    checked={qrColor === 'white'}
+                    onChange={() => setQrColor('white')}
+                    className="accent-white"
+                  />
+                  <span className="text-gray-900">White (black QR on white background)</span>
+                </label>
+              </div>
               {bulkQRCodes.length > 0 && (
                 <Button
                   className="bg-blue-600 text-white hover:bg-blue-700 font-semibold px-6 py-3 rounded-lg mt-2 w-full flex items-center justify-center gap-2"
